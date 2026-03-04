@@ -1,26 +1,31 @@
-  # Build the container image from your Dockerfile
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', '${_IMAGE}', '.']
+  steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -t
+      - us-central1-docker.pkg.dev/${PROJECT_ID}/pantrypivot/pantrypivot:${SHORT_SHA}
+      - .
 
-  # Push it to Artifact Registry
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', '${_IMAGE}']
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - us-central1-docker.pkg.dev/${PROJECT_ID}/pantrypivot/pantrypivot:${SHORT_SHA}
 
-  # Deploy to Cloud Run
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     entrypoint: gcloud
     args:
       - run
       - deploy
       - pantrypivot
-      - --image=${_IMAGE}
-      - --region=us-central1
-      - --platform=managed
+      - --image
+      - us-central1-docker.pkg.dev/${PROJECT_ID}/pantrypivot/pantrypivot:${SHORT_SHA}
+      - --region
+      - us-central1
+      - --platform
+      - managed
       - --allow-unauthenticated
-      - --set-secrets=GEMINI_API_KEY=GEMINI_API_KEY:latest
+      - --set-secrets
+      - GEMINI_API_KEY=GEMINI_API_KEY:latest
 
-substitutions:
-  _IMAGE: 'us-central1-docker.pkg.dev/${PROJECT_ID}/pantrypivot/pantrypivot:$SHORT_SHA'
-
-options:
-  logging: CLOUD_LOGGING_ONLY
+images:
+  - us-central1-docker.pkg.dev/${PROJECT_ID}/pantrypivot/pantrypivot:${SHORT_SHA}
