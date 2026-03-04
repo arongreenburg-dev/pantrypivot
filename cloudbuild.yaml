@@ -1,0 +1,27 @@
+steps:
+  # Build the container image from your Dockerfile
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', '${_IMAGE}', '.']
+
+  # Push it to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '${_IMAGE}']
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - pantrypivot
+      - --image=${_IMAGE}
+      - --region=us-central1
+      - --platform=managed
+      - --allow-unauthenticated
+      - --set-secrets=GEMINI_API_KEY=GEMINI_API_KEY:latest
+
+substitutions:
+  _IMAGE: 'us-central1-docker.pkg.dev/$PROJECT_ID/pantrypivot/pantrypivot:$SHORT_SHA'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
