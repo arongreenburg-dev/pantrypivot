@@ -24,6 +24,8 @@ steps:
   - '--platform'
   - managed
   - '--allow-unauthenticated'
+  - '--port=8080'
+  - '--set-secrets=GEMINI_API_KEY=GEMINI_API_KEY:latest'
 
 images:
 - us-central1-docker.pkg.dev/$PROJECT_ID/pantrypivot/pantrypivot:$SHORT_SHA
