@@ -1,0 +1,8 @@
+{
+  "name": "PantryPivot",
+  "description": "A smart guided recipe generator that crafts custom meals based on your available ingredients, dietary needs, and household preferences.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
