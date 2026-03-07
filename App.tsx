@@ -10,6 +10,31 @@ import SavedRecipes from './components/SavedRecipes';
 
 type View = 'home' | 'results' | 'detail' | 'settings' | 'saved';
 
+const LOADING_MESSAGES = [
+  { emoji: "🔪", text: "Chopping the ingredients..." },
+  { emoji: "🍳", text: "We're cooking something up..." },
+  { emoji: "👨‍🍳", text: "Chef is getting creative..." },
+  { emoji: "🌿", text: "Seasoning to perfection..." },
+  { emoji: "🍽️", text: "Serving up something great..." },
+  { emoji: "⭐", text: "Almost ready to plate..." },
+];
+
+const LoadingMessages: React.FC = () => {
+  const [index, setIndex] = useState(0);
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex(prev => (prev + 1) % LOADING_MESSAGES.length);
+    }, 2500);
+    return () => clearInterval(timer);
+  }, []);
+  const msg = LOADING_MESSAGES[index];
+  return (
+    <div className="text-center transition-all duration-500">
+      <div className="text-5xl mb-4 animate-bounce">{msg.emoji}</div>
+      <LoadingMessages />
+    </div>
+  );
+};
 const App: React.FC = () => {
   const [settings, setSettings] = useState<AppSettings>(getSettings());
   const [currentView, setCurrentView] = useState<View>('home');
@@ -161,8 +186,7 @@ const handleSelectRecipe = (recipeId: string) => {
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-6">
           <div className="bg-white rounded-[2.5rem] p-10 max-w-sm w-full text-center shadow-2xl animate-in zoom-in-95 duration-300">
             <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-orange-500 border-t-transparent mb-6"></div>
-            <h3 className="text-2xl font-black text-slate-900 mb-2">Chef is thinking...</h3>
-            <p className="text-slate-500 font-medium">Crafting custom recipes for you.</p>
+      <LoadingMessages />
           </div>
         </div>
       )}
