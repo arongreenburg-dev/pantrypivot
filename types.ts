@@ -94,6 +94,7 @@ export interface WizardState {
   kosherType: KosherType[];
   skillLevel: SkillLevel;
   unitSystem: UnitSystem;
+  kidFriendly?: boolean;
   favoriteChef?: string;
 }
 
