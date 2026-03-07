@@ -243,8 +243,35 @@ fix: photo upload now supports camera and multiple photos
                   ))}
                 </div>
               </div>
+<div className="space-y-4">
+  <p className="text-xs font-bold text-slate-500">Servings</p>
+  <div className="flex items-center gap-4">
+    <button
+      type="button"
+      onClick={() => updateForm('servings', Math.max(1, formData.servings - 1))}
+      className="w-9 h-9 rounded-full border-2 border-slate-200 text-slate-600 font-black text-lg hover:border-orange-400 hover:text-orange-600 transition-all flex items-center justify-center"
+    >
+      −
+    </button>
+    <span className="text-lg font-black text-slate-900 w-16 text-center">
+      {formData.servings} {formData.servings === 1 ? 'person' : 'people'}
+    </span>
+    <button
+      type="button"
+      onClick={() => updateForm('servings', Math.min(20, formData.servings + 1))}
+      className="w-9 h-9 rounded-full border-2 border-slate-200 text-slate-600 font-black text-lg hover:border-orange-400 hover:text-orange-600 transition-all flex items-center justify-center"
+    >
+      +
+    </button>
+  </div>
+</div>
+```
 
-              <div className="grid grid-cols-2 gap-6">
+---
+
+### Commit message:
+```
+feat: add servings selector to wizard              <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-4">
                   <p className="text-xs font-bold text-slate-500">Meal Type</p>
                   <select 
