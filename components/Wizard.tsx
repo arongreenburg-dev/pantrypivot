@@ -42,6 +42,7 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
     kosherType: [],
     skillLevel: settings.skillLevel,
     unitSystem: settings.unitSystem,
+    kidFriendly: false,
     favoriteChef: settings.favoriteChef
   });
 
@@ -125,7 +126,28 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
     <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100 max-w-2xl mx-auto">
       <div className="p-8">
         <div className="space-y-8 animate-in fade-in duration-300">
-          <div className="space-y-4">
+         <div className="space-y-4">
+  <p className="text-xs font-bold text-slate-500">Household</p>
+  <button
+    type="button"
+    onClick={() => updateForm('kidFriendly', !formData.kidFriendly)}
+    className={`flex items-center gap-3 px-5 py-3 rounded-2xl border-2 font-bold text-sm transition-all ${
+      formData.kidFriendly
+        ? 'bg-yellow-50 border-yellow-400 text-yellow-700'
+        : 'border-slate-200 text-slate-600 hover:border-yellow-300'
+    }`}
+  >
+    <span className="text-xl">👶</span>
+    {formData.kidFriendly ? 'Kid-Friendly ON' : 'Kid-Friendly'}
+  </button>
+</div>
+```
+
+---
+
+### Commit message:
+```
+feat: add kid-friendly toggle to wizard UI          <div className="space-y-4">
               <h2 className="text-2xl font-black text-slate-900">What's on your mind or in your pantry?</h2>
               <div className="relative">
                 <textarea 
