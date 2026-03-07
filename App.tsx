@@ -26,12 +26,14 @@ const App: React.FC = () => {
     window.scrollTo(0, 0);
   };
 
-  const handleSelectRecipe = (recipeId: string) => {
-    if (generationResults?.selectedRecipe) {
-      setSelectedRecipe(generationResults.selectedRecipe);
-      setCurrentView('detail');
-    }
-  };
+const handleSelectRecipe = (recipeId: string) => {
+  const card = generationResults?.recipeCards?.find(c => c.id === recipeId);
+  const recipe = generationResults?.selectedRecipe;
+  if (recipe) {
+    setSelectedRecipe({ ...recipe, name: card?.name ?? recipe.name });
+    setCurrentView('detail');
+  }
+};
 
   const handleSave = (recipe: DetailedRecipe) => {
     const newSaved: SavedRecipe = {
