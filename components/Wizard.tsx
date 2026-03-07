@@ -137,7 +137,21 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
                 <div className="absolute bottom-4 right-4 flex items-center gap-2">
                   <label className="flex items-center gap-2 px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded-xl cursor-pointer transition-colors text-[10px] font-bold border border-slate-200 shadow-sm">
                     <span>📷</span> {formData.ingredientPhoto ? 'Photo Added!' : 'Snap Ingredients'}
-                    <input type="file" accept="image/*" onChange={handlePhotoUpload} className="hidden" />
+                    <input type="file" accept="image/*" capture="environment" multiple onChange={handlePhotoUpload} className="hidden" />
+```
+
+**That's it. Two things added:**
+
+| What was added | What it does |
+|---|---|
+| `capture="environment"` | Opens the camera directly on phones |
+| `multiple` | Lets the user select more than one photo |
+
+---
+
+### Commit message:
+```
+fix: photo upload now supports camera and multiple photos
                   </label>
                   <VoiceInput 
                     onTranscript={(text) => updateForm('userPrompt', formData.userPrompt ? `${formData.userPrompt} ${text}` : text)} 
