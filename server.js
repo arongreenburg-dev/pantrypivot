@@ -37,6 +37,7 @@ function buildRecipePrompt(input) {
     `Avoid: ${input.avoidList?.join(', ') || 'None'}`,
     `Kosher: ${input.isKosher ? `Yes (${input.kosherType?.join(', ') || 'General'})` : 'No'}`,
     input.favoriteChef ? `Style Inspiration: ${input.favoriteChef}` : '',
+    input.kidFriendly ? 'Kid-Friendly: Yes — mild flavors, simple textures, fun presentation, no spicy ingredients' : '',
     '',
     'Return exactly this JSON shape (3 recipe cards, selectedRecipe is the first card in full detail):',
     `{
