@@ -28,13 +28,13 @@ const LoadingMessages: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
   const msg = LOADING_MESSAGES[index];
-  return (
+ return (
     <div className="text-center transition-all duration-500">
       <div className="text-5xl mb-4 animate-bounce">{msg.emoji}</div>
-      <LoadingMessages />
+      <h3 className="text-2xl font-black text-slate-900 mb-2">{msg.text}</h3>
+      <p className="text-slate-500 font-medium">Usually ready in about 15 seconds.</p>
     </div>
   );
-};
 const App: React.FC = () => {
   const [settings, setSettings] = useState<AppSettings>(getSettings());
   const [currentView, setCurrentView] = useState<View>('home');
