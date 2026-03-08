@@ -79,7 +79,7 @@ const handleSelectRecipe = (recipeId: string) => {
             onClick={() => setCurrentView('home')} 
             className="text-xl font-bold text-orange-600 flex items-center gap-2"
           >
-            <span className="text-2xl">🎯</span> PantryPivot
+            <img src="/apple-touch-icon.png" className="h-8 w-8 rounded-lg" alt="PantryPivot" /> PantryPivot
           </button>
           <div className="flex gap-4 items-center">
             <button onClick={() => setCurrentView('saved')} className="text-slate-600 hover:text-orange-600 transition-colors text-sm font-semibold">
