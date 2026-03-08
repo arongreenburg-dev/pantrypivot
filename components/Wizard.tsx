@@ -3,7 +3,6 @@ import { WizardState, GenerationResponse, AppSettings, ConvenienceFilter, UnitSy
 import { MEAL_TYPES, EFFORT_LEVELS, SPICE_LEVELS, HOUSEHOLD_TYPES, RELIGIOUS_DIETS, HEALTH_DIETS, CUISINE_REGIONS, COMMON_EQUIPMENT, KOSHER_TYPES, PANTRY_STAPLES, COMMON_ALLERGENS, STAPLE_LINKS, CONVENIENCE_FILTERS, AFFILIATE_LINKS, UNIT_SYSTEMS } from '../constants';
 import { generateRecipes, generateIdeas } from '../lib/recipeModel';
 import VoiceInput from './VoiceInput';
-
 interface WizardProps {
   settings: AppSettings;
   onComplete: (data: GenerationResponse) => void;
@@ -12,10 +11,8 @@ interface WizardProps {
   onError: (error: string) => void;
   isLoading: boolean;
 }
-
 const MEAT_KEYWORDS = ['beef', 'chicken', 'steak', 'lamb', 'meat', 'turkey', 'veal', 'ground beef', 'ribs', 'bacon', 'ham', 'salmon', 'tuna', 'fish'];
 const VEGGIE_KEYWORDS = ['broccoli', 'carrot', 'spinach', 'kale', 'pepper', 'onion', 'garlic', 'potato', 'vegetable', 'greens', 'zucchini', 'tomato', 'cabbage', 'lettuce', 'cucumber', 'cauliflower', 'asparagus', 'beans'];
-
 const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStream, onError, isLoading }) => {
   const [showStaples, setShowStaples] = useState(false);
   const [formData, setFormData] = useState<WizardState>({
@@ -44,11 +41,9 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
     kidFriendly: false,
     favoriteChef: settings.favoriteChef
   });
-
   const updateForm = (key: keyof WizardState, value: any) => {
     setFormData(prev => ({ ...prev, [key]: value }));
   };
-
   const toggleList = (key: 'cuisines' | 'dietaryRestrictions' | 'equipment' | 'allergies' | 'pantryStaples' | 'convenienceFilters' | 'kosherType', item: string) => {
     let list = [...(formData[key] as string[])];
     const index = list.indexOf(item);
@@ -69,7 +64,6 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
     }
     updateForm(key, list);
   };
-
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -80,7 +74,6 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
       reader.readAsDataURL(file);
     }
   };
-
   const handleSubmit = async (overridePrompt?: string) => {
     onLoading(true);
     try {
@@ -93,33 +86,13 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
       onLoading(false);
     }
   };
-
   const hasMeatInput = MEAT_KEYWORDS.some(k => formData.userPrompt.toLowerCase().includes(k));
   const hasVeggieInput = VEGGIE_KEYWORDS.some(k => formData.userPrompt.toLowerCase().includes(k) || formData.pantryStaples.some(s => s.toLowerCase().includes(k)));
   const showVeggieNudge = hasMeatInput && !hasVeggieInput && formData.userPrompt.trim().length > 3;
-
   return (
     <div className="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100 max-w-2xl mx-auto">
       <div className="p-8">
         <div className="space-y-8 animate-in fade-in duration-300">
-
-          {/* Kid-Friendly Toggle */}
-          <div className="space-y-4">
-            <p className="text-xs font-bold text-slate-500">Household</p>
-            <button
-              type="button"
-              onClick={() => updateForm('kidFriendly', !formData.kidFriendly)}
-              className={`flex items-center gap-3 px-5 py-3 rounded-2xl border-2 font-bold text-sm transition-all ${
-                formData.kidFriendly
-                  ? 'bg-yellow-50 border-yellow-400 text-yellow-700'
-                  : 'border-slate-200 text-slate-600 hover:border-yellow-300'
-              }`}
-            >
-              <span className="text-xl">👶</span>
-              {formData.kidFriendly ? 'Kid-Friendly ON' : 'Kid-Friendly'}
-            </button>
-          </div>
-
           {/* Main Input */}
           <div className="space-y-4">
             <h2 className="text-2xl font-black text-slate-900">What's on your mind or in your pantry?</h2>
@@ -153,14 +126,12 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
               {isLoading ? 'Cooking up ideas...' : 'Generate My Recipe'}
             </button>
           </div>
-
           {/* Optional Refinements */}
           <div className="space-y-6">
             <div className="flex items-center gap-2">
               <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Optional Refinements</span>
               <div className="h-px flex-1 bg-slate-100" />
             </div>
-
             {/* Dietary & Health */}
             <div className="space-y-4">
               <p className="text-xs font-bold text-slate-500">Dietary & Health</p>
@@ -209,7 +180,6 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
                 </div>
               </div>
             </div>
-
             {/* Cuisine Style */}
             <div className="space-y-4">
               <p className="text-xs font-bold text-slate-500">Cuisine Style</p>
@@ -225,7 +195,6 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
                 ))}
               </div>
             </div>
-
             {/* Servings */}
             <div className="space-y-4">
               <p className="text-xs font-bold text-slate-500">Servings</p>
@@ -249,7 +218,22 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
                 </button>
               </div>
             </div>
-
+            {/* Kid-Friendly Toggle */}
+            <div className="space-y-4">
+              <p className="text-xs font-bold text-slate-500">Household</p>
+              <button
+                type="button"
+                onClick={() => updateForm('kidFriendly', !formData.kidFriendly)}
+                className={`flex items-center gap-3 px-5 py-3 rounded-2xl border-2 font-bold text-sm transition-all ${
+                  formData.kidFriendly
+                    ? 'bg-yellow-50 border-yellow-400 text-yellow-700'
+                    : 'border-slate-200 text-slate-600 hover:border-yellow-300'
+                }`}
+              >
+                <span className="text-xl">👶</span>
+                {formData.kidFriendly ? 'Kid-Friendly ON' : 'Kid-Friendly'}
+              </button>
+            </div>
             {/* Meal Type + Time */}
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-4">
@@ -275,7 +259,6 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
                 </div>
               </div>
             </div>
-
             {/* Convenience */}
             <div className="space-y-4">
               <p className="text-xs font-bold text-slate-500">Convenience</p>
@@ -308,7 +291,6 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
                 </div>
               </div>
             </div>
-
             {/* Equipment */}
             <div className="space-y-4">
               <p className="text-xs font-bold text-slate-500">Equipment</p>
@@ -324,7 +306,6 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
                 ))}
               </div>
             </div>
-
             {/* Allergies */}
             <div className="space-y-4">
               <p className="text-xs font-bold text-slate-500">Allergies</p>
@@ -358,7 +339,6 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
               </div>
             </div>
           </div>
-
           <button
             onClick={() => handleSubmit()}
             disabled={isLoading}
@@ -366,12 +346,10 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
           >
             {isLoading ? 'Cooking up ideas...' : 'Generate My Recipe'}
           </button>
-
         </div>
       </div>
     </div>
   );
 };
-
 export default Wizard;
 ```
