@@ -32,9 +32,10 @@ const LoadingMessages: React.FC = () => {
     <div className="text-center transition-all duration-500">
       <div className="text-5xl mb-4 animate-bounce">{msg.emoji}</div>
       <h3 className="text-2xl font-black text-slate-900 mb-2">{msg.text}</h3>
-      <p className="text-slate-500 font-medium">Usually ready in about 15 seconds.</p>
+      <p className="text-slate-500 font-medium">Usually ready in about under aminute.</p>
     </div>
   );
+};
 const App: React.FC = () => {
   const [settings, setSettings] = useState<AppSettings>(getSettings());
   const [currentView, setCurrentView] = useState<View>('home');
@@ -106,7 +107,7 @@ const handleSelectRecipe = (recipeId: string) => {
                 <span className="text-3xl">👨‍🍳</span>
               </div>
               <h1 className="text-5xl font-extrabold text-slate-900 mb-6 leading-tight max-w-2xl">
-                Turn your ingredients into <span className="text-orange-600">gourmet meals</span> in seconds.
+                Find recipes with the ingredients you already have.
               </h1>
               <p className="text-xl text-slate-500 mb-10 max-w-xl">
                 Tell us what you want to make, or what you have on hand, and we’ll handle the culinary logic, dietary rules, and smart customization. Use the optional settings below to fine-tune your result.
