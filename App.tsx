@@ -32,7 +32,7 @@ const LoadingMessages: React.FC = () => {
     <div className="text-center transition-all duration-500">
       <div className="text-5xl mb-4 animate-bounce">{msg.emoji}</div>
       <h3 className="text-2xl font-black text-slate-900 mb-2">{msg.text}</h3>
-      <p className="text-slate-500 font-medium">Usually ready in about under aminute.</p>
+      <p className="text-slate-500 font-medium">Usually ready in under a minute.</p>
     </div>
   );
 };
