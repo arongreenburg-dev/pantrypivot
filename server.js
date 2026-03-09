@@ -89,7 +89,7 @@ async function callGemini(prompt, imageBase64) {
     : prompt;
 
   const response = await ai.models.generateContent({
-    model: 'gemini-2.0-flash',
+    model: 'gemini-2.5-flash',
     contents,
     config: { responseMimeType: 'application/json' },
   });
