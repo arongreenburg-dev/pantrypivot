@@ -229,7 +229,7 @@ const SalmonRecipes: React.FC = () => {
               rel="noopener noreferrer"
               className="flex-1 bg-slate-900 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-2xl text-center transition-all shadow-md"
             >
-              Generate Your Recipe on PantryPivot →
+              Generate More Recipes on PantryPivot →
             </a>
           </div>
         </div>
