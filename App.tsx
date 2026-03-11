@@ -1,12 +1,17 @@
 
 import React, { useState, useEffect } from 'react';
-import { WizardState, GenerationResponse, DetailedRecipe, SavedRecipe, AppSettings } from './types';
-import { getSettings, getSavedRecipes, saveRecipe, deleteRecipe } from './lib/storage';
+import { Routes, Route } from 'react-router-dom';
+import { GenerationResponse, DetailedRecipe, SavedRecipe, AppSettings } from './types';
+import { getSettings, saveRecipe, deleteRecipe } from './lib/storage';
 import Wizard from './components/Wizard';
 import RecipeCards from './components/RecipeCards';
 import RecipeDetail from './components/RecipeDetail';
 import Settings from './components/Settings';
 import SavedRecipes from './components/SavedRecipes';
+import AirFryerChicken from './components/recipes/AirFryerChicken';
+import CrockpotChicken from './components/recipes/CrockpotChicken';
+import SalmonRecipes from './components/recipes/SalmonRecipes';
+import ReactGA from 'react-ga4';
 
 type View = 'home' | 'results' | 'detail' | 'settings' | 'saved';
 
@@ -36,7 +41,12 @@ const LoadingMessages: React.FC = () => {
     </div>
   );
 };
+
 const App: React.FC = () => {
+  useEffect(() => {
+    ReactGA.send({ hitType: 'pageview', page: window.location.pathname });
+  }, []);
+
   const [settings, setSettings] = useState<AppSettings>(getSettings());
   const [currentView, setCurrentView] = useState<View>('home');
   const [generationResults, setGenerationResults] = useState<GenerationResponse | null>(null);
@@ -52,14 +62,14 @@ const App: React.FC = () => {
     window.scrollTo(0, 0);
   };
 
-const handleSelectRecipe = (recipeId: string) => {
-  const card = generationResults?.recipeCards?.find(c => c.id === recipeId);
-  const recipe = generationResults?.selectedRecipe;
-  if (recipe) {
-    setSelectedRecipe({ ...recipe, name: card?.name ?? recipe.name });
-    setCurrentView('detail');
-  }
-};
+  const handleSelectRecipe = (recipeId: string) => {
+    const card = generationResults?.recipeCards?.find(c => c.id === recipeId);
+    const recipe = generationResults?.selectedRecipe;
+    if (recipe) {
+      setSelectedRecipe({ ...recipe, name: card?.name ?? recipe.name });
+      setCurrentView('detail');
+    }
+  };
 
   const handleSave = (recipe: DetailedRecipe) => {
     const newSaved: SavedRecipe = {
@@ -71,13 +81,13 @@ const handleSelectRecipe = (recipeId: string) => {
     alert('Recipe saved to your collection!');
   };
 
-  return (
+  const homeView = (
     <div className="min-h-screen bg-slate-50 pb-20">
       {/* Header */}
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-          <button 
-            onClick={() => setCurrentView('home')} 
+          <button
+            onClick={() => setCurrentView('home')}
             className="text-xl font-bold text-orange-600 flex items-center gap-2"
           >
             <img src="/apple-touch-icon.png" className="h-8 w-8 rounded-lg" alt="PantryPivot" /> PantryPivot
@@ -110,11 +120,11 @@ const handleSelectRecipe = (recipeId: string) => {
                 Find recipes with the ingredients you already have.
               </h1>
               <p className="text-xl text-slate-500 mb-10 max-w-xl">
-                Tell us what you want to make, or what you have on hand, and we’ll handle the culinary logic, dietary rules, and smart customization. Use the optional settings below to fine-tune your result.
+                Tell us what you want to make, or what you have on hand, and we'll handle the culinary logic, dietary rules, and smart customization. Use the optional settings below to fine-tune your result.
               </p>
             </div>
 
-            <Wizard 
+            <Wizard
               settings={settings}
               onComplete={handleRecipeGenerated}
               onLoading={(loading) => {
@@ -147,15 +157,15 @@ const handleSelectRecipe = (recipeId: string) => {
         )}
 
         {currentView === 'results' && generationResults && (
-          <RecipeCards 
-            cards={generationResults.recipeCards} 
+          <RecipeCards
+            cards={generationResults.recipeCards}
             onSelect={handleSelectRecipe}
             onStartOver={() => setCurrentView('home')}
           />
         )}
 
         {currentView === 'detail' && selectedRecipe && (
-          <RecipeDetail 
+          <RecipeDetail
             recipe={selectedRecipe}
             onSave={() => handleSave(selectedRecipe)}
             onStartOver={() => setCurrentView('results')}
@@ -163,17 +173,17 @@ const handleSelectRecipe = (recipeId: string) => {
         )}
 
         {currentView === 'settings' && (
-          <Settings 
-            settings={settings} 
+          <Settings
+            settings={settings}
             onSave={(newSettings) => {
               setSettings(newSettings);
               setCurrentView('home');
-            }} 
+            }}
           />
         )}
 
         {currentView === 'saved' && (
-          <SavedRecipes 
+          <SavedRecipes
             onSelect={(recipe) => {
               setSelectedRecipe(recipe);
               setCurrentView('detail');
@@ -187,7 +197,7 @@ const handleSelectRecipe = (recipeId: string) => {
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-6">
           <div className="bg-white rounded-[2.5rem] p-10 max-w-sm w-full text-center shadow-2xl animate-in zoom-in-95 duration-300">
             <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-orange-500 border-t-transparent mb-6"></div>
-      <LoadingMessages />
+            <LoadingMessages />
           </div>
         </div>
       )}
@@ -198,6 +208,15 @@ const handleSelectRecipe = (recipeId: string) => {
         </p>
       </footer>
     </div>
+  );
+
+  return (
+    <Routes>
+      <Route path="/recipes/air-fryer-chicken" element={<AirFryerChicken />} />
+      <Route path="/recipes/crockpot-chicken" element={<CrockpotChicken />} />
+      <Route path="/recipes/salmon" element={<SalmonRecipes />} />
+      <Route path="*" element={homeView} />
+    </Routes>
   );
 };
 

@@ -352,4 +352,3 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
   );
 };
 export default Wizard;
-```

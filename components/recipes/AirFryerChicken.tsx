@@ -1,0 +1,249 @@
+import React, { useState } from 'react';
+
+type Tab = 'classic' | 'parmesan' | 'tenderloins' | 'thighs';
+
+interface Recipe {
+  title: string;
+  description: string;
+  time: string;
+  servings: string;
+  ingredients: string[];
+  instructions: string[];
+}
+
+const recipes: Record<Tab, Recipe> = {
+  classic: {
+    title: 'Classic Air Fryer Chicken Breast',
+    description: 'Juicy, golden chicken breasts cooked to perfection in the air fryer. Ready in under 20 minutes.',
+    time: '18 min',
+    servings: '2 servings',
+    ingredients: [
+      '2 boneless, skinless chicken breasts (6–8 oz each)',
+      '1 tbsp olive oil',
+      '1 tsp garlic powder',
+      '1 tsp onion powder',
+      '1 tsp smoked paprika',
+      '½ tsp dried oregano',
+      '½ tsp salt',
+      '¼ tsp black pepper',
+    ],
+    instructions: [
+      'Preheat the air fryer to 375°F (190°C) for 3 minutes.',
+      'Pat the chicken breasts dry with paper towels — this helps them brown evenly.',
+      'Drizzle olive oil over both sides of each breast.',
+      'Mix garlic powder, onion powder, paprika, oregano, salt, and pepper. Rub evenly over both sides of the chicken.',
+      'Place chicken in the air fryer basket in a single layer, not touching.',
+      'Cook at 375°F for 10 minutes, then flip and cook another 6–8 minutes until internal temperature reaches 165°F.',
+      'Rest for 5 minutes before slicing to keep the juices locked in.',
+    ],
+  },
+  parmesan: {
+    title: 'Air Fryer Chicken Parmesan',
+    description: 'Crispy breaded chicken with marinara — all the flavor of classic chicken parm, dairy-free.',
+    time: '22 min',
+    servings: '2 servings',
+    ingredients: [
+      '2 boneless, skinless chicken breasts',
+      '½ cup breadcrumbs (plain or Italian-style)',
+      '1 tsp garlic powder',
+      '1 tsp Italian seasoning',
+      '½ tsp salt',
+      '¼ tsp black pepper',
+      '1 egg, beaten',
+      '½ cup marinara sauce (dairy-free)',
+      '1 tbsp olive oil',
+    ],
+    instructions: [
+      'Preheat air fryer to 400°F (200°C).',
+      'Pound the chicken breasts to an even ¾-inch thickness.',
+      'Mix breadcrumbs, garlic powder, Italian seasoning, salt, and pepper in a shallow bowl.',
+      'Dip each breast in beaten egg, letting excess drip off, then coat thoroughly in the breadcrumb mixture.',
+      'Lightly spray or brush both sides with olive oil.',
+      'Air fry at 400°F for 8 minutes, flip carefully, then cook another 6 minutes.',
+      'Spoon marinara sauce on top of each breast. Cook 2 more minutes until sauce is hot and chicken reads 165°F.',
+      'Rest 3 minutes before serving.',
+    ],
+  },
+  tenderloins: {
+    title: 'Air Fryer Chicken Tenderloins',
+    description: 'Tender strips with a flavorful seasoning crust — perfect for a quick weeknight meal.',
+    time: '14 min',
+    servings: '2–3 servings',
+    ingredients: [
+      '1 lb chicken tenderloins',
+      '1 tbsp olive oil',
+      '1 tsp garlic powder',
+      '1 tsp smoked paprika',
+      '½ tsp cumin',
+      '½ tsp chili powder',
+      '½ tsp salt',
+      '¼ tsp black pepper',
+    ],
+    instructions: [
+      'Preheat air fryer to 400°F (200°C).',
+      'Remove the white tendon from each tenderloin if present — grip with a paper towel and pull.',
+      'Toss tenderloins in olive oil until coated.',
+      'Combine all spices and sprinkle over the tenderloins, tossing to coat evenly.',
+      'Arrange in a single layer in the air fryer basket (work in batches if needed).',
+      'Air fry for 5 minutes, flip, then cook another 4–5 minutes until internal temperature reaches 165°F.',
+      'Serve immediately with your favorite dipping sauce.',
+    ],
+  },
+  thighs: {
+    title: 'Air Fryer Chicken Thighs',
+    description: 'Bone-in, skin-on thighs with impossibly crispy skin and juicy meat inside.',
+    time: '25 min',
+    servings: '4 servings',
+    ingredients: [
+      '4 bone-in, skin-on chicken thighs',
+      '1 tbsp olive oil',
+      '1 tsp garlic powder',
+      '1 tsp onion powder',
+      '1 tsp smoked paprika',
+      '½ tsp dried thyme',
+      '1 tsp salt',
+      '½ tsp black pepper',
+    ],
+    instructions: [
+      'Preheat air fryer to 400°F (200°C).',
+      'Pat chicken thighs completely dry — critical for crispy skin.',
+      'Rub olive oil all over the thighs, including under the skin.',
+      'Mix all spices together and rub evenly over each thigh, including under the skin for maximum flavor.',
+      'Place thighs skin-side down in the air fryer basket.',
+      'Cook at 400°F for 13 minutes, flip skin-side up, then cook another 10–12 minutes.',
+      'Check internal temperature — thighs need to reach 165°F at the thickest part, away from the bone.',
+      'Rest 5 minutes before serving.',
+    ],
+  },
+};
+
+const TABS: { key: Tab; label: string }[] = [
+  { key: 'classic', label: 'Classic Breast' },
+  { key: 'parmesan', label: 'Chicken Parmesan' },
+  { key: 'tenderloins', label: 'Tenderloins' },
+  { key: 'thighs', label: 'Thighs' },
+];
+
+const AMAZON_LINK = 'https://amzn.to/40ZcXPs';
+const PANTRYPIVOT_LINK = 'https://pantrypivot.com';
+
+const AirFryerChicken: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<Tab>('classic');
+  const recipe = recipes[activeTab];
+
+  return (
+    <div className="min-h-screen bg-slate-50">
+      {/* Header */}
+      <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">
+        <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+          <a href="/" className="text-xl font-bold text-orange-600 flex items-center gap-2">
+            <img src="/apple-touch-icon.png" className="h-8 w-8 rounded-lg" alt="PantryPivot" /> PantryPivot
+          </a>
+        </div>
+      </header>
+
+      <main className="max-w-4xl mx-auto px-4 py-10">
+        {/* Hero */}
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Air Fryer Chicken Recipes</h1>
+          <p className="text-lg text-slate-500 max-w-xl mx-auto">
+            Quick, juicy, and full of flavor — these air fryer chicken recipes are ready in under 25 minutes.
+          </p>
+        </div>
+
+        {/* Tabs */}
+        <div className="flex gap-2 flex-wrap justify-center mb-8">
+          {TABS.map(tab => (
+            <button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              className={`px-5 py-2.5 rounded-full font-bold text-sm border transition-all ${
+                activeTab === tab.key
+                  ? 'bg-orange-600 border-orange-600 text-white shadow-md'
+                  : 'border-slate-200 text-slate-600 bg-white hover:border-orange-400'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Recipe Card */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+          {/* Recipe Header */}
+          <div className="bg-orange-50 border-b border-orange-100 px-8 py-6">
+            <h2 className="text-2xl font-black text-slate-900 mb-1">{recipe.title}</h2>
+            <p className="text-slate-500 mb-4">{recipe.description}</p>
+            <div className="flex gap-4 text-sm font-semibold text-slate-600">
+              <span>⏱ {recipe.time}</span>
+              <span>👥 {recipe.servings}</span>
+            </div>
+          </div>
+
+          <div className="p-8 grid md:grid-cols-2 gap-10">
+            {/* Ingredients */}
+            <div>
+              <h3 className="text-lg font-black text-slate-900 mb-4 uppercase tracking-wide text-sm text-orange-600">
+                Ingredients
+              </h3>
+              <ul className="space-y-2">
+                {recipe.ingredients.map((ing, i) => (
+                  <li key={i} className="flex items-start gap-2 text-slate-700">
+                    <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-orange-400 flex-shrink-0" />
+                    {ing}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Instructions */}
+            <div>
+              <h3 className="text-lg font-black text-slate-900 mb-4 uppercase tracking-wide text-sm text-orange-600">
+                Instructions
+              </h3>
+              <ol className="space-y-4">
+                {recipe.instructions.map((step, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-orange-600 text-white text-xs font-black flex items-center justify-center mt-0.5">
+                      {i + 1}
+                    </span>
+                    <span className="text-slate-700 leading-relaxed">{step}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+
+          {/* CTAs */}
+          <div className="px-8 pb-8 flex flex-col sm:flex-row gap-3">
+            <a
+              href={AMAZON_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-2xl text-center transition-all shadow-md"
+            >
+              Order Ingredients on Amazon Fresh
+            </a>
+            <a
+              href={PANTRYPIVOT_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 bg-slate-900 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-2xl text-center transition-all shadow-md"
+            >
+              Generate Your Recipe on PantryPivot →
+            </a>
+          </div>
+        </div>
+      </main>
+
+      <footer className="max-w-4xl mx-auto px-4 py-8 border-t border-slate-200 mt-12 text-center">
+        <p className="text-[10px] text-slate-400 font-medium uppercase tracking-widest leading-relaxed">
+          Disclosure: PantryPivot participates in the Amazon Associates Program. <br />
+          As an Amazon Associate, we may earn from qualifying purchases at no additional cost to you.
+        </p>
+      </footer>
+    </div>
+  );
+};
+
+export default AirFryerChicken;
