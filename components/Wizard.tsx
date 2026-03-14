@@ -104,20 +104,30 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
                 className="w-full h-40 px-6 py-4 rounded-2xl border-2 border-slate-100 focus:border-orange-500 focus:ring-0 outline-none transition-all text-lg font-medium resize-none shadow-inner bg-slate-50/50"
               />
               <div className="absolute bottom-4 right-4 flex items-center gap-2">
-                <label className="flex items-center gap-2 px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded-xl cursor-pointer transition-colors text-[10px] font-bold border border-slate-200 shadow-sm">
-                  <span>📷</span> {formData.ingredientPhoto ? 'Photo Added!' : 'Snap Ingredients'}
-                  <input type="file" accept="image/*" capture="environment" multiple onChange={handlePhotoUpload} className="hidden" />
-                </label>
+                {formData.ingredientPhoto ? (
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-xl shadow-sm">
+                    <img src={formData.ingredientPhoto} alt="Uploaded ingredient" className="h-12 w-auto rounded-lg object-cover" />
+                    <span className="text-[10px] font-bold text-slate-700">Photo Added!</span>
+                    <button
+                      type="button"
+                      onClick={() => updateForm('ingredientPhoto', undefined)}
+                      className="ml-1 text-slate-400 hover:text-red-500 transition-colors font-black text-xs leading-none"
+                      title="Remove photo"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ) : (
+                  <label className="flex items-center gap-2 px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded-xl cursor-pointer transition-colors text-[10px] font-bold border border-slate-200 shadow-sm">
+                    <span>📷</span> Snap Ingredients
+                    <input type="file" accept="image/*" capture="environment" onChange={handlePhotoUpload} className="hidden" />
+                  </label>
+                )}
                 <VoiceInput
                   onTranscript={(text) => updateForm('userPrompt', formData.userPrompt ? `${formData.userPrompt} ${text}` : text)}
                 />
               </div>
             </div>
-            {formData.ingredientPhoto && (
-              <div className="flex justify-end">
-                <button onClick={() => updateForm('ingredientPhoto', undefined)} className="text-red-500 text-[10px] font-bold underline">Remove photo</button>
-              </div>
-            )}
             <button
               onClick={() => handleSubmit()}
               disabled={isLoading}
