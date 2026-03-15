@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import { GenerationResponse, DetailedRecipe, SavedRecipe, AppSettings } from './types';
 import { getSettings, saveRecipe, deleteRecipe } from './lib/storage';
 import Wizard from './components/Wizard';
@@ -156,6 +156,31 @@ const App: React.FC = () => {
                   <h3 className="font-bold text-lg mb-2">Photo Scan</h3>
                   <p className="text-sm text-slate-500 leading-relaxed">Don't want to type? Snap a photo of your fridge and our AI will identify the ingredients.</p>
                </div>
+            </div>
+
+            {/* Recipe Ideas */}
+            <div className="pt-4">
+              <h2 className="text-2xl font-extrabold text-slate-900 mb-6 text-center">Recipe Ideas</h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                {[
+                  { label: 'Air Fryer Chicken', href: '/recipes/air-fryer-chicken', emoji: '🍗' },
+                  { label: 'Crockpot Chicken', href: '/recipes/crockpot-chicken', emoji: '🍲' },
+                  { label: 'Salmon Recipes', href: '/recipes/salmon', emoji: '🐟' },
+                  { label: 'Ground Turkey', href: '/recipes/ground-turkey', emoji: '🦃' },
+                  { label: 'Chicken and Rice', href: '/recipes/chicken-and-rice', emoji: '🍚' },
+                  { label: 'Ground Beef Pasta', href: '/recipes/ground-beef-pasta', emoji: '🍝' },
+                  { label: 'Instant Pot Chicken', href: '/recipes/instant-pot-chicken', emoji: '⚡' },
+                ].map(({ label, href, emoji }) => (
+                  <Link
+                    key={href}
+                    to={href}
+                    className="flex items-center gap-2 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all text-sm font-semibold text-slate-700 hover:text-orange-600"
+                  >
+                    <span className="text-xl">{emoji}</span>
+                    {label}
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         )}

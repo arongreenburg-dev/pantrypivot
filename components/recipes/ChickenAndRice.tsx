@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 type Tab = 'classic' | 'soup' | 'casserole' | 'bowl';
 
@@ -251,6 +252,22 @@ const ChickenAndRice: React.FC = () => {
             >
               Generate More Recipes on PantryPivot →
             </a>
+          </div>
+        </div>
+
+        {/* More Recipes */}
+        <div className="mt-16">
+          <h2 className="text-2xl font-extrabold text-slate-900 mb-6">More Recipes</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <Link to="/recipes/air-fryer-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍗</span> Air Fryer Chicken
+            </Link>
+            <Link to="/recipes/crockpot-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍲</span> Crockpot Chicken
+            </Link>
+            <Link to="/recipes/instant-pot-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">⚡</span> Instant Pot Chicken
+            </Link>
           </div>
         </div>
       </main>
