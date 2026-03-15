@@ -184,12 +184,22 @@ const InstantPotChicken: React.FC = () => {
       "@type": "Recipe",
       "name": "Instant Pot Chicken",
       "description": "Fast Instant Pot chicken recipes — classic breast, drumsticks, dump and go, and thighs. Pressure cooker meals in under 30 minutes.",
+      "image": "https://pantrypivot.com/og-image.png",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "prepTime": "PT10M",
+      "cookTime": "PT30M",
       "recipeCategory": "Main Course",
       "recipeCuisine": "American",
       "keywords": "instant pot chicken, pressure cooker chicken, easy instant pot recipes",
-      "url": "https://pantrypivot.com/recipes/instant-pot-chicken"
+      "url": "https://pantrypivot.com/recipes/instant-pot-chicken",
+      "recipeIngredient": [
+        "4 boneless, skinless chicken breasts (6\u20138 oz each)",
+        "1 cup chicken broth",
+        "1 tbsp olive oil",
+        "1 tsp garlic powder",
+        "1 tsp onion powder"
+      ]
     });
     document.head.appendChild(script);
     return () => {

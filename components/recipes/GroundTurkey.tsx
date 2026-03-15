@@ -193,12 +193,22 @@ const GroundTurkey: React.FC = () => {
       "@type": "Recipe",
       "name": "Ground Turkey Recipes",
       "description": "Easy ground turkey recipes — classic, bowls, sweet potato, and healthy dinner ideas. Quick meat-only meals under 30 minutes.",
+      "image": "https://pantrypivot.com/og-image.png",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "prepTime": "PT10M",
+      "cookTime": "PT30M",
       "recipeCategory": "Main Course",
       "recipeCuisine": "American",
       "keywords": "ground turkey recipes, easy ground turkey, ground turkey dinner",
-      "url": "https://pantrypivot.com/recipes/ground-turkey"
+      "url": "https://pantrypivot.com/recipes/ground-turkey",
+      "recipeIngredient": [
+        "1 lb ground turkey (93% lean)",
+        "1 tbsp olive oil",
+        "1 small onion, diced",
+        "3 cloves garlic, minced",
+        "1 tsp cumin"
+      ]
     });
     document.head.appendChild(script);
     return () => {

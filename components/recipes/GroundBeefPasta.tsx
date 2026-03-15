@@ -196,12 +196,22 @@ const GroundBeefPasta: React.FC = () => {
       "@type": "Recipe",
       "name": "Ground Beef Pasta",
       "description": "Easy ground beef pasta recipes — classic, penne, casserole, and taco pasta. Quick meat-only dinners ready in 30 minutes.",
+      "image": "https://pantrypivot.com/og-image.png",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "prepTime": "PT10M",
+      "cookTime": "PT30M",
       "recipeCategory": "Main Course",
       "recipeCuisine": "American",
       "keywords": "ground beef pasta, pasta with ground beef, easy pasta dinner",
-      "url": "https://pantrypivot.com/recipes/ground-beef-pasta"
+      "url": "https://pantrypivot.com/recipes/ground-beef-pasta",
+      "recipeIngredient": [
+        "1 lb ground beef (80/20 or 90/10)",
+        "12 oz spaghetti or linguine",
+        "1 can (28 oz) crushed tomatoes",
+        "1 small onion, diced",
+        "4 cloves garlic, minced"
+      ]
     });
     document.head.appendChild(script);
     return () => {

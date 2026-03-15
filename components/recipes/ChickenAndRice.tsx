@@ -197,12 +197,22 @@ const ChickenAndRice: React.FC = () => {
       "@type": "Recipe",
       "name": "Chicken and Rice",
       "description": "Easy chicken and rice recipes — classic, soup, creamy casserole, and rice bowls. Simple meat-only dinners the whole family loves.",
+      "image": "https://pantrypivot.com/og-image.png",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "prepTime": "PT10M",
+      "cookTime": "PT40M",
       "recipeCategory": "Main Course",
       "recipeCuisine": "American",
       "keywords": "chicken and rice, chicken and rice recipe, easy chicken dinner",
-      "url": "https://pantrypivot.com/recipes/chicken-and-rice"
+      "url": "https://pantrypivot.com/recipes/chicken-and-rice",
+      "recipeIngredient": [
+        "4 bone-in, skin-on chicken thighs",
+        "1\u00bd cups long-grain white rice",
+        "2\u00bd cups chicken broth",
+        "1 small onion, diced",
+        "3 cloves garlic, minced"
+      ]
     });
     document.head.appendChild(script);
     return () => {

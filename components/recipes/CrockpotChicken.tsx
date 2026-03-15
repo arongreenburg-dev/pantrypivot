@@ -230,12 +230,22 @@ const CrockpotChicken: React.FC = () => {
       "@type": "Recipe",
       "name": "Crockpot Chicken",
       "description": "Set-it-and-forget-it crockpot chicken recipes. Classic, few ingredients, chicken legs, and thighs. Includes Thanksgiving turkey section.",
+      "image": "https://pantrypivot.com/og-image.png",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "prepTime": "PT10M",
+      "cookTime": "PT360M",
       "recipeCategory": "Main Course",
       "recipeCuisine": "American",
       "keywords": "crockpot chicken, slow cooker chicken, easy crockpot recipes",
-      "url": "https://pantrypivot.com/recipes/crockpot-chicken"
+      "url": "https://pantrypivot.com/recipes/crockpot-chicken",
+      "recipeIngredient": [
+        "2 lbs boneless, skinless chicken breasts",
+        "1 cup chicken broth",
+        "1 tsp garlic powder",
+        "1 tsp onion powder",
+        "1 tsp smoked paprika"
+      ]
     });
     document.head.appendChild(script);
     return () => {

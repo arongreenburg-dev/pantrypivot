@@ -175,12 +175,22 @@ const AirFryerChicken: React.FC = () => {
       "@type": "Recipe",
       "name": "Air Fryer Chicken Breast",
       "description": "Easy air fryer chicken breast recipes — classic, tenderloins, thighs, and crispy chicken. Meat-only, ready in 25 minutes.",
+      "image": "https://pantrypivot.com/og-image.png",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "prepTime": "PT10M",
+      "cookTime": "PT25M",
       "recipeCategory": "Main Course",
       "recipeCuisine": "American",
       "keywords": "air fryer chicken, air fryer chicken breast, easy chicken recipes",
-      "url": "https://pantrypivot.com/recipes/air-fryer-chicken"
+      "url": "https://pantrypivot.com/recipes/air-fryer-chicken",
+      "recipeIngredient": [
+        "2 boneless, skinless chicken breasts (6\u20138 oz each)",
+        "1 tbsp olive oil",
+        "1 tsp garlic powder",
+        "1 tsp onion powder",
+        "1 tsp smoked paprika"
+      ]
     });
     document.head.appendChild(script);
     return () => {
