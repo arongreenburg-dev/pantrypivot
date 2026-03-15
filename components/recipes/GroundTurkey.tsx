@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 type Tab = 'classic' | 'bowls' | 'sweetpotato' | 'healthy';
 
@@ -148,6 +148,15 @@ const PANTRYPIVOT_LINK = 'https://pantrypivot.com';
 const GroundTurkey: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('classic');
   const recipe = recipes[activeTab];
+  useEffect(() => {
+    document.title = 'Ground Turkey Recipes | PantryPivot';
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', 'Easy ground turkey recipes — classic, bowls, sweet potato, and healthy dinner ideas. Quick meat-only meals under 30 minutes.');
+    return () => {
+      document.title = 'Recipes for Ingredients You Have | AI Recipe Generator';
+      if (meta) meta.setAttribute('content', 'Stop staring at the fridge. Find recipes for the ingredients you already have. AI generates a custom recipe in under 30 seconds.');
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-slate-50">

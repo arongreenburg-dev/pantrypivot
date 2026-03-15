@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 type Tab = 'breast' | 'drumsticks' | 'dump' | 'thighs';
 
@@ -139,6 +139,15 @@ const PANTRYPIVOT_LINK = 'https://pantrypivot.com';
 const InstantPotChicken: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('breast');
   const recipe = recipes[activeTab];
+  useEffect(() => {
+    document.title = 'Instant Pot Chicken Recipes | PantryPivot';
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', 'Fast Instant Pot chicken recipes — classic breast, drumsticks, dump and go, and thighs. Pressure cooker meals in under 30 minutes.');
+    return () => {
+      document.title = 'Recipes for Ingredients You Have | AI Recipe Generator';
+      if (meta) meta.setAttribute('content', 'Stop staring at the fridge. Find recipes for the ingredients you already have. AI generates a custom recipe in under 30 seconds.');
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-slate-50">

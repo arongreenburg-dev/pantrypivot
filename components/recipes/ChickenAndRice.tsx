@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 type Tab = 'classic' | 'soup' | 'casserole' | 'bowl';
 
@@ -152,6 +152,15 @@ const PANTRYPIVOT_LINK = 'https://pantrypivot.com';
 const ChickenAndRice: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('classic');
   const recipe = recipes[activeTab];
+  useEffect(() => {
+    document.title = 'Chicken and Rice Recipes | PantryPivot';
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', 'Easy chicken and rice recipes — classic, soup, creamy casserole, and rice bowls. Simple meat-only dinners the whole family loves.');
+    return () => {
+      document.title = 'Recipes for Ingredients You Have | AI Recipe Generator';
+      if (meta) meta.setAttribute('content', 'Stop staring at the fridge. Find recipes for the ingredients you already have. AI generates a custom recipe in under 30 seconds.');
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-slate-50">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 type Tab = 'classic' | 'parmesan' | 'tenderloins' | 'thighs';
 
@@ -130,6 +130,15 @@ const PANTRYPIVOT_LINK = 'https://pantrypivot.com';
 const AirFryerChicken: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('classic');
   const recipe = recipes[activeTab];
+  useEffect(() => {
+    document.title = 'Air Fryer Chicken Breast Recipes | PantryPivot';
+    const meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', 'Easy air fryer chicken breast recipes — classic, tenderloins, thighs, and crispy chicken. Meat-only, ready in 25 minutes.');
+    return () => {
+      document.title = 'Recipes for Ingredients You Have | AI Recipe Generator';
+      if (meta) meta.setAttribute('content', 'Stop staring at the fridge. Find recipes for the ingredients you already have. AI generates a custom recipe in under 30 seconds.');
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-slate-50">
