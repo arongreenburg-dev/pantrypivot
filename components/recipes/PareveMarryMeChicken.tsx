@@ -281,6 +281,14 @@ const PareveMarryMeChicken: React.FC = () => {
           </p>
         </div>
 
+        {/* Passover note */}
+        <div className="flex items-start gap-3 bg-green-50 border border-green-200 rounded-2xl px-5 py-4 mb-6 max-w-2xl mx-auto">
+          <span className="text-green-600 text-lg flex-shrink-0">✅</span>
+          <p className="text-sm text-green-800 font-medium leading-snug">
+            This recipe is Kosher for Passover when made with potato starch instead of flour.
+          </p>
+        </div>
+
         {/* Amazon CTA */}
         <div className="text-center mb-6">
           <a

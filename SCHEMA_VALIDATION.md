@@ -2,7 +2,7 @@
 
 Use [Google Rich Results Test](https://search.google.com/test/rich-results) or [Schema.org Validator](https://validator.schema.org/) to validate each page.
 
-## All 14 Recipe Pages
+## All 16 Recipe Pages
 
 | Page | URL |
 |------|-----|
@@ -19,6 +19,8 @@ Use [Google Rich Results Test](https://search.google.com/test/rich-results) or [
 | Shakshuka | https://pantrypivot.com/recipes/shakshuka |
 | Ground Turkey Sweet Potato | https://pantrypivot.com/recipes/ground-turkey-sweet-potato |
 | Dairy-Free Marry Me Chicken | https://pantrypivot.com/recipes/dairy-free-marry-me-chicken |
+| Passover Recipes | https://pantrypivot.com/recipes/passover |
+| Easter Recipes | https://pantrypivot.com/recipes/easter |
 
 ## Quick Copy List
 
@@ -36,6 +38,8 @@ https://pantrypivot.com/recipes/chicken-soup
 https://pantrypivot.com/recipes/shakshuka
 https://pantrypivot.com/recipes/ground-turkey-sweet-potato
 https://pantrypivot.com/recipes/dairy-free-marry-me-chicken
+https://pantrypivot.com/recipes/passover
+https://pantrypivot.com/recipes/easter
 ```
 
 ## Schema Fields Verified Per Page
