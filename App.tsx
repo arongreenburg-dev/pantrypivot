@@ -63,8 +63,6 @@ const App: React.FC = () => {
 
   const _now = new Date();
   const _md = _now.getMonth() * 100 + _now.getDate(); // 0-indexed month * 100 + day
-  const showPassoverBanner = _md >= 215 && _md <= 313; // Mar 15 – Apr 13
-  const showEasterBanner   = _md >= 215 && _md <= 320; // Mar 15 – Apr 20
   const showEasterGrid     = _md >= 215 && _md <= 325; // Mar 15 – Apr 25
 
   const [settings, setSettings] = useState<AppSettings>(getSettings());
@@ -123,16 +121,6 @@ const App: React.FC = () => {
         </div>
       </header>
 
-      {currentView === 'home' && showPassoverBanner && (
-        <Link to="/recipes/passover" className="block w-full bg-gradient-to-r from-indigo-800 to-blue-700 text-white text-center py-3 px-6 font-bold hover:from-indigo-700 hover:to-blue-600 transition-all text-sm">
-          🍷 Passover is April 13 — Generate your Seder menu on PantryPivot →
-        </Link>
-      )}
-      {currentView === 'home' && showEasterBanner && (
-        <Link to="/recipes/easter" className="block w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-center py-3 px-6 font-bold hover:from-emerald-500 hover:to-teal-500 transition-all text-sm">
-          🐣 Easter dinner ideas — Generate recipes from what you have →
-        </Link>
-      )}
 
       <main className="max-w-4xl mx-auto px-4 py-8">
         {error && (

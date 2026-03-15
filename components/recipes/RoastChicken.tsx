@@ -186,7 +186,7 @@ const RoastChicken: React.FC = () => {
       "@type": "Recipe",
       "name": "Roast Chicken",
       "description": "Perfect roast chicken recipes — classic, lemon herb, garlic, and easy roast chicken thighs. Meat-only, no dairy.",
-      "image": "https://images.pexels.com/photos/19259179/pexels-photo-19259179.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "image": "https://images.pexels.com/photos/616354/pexels-photo-616354.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -247,7 +247,7 @@ const RoastChicken: React.FC = () => {
         {/* Hero Image */}
         <div className="mb-8 rounded-2xl overflow-hidden">
           <img
-            src="https://images.pexels.com/photos/19259179/pexels-photo-19259179.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            src="https://images.pexels.com/photos/616354/pexels-photo-616354.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
             alt="Golden roast chicken dinner"
             width={800}
             height={500}

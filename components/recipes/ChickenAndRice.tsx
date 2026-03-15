@@ -198,7 +198,7 @@ const ChickenAndRice: React.FC = () => {
       "@type": "Recipe",
       "name": "Chicken and Rice",
       "description": "Easy chicken and rice recipes — classic, soup, creamy casserole, and rice bowls. Simple meat-only dinners the whole family loves.",
-      "image": "https://images.pexels.com/photos/28898628/pexels-photo-28898628.png?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "image": "https://images.pexels.com/photos/9980765/pexels-photo-9980765.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -258,7 +258,7 @@ const ChickenAndRice: React.FC = () => {
         {/* Hero Image */}
         <div className="mb-8 rounded-2xl overflow-hidden">
           <img
-            src="https://images.pexels.com/photos/28898628/pexels-photo-28898628.png?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            src="https://images.pexels.com/photos/9980765/pexels-photo-9980765.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
             alt="Chicken and rice bowl with herbs and seasoning"
             width={800}
             height={500}

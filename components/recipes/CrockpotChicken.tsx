@@ -231,7 +231,7 @@ const CrockpotChicken: React.FC = () => {
       "@type": "Recipe",
       "name": "Crockpot Chicken",
       "description": "Set-it-and-forget-it crockpot chicken recipes. Classic, few ingredients, chicken legs, and thighs. Includes Thanksgiving turkey section.",
-      "image": "https://images.pexels.com/photos/31648205/pexels-photo-31648205.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "image": "https://images.pexels.com/photos/35156477/pexels-photo-35156477.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -292,7 +292,7 @@ const CrockpotChicken: React.FC = () => {
         {/* Hero Image */}
         <div className="mb-8 rounded-2xl overflow-hidden">
           <img
-            src="https://images.pexels.com/photos/31648205/pexels-photo-31648205.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            src="https://images.pexels.com/photos/35156477/pexels-photo-35156477.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
             alt="Slow cooker chicken with herbs and vegetables"
             width={800}
             height={500}

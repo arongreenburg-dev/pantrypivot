@@ -199,7 +199,7 @@ const GroundTurkeySweetPotato: React.FC = () => {
       "@type": "Recipe",
       "name": "Ground Turkey Sweet Potato",
       "description": "Easy ground turkey and sweet potato recipes — bowls, skillet, stuffed sweet potato, and soup. Healthy meat-only meals ready in 30 minutes.",
-      "image": "https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "image": "https://images.pexels.com/photos/4617527/pexels-photo-4617527.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -261,7 +261,7 @@ const GroundTurkeySweetPotato: React.FC = () => {
         {/* Hero Image */}
         <div className="mb-8 rounded-2xl overflow-hidden">
           <img
-            src="https://images.pexels.com/photos/1640772/pexels-photo-1640772.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            src="https://images.pexels.com/photos/4617527/pexels-photo-4617527.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
             alt="Ground turkey and sweet potato bowl with fresh toppings"
             width={800}
             height={500}

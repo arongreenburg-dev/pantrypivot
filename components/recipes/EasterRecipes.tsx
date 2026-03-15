@@ -137,7 +137,7 @@ const TABS: { key: Tab; label: string }[] = [
 
 const AMAZON_LINK = 'https://amzn.to/40ZcXPs';
 const PANTRYPIVOT_LINK = 'https://pantrypivot.com';
-const HERO_IMAGE = 'https://images.pexels.com/photos/29908554/pexels-photo-29908554.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940';
+const HERO_IMAGE = 'https://images.pexels.com/photos/18330963/pexels-photo-18330963.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940';
 
 const EasterRecipes: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('lamb');

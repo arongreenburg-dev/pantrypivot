@@ -209,7 +209,7 @@ const BeefStew: React.FC = () => {
       "@type": "Recipe",
       "name": "Beef Stew",
       "description": "Hearty beef stew recipes — classic stovetop, crockpot, Instant Pot, and beef vegetable stew. Meat-only, no dairy, rich and comforting.",
-      "image": "https://images.pexels.com/photos/3981486/pexels-photo-3981486.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "image": "https://images.pexels.com/photos/34822475/pexels-photo-34822475.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -270,7 +270,7 @@ const BeefStew: React.FC = () => {
         {/* Hero Image */}
         <div className="mb-8 rounded-2xl overflow-hidden">
           <img
-            src="https://images.pexels.com/photos/3981486/pexels-photo-3981486.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            src="https://images.pexels.com/photos/34822475/pexels-photo-34822475.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
             alt="Hearty beef stew in a bowl"
             width={800}
             height={500}

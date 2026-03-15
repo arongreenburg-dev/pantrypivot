@@ -145,7 +145,7 @@ const TABS: { key: Tab; label: string }[] = [
 
 const AMAZON_LINK = 'https://amzn.to/40ZcXPs';
 const PANTRYPIVOT_LINK = 'https://pantrypivot.com';
-const HERO_IMAGE = 'https://images.pexels.com/photos/9397270/pexels-photo-9397270.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940';
+const HERO_IMAGE = 'https://images.pexels.com/photos/12645502/pexels-photo-12645502.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940';
 
 const PassoverRecipes: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('brisket');

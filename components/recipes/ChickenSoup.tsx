@@ -190,7 +190,7 @@ const ChickenSoup: React.FC = () => {
       "@type": "Recipe",
       "name": "Classic Chicken Soup",
       "description": "Comforting chicken soup recipes — classic, chicken noodle, chicken rice, and lemon chicken soup. Meat-only, no dairy.",
-      "image": "https://images.pexels.com/photos/10172749/pexels-photo-10172749.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "image": "https://images.pexels.com/photos/30392957/pexels-photo-30392957.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -251,7 +251,7 @@ const ChickenSoup: React.FC = () => {
         {/* Hero Image */}
         <div className="mb-8 rounded-2xl overflow-hidden">
           <img
-            src="https://images.pexels.com/photos/10172749/pexels-photo-10172749.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            src="https://images.pexels.com/photos/30392957/pexels-photo-30392957.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
             alt="Chicken noodle soup in a bowl"
             width={800}
             height={500}

@@ -176,7 +176,7 @@ const AirFryerChicken: React.FC = () => {
       "@type": "Recipe",
       "name": "Air Fryer Chicken Breast",
       "description": "Easy air fryer chicken breast recipes — classic, tenderloins, thighs, and crispy chicken. Meat-only, ready in 25 minutes.",
-      "image": "https://images.pexels.com/photos/35285814/pexels-photo-35285814.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "image": "https://images.pexels.com/photos/10648379/pexels-photo-10648379.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -235,7 +235,7 @@ const AirFryerChicken: React.FC = () => {
         {/* Hero Image */}
         <div className="mb-8 rounded-2xl overflow-hidden">
           <img
-            src="https://images.pexels.com/photos/35285814/pexels-photo-35285814.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            src="https://images.pexels.com/photos/10648379/pexels-photo-10648379.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
             alt="Juicy air fryer chicken breast on a plate with seasoning"
             width={800}
             height={500}
