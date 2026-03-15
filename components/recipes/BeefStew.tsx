@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-type Tab = 'classic' | 'penne' | 'casserole' | 'taco';
+type Tab = 'classic' | 'crockpot' | 'instantpot' | 'veggie';
 
 interface Recipe {
   title: string;
@@ -14,149 +14,161 @@ interface Recipe {
 
 const recipes: Record<Tab, Recipe> = {
   classic: {
-    title: 'Classic Ground Beef Pasta',
-    description: 'A rich, hearty meat sauce tossed with spaghetti — simple ingredients, big flavor.',
-    time: '35 min',
-    servings: '4 servings',
+    title: 'Classic Beef Stew',
+    description: 'Rich, hearty beef stew simmered low and slow on the stovetop — tender chunks of beef and vegetables in a deep savory broth.',
+    time: '2.5 hrs',
+    servings: '6 servings',
     ingredients: [
-      '1 lb ground beef (80/20 or 90/10)',
-      '12 oz spaghetti or linguine',
-      '1 can (28 oz) crushed tomatoes',
-      '1 small onion, diced',
+      '2 lbs beef chuck, cut into 1½-inch cubes',
+      '3 tbsp olive oil, divided',
+      '1 large onion, diced',
       '4 cloves garlic, minced',
-      '1 tbsp olive oil',
-      '1 tsp Italian seasoning',
-      '½ tsp dried basil',
-      '½ tsp smoked paprika',
+      '3 medium carrots, sliced',
+      '3 stalks celery, sliced',
+      '3 medium Yukon Gold potatoes, cubed',
+      '2½ cups beef broth',
+      '1 can (14 oz) diced tomatoes',
+      '2 tbsp tomato paste',
+      '2 tbsp all-purpose flour',
+      '1 tsp dried thyme',
+      '1 tsp dried rosemary',
+      '1 tsp smoked paprika',
       '1 tsp salt',
       '½ tsp black pepper',
-      '½ tsp sugar (to balance acidity)',
+      '2 bay leaves',
     ],
     instructions: [
-      'Bring a large pot of salted water to a boil. Cook pasta according to package directions until al dente. Reserve ½ cup pasta water before draining.',
-      'Heat olive oil in a large skillet over medium-high heat.',
-      'Add onion and cook 3–4 minutes until softened.',
-      'Add garlic and cook 30 seconds.',
-      'Add ground beef, breaking apart with a spatula. Cook 7–8 minutes until browned. Drain excess fat.',
-      'Add Italian seasoning, basil, paprika, salt, pepper, and sugar. Stir to combine.',
-      'Pour in crushed tomatoes. Stir and bring to a simmer. Cook 10 minutes, stirring occasionally.',
-      'Add a splash of pasta water to loosen the sauce if needed.',
-      'Toss drained pasta into the sauce and serve immediately.',
+      'Pat beef dry with paper towels. Toss with flour, salt, pepper, and paprika until coated.',
+      'Heat 2 tbsp oil in a large Dutch oven over medium-high heat. Brown beef in batches without crowding, 3–4 min per side. Remove and set aside.',
+      'Add remaining oil to pot. Sauté onion 3 minutes until softened. Add garlic and cook 1 minute.',
+      'Stir in tomato paste and cook 1 minute.',
+      'Return beef to pot. Pour in beef broth and diced tomatoes. Scrape up any browned bits.',
+      'Add carrots, celery, potatoes, thyme, rosemary, and bay leaves. Bring to a boil.',
+      'Reduce heat to low, cover, and simmer 1.5–2 hours until beef is fork-tender.',
+      'Remove bay leaves. Taste and adjust seasoning before serving.',
     ],
   },
-  penne: {
-    title: 'Penne with Ground Beef',
-    description: 'Penne pasta with a bold, herb-forward ground beef tomato sauce — ready in 30 minutes.',
-    time: '30 min',
-    servings: '4 servings',
+  crockpot: {
+    title: 'Crockpot Beef Stew',
+    description: 'Set-it-and-forget-it slow cooker beef stew — tender beef and hearty vegetables in a rich, thick broth after a long, lazy cook.',
+    time: '8 hrs (low) or 4–5 hrs (high)',
+    servings: '6 servings',
     ingredients: [
-      '1 lb ground beef',
-      '12 oz penne pasta',
-      '1 can (14.5 oz) diced tomatoes',
-      '1 can (15 oz) tomato sauce',
-      '1 small onion, diced',
-      '3 cloves garlic, minced',
-      '1 tbsp olive oil',
-      '1 tsp dried oregano',
-      '1 tsp Italian seasoning',
-      '½ tsp red pepper flakes (optional)',
+      '2 lbs beef chuck, cut into 1½-inch cubes',
+      '2 tbsp all-purpose flour',
+      '3 medium carrots, sliced',
+      '3 stalks celery, sliced',
+      '3 medium potatoes, cubed',
+      '1 large onion, diced',
+      '4 cloves garlic, minced',
+      '2 cups beef broth',
+      '1 can (14 oz) diced tomatoes',
+      '2 tbsp tomato paste',
+      '1 tsp dried thyme',
+      '1 tsp dried rosemary',
       '1 tsp salt',
-      '¼ tsp black pepper',
+      '½ tsp black pepper',
+      '2 bay leaves',
     ],
     instructions: [
-      'Cook penne in salted boiling water until al dente. Reserve ¼ cup pasta water before draining.',
-      'Heat olive oil in a large skillet over medium-high heat.',
-      'Add onion, cook 3 minutes. Add garlic, cook 30 seconds.',
-      'Add ground beef, breaking it apart. Cook until browned, about 7 minutes. Drain excess fat.',
-      'Add oregano, Italian seasoning, red pepper flakes, salt, and pepper.',
-      'Pour in diced tomatoes and tomato sauce. Stir and simmer 8–10 minutes.',
-      'Add pasta water a little at a time to reach desired sauce consistency.',
-      'Add cooked penne directly to the sauce and toss to coat.',
-      'Serve immediately.',
+      'Toss beef cubes with flour, salt, and pepper until evenly coated.',
+      'Layer vegetables in the bottom of the crockpot: onion, garlic, carrots, celery, and potatoes.',
+      'Place floured beef on top of the vegetables.',
+      'Whisk tomato paste into beef broth until smooth. Pour over beef.',
+      'Add diced tomatoes, thyme, rosemary, and bay leaves.',
+      'Cook on LOW for 7–8 hours or HIGH for 4–5 hours, until beef is very tender.',
+      'Remove bay leaves. Stir to combine and adjust seasoning.',
+      'If you want a thicker stew, mash a few of the potatoes into the broth before serving.',
     ],
   },
-  casserole: {
-    title: 'Ground Beef Casserole',
-    description: 'A satisfying baked pasta casserole with seasoned beef and tomato sauce — perfect for meal prep.',
+  instantpot: {
+    title: 'Instant Pot Beef Stew',
+    description: 'All the depth of a slow-simmered stew in under an hour — tender beef and vegetables from your pressure cooker.',
     time: '55 min',
     servings: '6 servings',
     ingredients: [
-      '1 lb ground beef',
-      '12 oz ziti or penne pasta, cooked',
-      '1 can (28 oz) crushed tomatoes',
-      '1 small onion, diced',
-      '3 cloves garlic, minced',
-      '1 tbsp olive oil',
-      '1 tsp Italian seasoning',
-      '1 tsp garlic powder',
-      '½ tsp dried basil',
+      '2 lbs beef chuck, cut into 1½-inch cubes',
+      '2 tbsp olive oil',
+      '1 large onion, diced',
+      '4 cloves garlic, minced',
+      '3 medium carrots, sliced',
+      '3 medium potatoes, cubed',
+      '2 cups beef broth',
+      '1 can (14 oz) diced tomatoes',
+      '2 tbsp tomato paste',
+      '1 tsp dried thyme',
+      '1 tsp smoked paprika',
       '1 tsp salt',
       '½ tsp black pepper',
+      '2 tbsp cornstarch + 2 tbsp cold water (slurry)',
+      '2 bay leaves',
     ],
     instructions: [
-      'Preheat oven to 375°F (190°C). Grease a 9x13-inch baking dish.',
-      'Cook pasta until just under al dente (it will finish in the oven). Drain and set aside.',
-      'Heat olive oil in a large skillet. Add onion and cook 3 minutes.',
-      'Add garlic and cook 30 seconds. Add ground beef, cook until browned, about 7 minutes. Drain fat.',
-      'Stir in Italian seasoning, garlic powder, basil, salt, and pepper.',
-      'Add crushed tomatoes. Simmer 5 minutes.',
-      'Combine pasta and meat sauce in the baking dish. Stir to mix well.',
-      'Cover with foil and bake 25 minutes.',
-      'Remove foil and bake 10 more minutes until bubbling around the edges. Rest 5 minutes before serving.',
+      'Set Instant Pot to Sauté. Heat oil and brown beef in batches 2–3 min per side. Remove and set aside.',
+      'Sauté onion 2 minutes, add garlic 30 seconds. Stir in tomato paste and cook 30 seconds.',
+      'Pour in beef broth and scrape up any browned bits from the bottom.',
+      'Add beef, carrots, potatoes, tomatoes, thyme, paprika, salt, pepper, and bay leaves.',
+      'Seal the lid. Set valve to Sealing. Cook on Manual (High Pressure) for 35 minutes.',
+      'Natural release for 10 minutes, then carefully quick-release remaining pressure.',
+      'Remove bay leaves. Switch to Sauté mode. Stir in cornstarch slurry and cook 2–3 minutes until thickened.',
+      'Adjust seasoning and serve hot.',
     ],
   },
-  taco: {
-    title: 'Taco Pasta',
-    description: 'All the flavors of taco night in one easy pasta skillet — done in under 30 minutes.',
-    time: '28 min',
-    servings: '4 servings',
+  veggie: {
+    title: 'Beef & Vegetable Stew',
+    description: 'A loaded beef stew packed with hearty root vegetables — colorful, deeply satisfying, and meat-only.',
+    time: '2.5 hrs',
+    servings: '6 servings',
     ingredients: [
-      '1 lb ground beef',
-      '10 oz rotini or elbow pasta',
-      '1 can (14.5 oz) diced tomatoes with green chiles (like Rotel)',
-      '1 can (15 oz) tomato sauce',
-      '1½ cups beef broth',
-      '1 small onion, diced',
-      '2 cloves garlic, minced',
-      '1 tbsp olive oil',
-      '2 tsp chili powder',
-      '1 tsp cumin',
-      '1 tsp garlic powder',
-      '½ tsp smoked paprika',
+      '2 lbs beef chuck, cut into 1½-inch cubes',
+      '2 tbsp olive oil',
+      '1 large onion, diced',
+      '4 cloves garlic, minced',
+      '2 large carrots, sliced',
+      '2 parsnips, peeled and sliced',
+      '2 medium turnips, cubed',
+      '2 medium potatoes, cubed',
+      '1 cup frozen peas',
+      '2½ cups beef broth',
+      '1 can (14 oz) diced tomatoes',
+      '1 tbsp tomato paste',
+      '1 tsp dried thyme',
+      '1 tsp dried rosemary',
       '1 tsp salt',
-      '¼ tsp black pepper',
+      '½ tsp black pepper',
+      '2 bay leaves',
     ],
     instructions: [
-      'Heat olive oil in a large, deep skillet over medium-high heat.',
-      'Add onion and cook 3 minutes. Add garlic and cook 30 seconds.',
-      'Add ground beef, breaking apart as it cooks. Cook until browned, about 7 minutes. Drain excess fat.',
-      'Stir in chili powder, cumin, garlic powder, paprika, salt, and pepper.',
-      'Add diced tomatoes, tomato sauce, and beef broth. Stir to combine.',
-      'Bring to a boil, then add uncooked pasta. Stir and reduce heat to medium.',
-      'Cover and cook 12–14 minutes, stirring every few minutes, until pasta is tender and liquid is mostly absorbed.',
-      'If the pasta is still too wet, cook uncovered 2–3 minutes. Serve immediately.',
+      'Season beef with salt and pepper. Heat oil in a large Dutch oven over medium-high heat. Brown beef in batches, 3–4 min per side. Set aside.',
+      'In the same pot, sauté onion 3 minutes. Add garlic and cook 1 minute.',
+      'Return beef to pot. Add broth, diced tomatoes, and tomato paste. Stir to combine.',
+      'Add carrots, parsnips, turnips, potatoes, thyme, rosemary, and bay leaves.',
+      'Bring to a boil, then reduce heat to low. Cover and simmer 1.5–2 hours until beef is fork-tender.',
+      'Add frozen peas in the last 5 minutes of cooking.',
+      'Remove bay leaves. Adjust seasoning and serve.',
     ],
   },
 };
 
 const TABS: { key: Tab; label: string }[] = [
-  { key: 'classic', label: 'Classic Ground Beef Pasta' },
-  { key: 'penne', label: 'Penne with Ground Beef' },
-  { key: 'casserole', label: 'Ground Beef Casserole' },
-  { key: 'taco', label: 'Taco Pasta' },
+  { key: 'classic', label: 'Classic Beef Stew' },
+  { key: 'crockpot', label: 'Crockpot Beef Stew' },
+  { key: 'instantpot', label: 'Instant Pot Beef Stew' },
+  { key: 'veggie', label: 'Beef & Vegetable Stew' },
 ];
 
 const AMAZON_LINK = 'https://amzn.to/40ZcXPs';
 const PANTRYPIVOT_LINK = 'https://pantrypivot.com';
 
-const GroundBeefPasta: React.FC = () => {
+const BeefStew: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('classic');
   const [copied, setCopied] = useState(false);
   const recipe = recipes[activeTab];
+
   useEffect(() => {
-    const PAGE_TITLE = 'Ground Beef Pasta Recipes | PantryPivot';
-    const PAGE_DESC = 'Easy ground beef pasta recipes — classic, penne, casserole, and taco pasta. Quick meat-only dinners ready in 30 minutes.';
-    const PAGE_URL = 'https://pantrypivot.com/recipes/ground-beef-pasta';
+    const PAGE_TITLE = 'Beef Stew Recipes | PantryPivot';
+    const PAGE_DESC = 'Hearty beef stew recipes — classic stovetop, crockpot, Instant Pot, and beef vegetable stew. Meat-only, no dairy, rich and comforting.';
+    const PAGE_URL = 'https://pantrypivot.com/recipes/beef-stew';
     document.title = PAGE_TITLE;
     const update = (sel: string, attr: string, val: string): string => {
       const el = document.querySelector(sel);
@@ -195,23 +207,23 @@ const GroundBeefPasta: React.FC = () => {
     script.textContent = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Recipe",
-      "name": "Ground Beef Pasta",
-      "description": "Easy ground beef pasta recipes — classic, penne, casserole, and taco pasta. Quick meat-only dinners ready in 30 minutes.",
+      "name": "Beef Stew",
+      "description": "Hearty beef stew recipes — classic stovetop, crockpot, Instant Pot, and beef vegetable stew. Meat-only, no dairy, rich and comforting.",
       "image": "https://pantrypivot.com/og-image.png",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
-      "cookTime": "PT30M",
+      "cookTime": "PT180M",
       "recipeCategory": "Main Course",
       "recipeCuisine": "American",
-      "keywords": "ground beef pasta, pasta with ground beef, easy pasta dinner",
-      "url": "https://pantrypivot.com/recipes/ground-beef-pasta",
+      "keywords": "beef stew, easy beef stew, homemade beef stew",
+      "url": "https://pantrypivot.com/recipes/beef-stew",
       "recipeIngredient": [
-        "1 lb ground beef (80/20 or 90/10)",
-        "12 oz spaghetti or linguine",
-        "1 can (28 oz) crushed tomatoes",
-        "1 small onion, diced",
-        "4 cloves garlic, minced"
+        "2 lbs beef chuck, cut into 1\u00bd-inch cubes",
+        "3 tbsp olive oil, divided",
+        "1 large onion, diced",
+        "4 cloves garlic, minced",
+        "3 medium carrots, sliced"
       ]
     });
     document.head.appendChild(script);
@@ -223,6 +235,7 @@ const GroundBeefPasta: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
+      {/* Header */}
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
           <a href="/" className="text-xl font-bold text-orange-600 flex items-center gap-2">
@@ -239,17 +252,19 @@ const GroundBeefPasta: React.FC = () => {
             <li className="text-slate-300">›</li>
             <li>Recipes</li>
             <li className="text-slate-300">›</li>
-            <li className="text-slate-600 font-medium">Ground Beef Pasta</li>
+            <li className="text-slate-600 font-medium">Beef Stew</li>
           </ol>
         </nav>
-        {/* TODO: Add recipe hero image here, e.g. <img src="..." alt="Ground beef pasta with tomato sauce in a skillet" /> */}
+
+        {/* Hero */}
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Ground Beef Pasta Recipes</h1>
+          <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Beef Stew Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
-            Hearty, crowd-pleasing ground beef pasta dinners — from classic meat sauce to one-pan taco pasta.
+            Rich, hearty beef stew for every cooking method — stovetop, slow cooker, Instant Pot, and loaded with vegetables.
           </p>
         </div>
 
+        {/* Tabs */}
         <div className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (
             <button
@@ -266,6 +281,7 @@ const GroundBeefPasta: React.FC = () => {
           ))}
         </div>
 
+        {/* Recipe Card */}
         <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
           <div className="bg-orange-50 border-b border-orange-100 px-8 py-6">
             <h2 className="text-2xl font-black text-slate-900 mb-1">{recipe.title}</h2>
@@ -278,7 +294,9 @@ const GroundBeefPasta: React.FC = () => {
 
           <div className="p-8 grid md:grid-cols-2 gap-10">
             <div>
-              <h3 className="text-sm font-black text-orange-600 uppercase tracking-wide mb-4">Ingredients</h3>
+              <h3 className="text-lg font-black text-slate-900 mb-4 uppercase tracking-wide text-sm text-orange-600">
+                Ingredients
+              </h3>
               <ul className="space-y-2">
                 {recipe.ingredients.map((ing, i) => (
                   <li key={i} className="flex items-start gap-2 text-slate-700">
@@ -288,9 +306,10 @@ const GroundBeefPasta: React.FC = () => {
                 ))}
               </ul>
             </div>
-
             <div>
-              <h3 className="text-sm font-black text-orange-600 uppercase tracking-wide mb-4">Instructions</h3>
+              <h3 className="text-lg font-black text-slate-900 mb-4 uppercase tracking-wide text-sm text-orange-600">
+                Instructions
+              </h3>
               <ol className="space-y-4">
                 {recipe.instructions.map((step, i) => (
                   <li key={i} className="flex items-start gap-3">
@@ -304,6 +323,7 @@ const GroundBeefPasta: React.FC = () => {
             </div>
           </div>
 
+          {/* CTAs */}
           <div className="px-8 pb-8 flex flex-col sm:flex-row gap-3">
             <a
               href={AMAZON_LINK}
@@ -338,14 +358,14 @@ const GroundBeefPasta: React.FC = () => {
         <div className="mt-16">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-6">More Recipes</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <Link to="/recipes/ground-turkey" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
-              <span className="text-2xl">🦃</span> Ground Turkey
+            <Link to="/recipes/crockpot-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍲</span> Crockpot Chicken
             </Link>
-            <Link to="/recipes/chicken-and-rice" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
-              <span className="text-2xl">🍚</span> Chicken and Rice
+            <Link to="/recipes/instant-pot-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">⚡</span> Instant Pot Chicken
             </Link>
-            <Link to="/recipes/salmon" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
-              <span className="text-2xl">🐟</span> Salmon Recipes
+            <Link to="/recipes/ground-beef-pasta" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍝</span> Ground Beef Pasta
             </Link>
           </div>
         </div>
@@ -363,8 +383,10 @@ const GroundBeefPasta: React.FC = () => {
           <Link to="/recipes/salmon" className="text-slate-500 hover:text-orange-600 transition-colors">Salmon Recipes</Link>
           <Link to="/recipes/ground-turkey" className="text-slate-500 hover:text-orange-600 transition-colors">Ground Turkey</Link>
           <Link to="/recipes/chicken-and-rice" className="text-slate-500 hover:text-orange-600 transition-colors">Chicken and Rice</Link>
+          <Link to="/recipes/ground-beef-pasta" className="text-slate-500 hover:text-orange-600 transition-colors">Ground Beef Pasta</Link>
           <Link to="/recipes/instant-pot-chicken" className="text-slate-500 hover:text-orange-600 transition-colors">Instant Pot Chicken</Link>
-          <Link to="/recipes/beef-stew" className="text-slate-500 hover:text-orange-600 transition-colors">Beef Stew</Link>
+          <Link to="/recipes/roast-chicken" className="text-slate-500 hover:text-orange-600 transition-colors">Roast Chicken</Link>
+          <Link to="/recipes/chicken-soup" className="text-slate-500 hover:text-orange-600 transition-colors">Chicken Soup</Link>
         </div>
         <p className="text-[10px] text-slate-400 font-medium uppercase tracking-widest leading-relaxed text-center">
           Disclosure: PantryPivot participates in the Amazon Associates Program. <br />
@@ -375,4 +397,4 @@ const GroundBeefPasta: React.FC = () => {
   );
 };
 
-export default GroundBeefPasta;
+export default BeefStew;

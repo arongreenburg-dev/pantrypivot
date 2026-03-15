@@ -32,4 +32,20 @@
     <loc>https://pantrypivot.com/recipes/instant-pot-chicken</loc>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://pantrypivot.com/recipes/beef-stew</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pantrypivot.com/recipes/roast-chicken</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pantrypivot.com/recipes/chicken-soup</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pantrypivot.com/recipes/shakshuka</loc>
+    <priority>0.8</priority>
+  </url>
 </urlset>

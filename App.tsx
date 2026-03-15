@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import { GenerationResponse, DetailedRecipe, SavedRecipe, AppSettings } from './types';
 import { getSettings, saveRecipe, deleteRecipe } from './lib/storage';
@@ -8,14 +8,19 @@ import RecipeCards from './components/RecipeCards';
 import RecipeDetail from './components/RecipeDetail';
 import Settings from './components/Settings';
 import SavedRecipes from './components/SavedRecipes';
-import AirFryerChicken from './components/recipes/AirFryerChicken';
-import CrockpotChicken from './components/recipes/CrockpotChicken';
-import SalmonRecipes from './components/recipes/SalmonRecipes';
-import GroundTurkey from './components/recipes/GroundTurkey';
-import ChickenAndRice from './components/recipes/ChickenAndRice';
-import GroundBeefPasta from './components/recipes/GroundBeefPasta';
-import InstantPotChicken from './components/recipes/InstantPotChicken';
 import NotFound from './components/NotFound';
+
+const AirFryerChicken = lazy(() => import('./components/recipes/AirFryerChicken'));
+const CrockpotChicken = lazy(() => import('./components/recipes/CrockpotChicken'));
+const SalmonRecipes = lazy(() => import('./components/recipes/SalmonRecipes'));
+const GroundTurkey = lazy(() => import('./components/recipes/GroundTurkey'));
+const ChickenAndRice = lazy(() => import('./components/recipes/ChickenAndRice'));
+const GroundBeefPasta = lazy(() => import('./components/recipes/GroundBeefPasta'));
+const InstantPotChicken = lazy(() => import('./components/recipes/InstantPotChicken'));
+const BeefStew = lazy(() => import('./components/recipes/BeefStew'));
+const RoastChicken = lazy(() => import('./components/recipes/RoastChicken'));
+const ChickenSoup = lazy(() => import('./components/recipes/ChickenSoup'));
+const Shakshuka = lazy(() => import('./components/recipes/Shakshuka'));
 import ReactGA from 'react-ga4';
 
 type View = 'home' | 'results' | 'detail' | 'settings' | 'saved';
@@ -171,6 +176,10 @@ const App: React.FC = () => {
                   { label: 'Chicken and Rice', href: '/recipes/chicken-and-rice', emoji: '🍚' },
                   { label: 'Ground Beef Pasta', href: '/recipes/ground-beef-pasta', emoji: '🍝' },
                   { label: 'Instant Pot Chicken', href: '/recipes/instant-pot-chicken', emoji: '⚡' },
+                  { label: 'Beef Stew', href: '/recipes/beef-stew', emoji: '🥩' },
+                  { label: 'Roast Chicken', href: '/recipes/roast-chicken', emoji: '🍗' },
+                  { label: 'Chicken Soup', href: '/recipes/chicken-soup', emoji: '🍜' },
+                  { label: 'Shakshuka', href: '/recipes/shakshuka', emoji: '🍳' },
                 ].map(({ label, href, emoji }) => (
                   <Link
                     key={href}
@@ -241,17 +250,23 @@ const App: React.FC = () => {
   );
 
   return (
-    <Routes>
-      <Route path="/" element={homeView} />
-      <Route path="/recipes/air-fryer-chicken" element={<AirFryerChicken />} />
-      <Route path="/recipes/crockpot-chicken" element={<CrockpotChicken />} />
-      <Route path="/recipes/salmon" element={<SalmonRecipes />} />
-      <Route path="/recipes/ground-turkey" element={<GroundTurkey />} />
-      <Route path="/recipes/chicken-and-rice" element={<ChickenAndRice />} />
-      <Route path="/recipes/ground-beef-pasta" element={<GroundBeefPasta />} />
-      <Route path="/recipes/instant-pot-chicken" element={<InstantPotChicken />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen bg-slate-50"><div className="animate-spin rounded-full h-12 w-12 border-4 border-orange-500 border-t-transparent"></div></div>}>
+      <Routes>
+        <Route path="/" element={homeView} />
+        <Route path="/recipes/air-fryer-chicken" element={<AirFryerChicken />} />
+        <Route path="/recipes/crockpot-chicken" element={<CrockpotChicken />} />
+        <Route path="/recipes/salmon" element={<SalmonRecipes />} />
+        <Route path="/recipes/ground-turkey" element={<GroundTurkey />} />
+        <Route path="/recipes/chicken-and-rice" element={<ChickenAndRice />} />
+        <Route path="/recipes/ground-beef-pasta" element={<GroundBeefPasta />} />
+        <Route path="/recipes/instant-pot-chicken" element={<InstantPotChicken />} />
+        <Route path="/recipes/beef-stew" element={<BeefStew />} />
+        <Route path="/recipes/roast-chicken" element={<RoastChicken />} />
+        <Route path="/recipes/chicken-soup" element={<ChickenSoup />} />
+        <Route path="/recipes/shakshuka" element={<Shakshuka />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Suspense>
   );
 };
 

@@ -139,6 +139,7 @@ const PANTRYPIVOT_LINK = 'https://pantrypivot.com';
 
 const InstantPotChicken: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('breast');
+  const [copied, setCopied] = useState(false);
   const recipe = recipes[activeTab];
   useEffect(() => {
     const PAGE_TITLE = 'Instant Pot Chicken Recipes | PantryPivot';
@@ -213,7 +214,7 @@ const InstantPotChicken: React.FC = () => {
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
           <a href="/" className="text-xl font-bold text-orange-600 flex items-center gap-2">
-            <img src="/apple-touch-icon.png" className="h-8 w-8 rounded-lg" alt="PantryPivot" /> PantryPivot
+            <img src="/apple-touch-icon.png" className="h-8 w-8 rounded-lg" alt="PantryPivot" loading="lazy" /> PantryPivot
           </a>
         </div>
       </header>
@@ -308,6 +309,16 @@ const InstantPotChicken: React.FC = () => {
             >
               Generate More Recipes on PantryPivot →
             </a>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(window.location.href);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+              className="flex-1 border-2 border-slate-200 hover:border-orange-300 text-slate-700 font-bold py-3 px-6 rounded-2xl text-center transition-all"
+            >
+              {copied ? '✓ Link copied!' : 'Share this recipe'}
+            </button>
           </div>
         </div>
 
@@ -341,6 +352,8 @@ const InstantPotChicken: React.FC = () => {
           <Link to="/recipes/ground-turkey" className="text-slate-500 hover:text-orange-600 transition-colors">Ground Turkey</Link>
           <Link to="/recipes/chicken-and-rice" className="text-slate-500 hover:text-orange-600 transition-colors">Chicken and Rice</Link>
           <Link to="/recipes/ground-beef-pasta" className="text-slate-500 hover:text-orange-600 transition-colors">Ground Beef Pasta</Link>
+          <Link to="/recipes/beef-stew" className="text-slate-500 hover:text-orange-600 transition-colors">Beef Stew</Link>
+          <Link to="/recipes/chicken-soup" className="text-slate-500 hover:text-orange-600 transition-colors">Chicken Soup</Link>
         </div>
         <p className="text-[10px] text-slate-400 font-medium uppercase tracking-widest leading-relaxed text-center">
           Disclosure: PantryPivot participates in the Amazon Associates Program. <br />
