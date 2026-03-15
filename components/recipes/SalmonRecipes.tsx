@@ -180,7 +180,7 @@ const SalmonRecipes: React.FC = () => {
       "@type": "Recipe",
       "name": "Baked Salmon",
       "description": "Easy pareve salmon recipes — baked, sheet pan, air fryer, and salmon with sweet potato. Kosher-friendly weeknight dinners.",
-      "image": "https://images.pexels.com/photos/27969841/pexels-photo-27969841.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "image": "https://images.pexels.com/photos/5014597/pexels-photo-5014597.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -238,7 +238,7 @@ const SalmonRecipes: React.FC = () => {
         {/* Hero Image */}
         <div className="mb-8 rounded-2xl overflow-hidden">
           <img
-            src="https://images.pexels.com/photos/27969841/pexels-photo-27969841.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            src="https://images.pexels.com/photos/5014597/pexels-photo-5014597.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
             alt="Baked salmon fillet with lemon and herbs on a sheet pan"
             width={800}
             height={500}

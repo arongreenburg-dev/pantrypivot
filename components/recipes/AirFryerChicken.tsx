@@ -176,7 +176,7 @@ const AirFryerChicken: React.FC = () => {
       "@type": "Recipe",
       "name": "Air Fryer Chicken Breast",
       "description": "Easy air fryer chicken breast recipes — classic, tenderloins, thighs, and crispy chicken. Meat-only, ready in 25 minutes.",
-      "image": "https://images.pexels.com/photos/10648379/pexels-photo-10648379.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "image": "https://images.pexels.com/photos/8879631/pexels-photo-8879631.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -235,7 +235,7 @@ const AirFryerChicken: React.FC = () => {
         {/* Hero Image */}
         <div className="mb-8 rounded-2xl overflow-hidden">
           <img
-            src="https://images.pexels.com/photos/10648379/pexels-photo-10648379.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            src="https://images.pexels.com/photos/8879631/pexels-photo-8879631.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
             alt="Juicy air fryer chicken breast on a plate with seasoning"
             width={800}
             height={500}
@@ -243,7 +243,7 @@ const AirFryerChicken: React.FC = () => {
             fetchPriority="high"
             className="w-full object-cover rounded-2xl"
           />
-          <p className="text-xs text-slate-400 text-center mt-1">Photo by FOX ^.ᆽ.^= ∫ via Pexels</p>
+          <p className="text-xs text-slate-400 text-center mt-1">Photo by Ron Lach via Pexels</p>
         </div>
         <div className="text-center mb-10">
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Air Fryer Chicken Recipes</h1>

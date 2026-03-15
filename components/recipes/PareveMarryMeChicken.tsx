@@ -198,7 +198,7 @@ const PareveMarryMeChicken: React.FC = () => {
       "@type": "Recipe",
       "name": "Dairy-Free Marry Me Chicken",
       "description": "Dairy-free Marry Me Chicken made with coconut cream — classic, soup, Instant Pot, and Crockpot versions. Kosher-friendly and delicious.",
-      "image": "https://images.pexels.com/photos/33328012/pexels-photo-33328012.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "image": "https://images.pexels.com/photos/30120281/pexels-photo-30120281.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -260,7 +260,7 @@ const PareveMarryMeChicken: React.FC = () => {
         {/* Hero Image */}
         <div className="mb-8 rounded-2xl overflow-hidden">
           <img
-            src="https://images.pexels.com/photos/33328012/pexels-photo-33328012.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            src="https://images.pexels.com/photos/30120281/pexels-photo-30120281.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
             alt="Creamy dairy-free marry me chicken skillet with sun-dried tomatoes"
             width={800}
             height={500}
@@ -268,7 +268,7 @@ const PareveMarryMeChicken: React.FC = () => {
             fetchPriority="high"
             className="w-full object-cover rounded-2xl"
           />
-          <p className="text-xs text-slate-400 text-center mt-1">Photo by Shameel mukkath via Pexels</p>
+          <p className="text-xs text-slate-400 text-center mt-1">Photo by Change C.C via Pexels</p>
         </div>
 
         <div className="text-center mb-10">
