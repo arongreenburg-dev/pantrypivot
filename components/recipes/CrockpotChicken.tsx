@@ -221,6 +221,29 @@ const CrockpotChicken: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Crockpot Chicken",
+      "description": "Set-it-and-forget-it crockpot chicken recipes. Classic, few ingredients, chicken legs, and thighs. Includes Thanksgiving turkey section.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "crockpot chicken, slow cooker chicken, easy crockpot recipes",
+      "url": "https://pantrypivot.com/recipes/crockpot-chicken"
+    });
+    document.head.appendChild(script);
+    return () => {
+      const el = document.getElementById('recipe-schema');
+      if (el) el.remove();
+    };
+  }, []);
+
   const currentMonth = new Date().getMonth(); // 0-indexed: Oct=9, Nov=10
   const showThanksgiving = currentMonth === 9 || currentMonth === 10;
 

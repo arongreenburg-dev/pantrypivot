@@ -188,6 +188,29 @@ const ChickenAndRice: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Chicken and Rice",
+      "description": "Easy chicken and rice recipes — classic, soup, creamy casserole, and rice bowls. Simple meat-only dinners the whole family loves.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "chicken and rice, chicken and rice recipe, easy chicken dinner",
+      "url": "https://pantrypivot.com/recipes/chicken-and-rice"
+    });
+    document.head.appendChild(script);
+    return () => {
+      const el = document.getElementById('recipe-schema');
+      if (el) el.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

@@ -187,6 +187,29 @@ const GroundBeefPasta: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Ground Beef Pasta",
+      "description": "Easy ground beef pasta recipes — classic, penne, casserole, and taco pasta. Quick meat-only dinners ready in 30 minutes.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "ground beef pasta, pasta with ground beef, easy pasta dinner",
+      "url": "https://pantrypivot.com/recipes/ground-beef-pasta"
+    });
+    document.head.appendChild(script);
+    return () => {
+      const el = document.getElementById('recipe-schema');
+      if (el) el.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

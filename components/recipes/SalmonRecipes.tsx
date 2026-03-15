@@ -170,6 +170,29 @@ const SalmonRecipes: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Baked Salmon",
+      "description": "Easy pareve salmon recipes — baked, sheet pan, air fryer, and salmon with sweet potato. Kosher-friendly weeknight dinners.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "salmon recipes, baked salmon, easy salmon, pareve recipes",
+      "url": "https://pantrypivot.com/recipes/salmon"
+    });
+    document.head.appendChild(script);
+    return () => {
+      const el = document.getElementById('recipe-schema');
+      if (el) el.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
