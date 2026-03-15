@@ -246,6 +246,15 @@ const CrockpotChicken: React.FC = () => {
         "1 tsp garlic powder",
         "1 tsp onion powder",
         "1 tsp smoked paprika"
+      ],
+      "recipeYield": "4 servings",
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Place chicken breasts in the bottom of the crockpot in a single layer." },
+        { "@type": "HowToStep", "text": "Mix garlic powder, onion powder, paprika, thyme, oregano, salt, and pepper. Sprinkle evenly over the chicken." },
+        { "@type": "HowToStep", "text": "Add minced garlic around the chicken, then pour chicken broth over everything." },
+        { "@type": "HowToStep", "text": "Cook on LOW for 6–8 hours or HIGH for 3–4 hours, until chicken is completely tender and reads 165°F." },
+        { "@type": "HowToStep", "text": "Remove chicken and shred with two forks, then return to the pot and stir through the juices." },
+        { "@type": "HowToStep", "text": "Serve over rice, in tacos, or as-is with a side of roasted vegetables." }
       ]
     });
     document.head.appendChild(script);
@@ -288,6 +297,32 @@ const CrockpotChicken: React.FC = () => {
             Set it and forget it — these slow cooker chicken recipes are tender, flavorful, and hands-off.
           </p>
         </div>
+
+        {/* Amazon CTA */}
+        <div className="text-center mb-4">
+          <a
+            href="https://amzn.to/47MV8a6"
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full transition-colors text-sm"
+          >
+            Shop Top-Rated Crockpots on Amazon →
+          </a>
+        </div>
+
+        {/* Seasonal Banner */}
+        {[6, 9, 10].includes(new Date().getMonth()) && (
+          <a
+            href="https://amzn.to/47MV8a6"
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className="block text-center bg-orange-500 text-white font-bold py-3 px-4 mb-6 text-sm hover:bg-orange-600 transition-colors rounded"
+          >
+            {new Date().getMonth() === 6 && '🛒 Prime Day — Save big on crockpots!'}
+            {new Date().getMonth() === 9 && '🎃 Prime Big Deal Days — Limited-time deals on slow cookers!'}
+            {new Date().getMonth() === 10 && '🦃 Black Friday — Best prices of the year on crockpots!'}
+          </a>
+        )}
 
         {/* Tabs */}
         <div className="flex gap-2 flex-wrap justify-center mb-8">

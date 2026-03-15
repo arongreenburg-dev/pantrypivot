@@ -212,6 +212,18 @@ const GroundBeefPasta: React.FC = () => {
         "1 can (28 oz) crushed tomatoes",
         "1 small onion, diced",
         "4 cloves garlic, minced"
+      ],
+      "recipeYield": "4 servings",
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Bring a large pot of salted water to a boil. Cook pasta according to package directions until al dente. Reserve ½ cup pasta water before draining." },
+        { "@type": "HowToStep", "text": "Heat olive oil in a large skillet over medium-high heat." },
+        { "@type": "HowToStep", "text": "Add onion and cook 3–4 minutes until softened." },
+        { "@type": "HowToStep", "text": "Add garlic and cook 30 seconds." },
+        { "@type": "HowToStep", "text": "Add ground beef, breaking apart with a spatula. Cook 7–8 minutes until browned. Drain excess fat." },
+        { "@type": "HowToStep", "text": "Add Italian seasoning, basil, paprika, salt, pepper, and sugar. Stir to combine." },
+        { "@type": "HowToStep", "text": "Pour in crushed tomatoes. Stir and bring to a simmer. Cook 10 minutes, stirring occasionally." },
+        { "@type": "HowToStep", "text": "Add a splash of pasta water to loosen the sauce if needed." },
+        { "@type": "HowToStep", "text": "Toss drained pasta into the sauce and serve immediately." }
       ]
     });
     document.head.appendChild(script);

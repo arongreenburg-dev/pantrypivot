@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-type Tab = 'classic' | 'soup' | 'casserole' | 'bowl';
+type Tab = 'bowl' | 'skillet' | 'stuffed' | 'soup';
 
 interface Recipe {
   title: string;
@@ -13,151 +13,152 @@ interface Recipe {
 }
 
 const recipes: Record<Tab, Recipe> = {
-  classic: {
-    title: 'Classic Chicken and Rice',
-    description: 'Tender chicken thighs slow-simmered with seasoned rice — a one-pot comfort meal.',
-    time: '45 min',
+  bowl: {
+    title: 'Ground Turkey Sweet Potato Bowl',
+    description: 'Seasoned ground turkey over roasted sweet potato with fresh toppings — a protein-packed, healthy bowl ready in 30 minutes.',
+    time: '30 min',
     servings: '4 servings',
     ingredients: [
-      '4 bone-in, skin-on chicken thighs',
-      '1½ cups long-grain white rice',
-      '2½ cups chicken broth',
+      '1 lb ground turkey (93% lean)',
+      '2 medium sweet potatoes, diced into 1-inch cubes',
+      '1 tbsp olive oil (for turkey)',
+      '1 tbsp olive oil (for sweet potato)',
       '1 small onion, diced',
       '3 cloves garlic, minced',
-      '1 tbsp olive oil',
+      '1 tsp cumin',
       '1 tsp smoked paprika',
-      '1 tsp garlic powder',
-      '½ tsp onion powder',
-      '½ tsp dried thyme',
+      '½ tsp chili powder',
       '1 tsp salt',
       '½ tsp black pepper',
+      '2 tbsp chicken broth or water',
+      '2 cups cooked rice or quinoa for serving',
+      'Fresh cilantro and lime wedges for serving',
     ],
     instructions: [
-      'Season chicken thighs on both sides with paprika, garlic powder, onion powder, salt, and pepper.',
-      'Heat olive oil in a large, deep skillet or Dutch oven over medium-high heat.',
-      'Sear chicken skin-side down for 5–6 minutes until golden. Flip and sear 3 more minutes. Remove and set aside.',
-      'In the same pan, add onion and cook 3 minutes. Add garlic and cook 30 seconds.',
-      'Add rice and stir to coat in the pan drippings for 1 minute.',
-      'Pour in chicken broth and add thyme. Stir and bring to a boil.',
-      'Nestle the chicken thighs on top of the rice, skin-side up.',
-      'Reduce heat to low, cover tightly, and cook 25 minutes until rice is tender and chicken is cooked through.',
-      'Let rest 5 minutes before serving.',
+      'Preheat oven to 425°F. Toss diced sweet potato with 1 tbsp olive oil, ½ tsp salt, and a pinch of paprika. Spread on a baking sheet.',
+      'Roast sweet potatoes 20–25 minutes, flipping once, until golden and tender.',
+      'Meanwhile, heat 1 tbsp olive oil in a large skillet over medium-high heat. Add onion and cook 3 minutes.',
+      'Add garlic and cook 30 seconds. Add ground turkey and break apart with a spatula.',
+      'Cook turkey 6–8 minutes until browned and cooked through. Drain excess liquid.',
+      'Add cumin, paprika, chili powder, salt, and pepper. Stir to coat. Add broth and cook 1 minute.',
+      'Assemble bowls: rice or quinoa → seasoned turkey → roasted sweet potato.',
+      'Top with fresh cilantro and a squeeze of lime.',
+    ],
+  },
+  skillet: {
+    title: 'Ground Turkey Sweet Potato Skillet',
+    description: 'A hearty one-pan skillet with ground turkey and sweet potato cooked together in savory spices — quick cleanup, big flavor.',
+    time: '30 min',
+    servings: '4 servings',
+    ingredients: [
+      '1 lb ground turkey',
+      '2 medium sweet potatoes, peeled and diced small',
+      '1 tbsp olive oil',
+      '1 small onion, diced',
+      '3 cloves garlic, minced',
+      '1 red bell pepper, diced',
+      '1 tsp cumin',
+      '1 tsp smoked paprika',
+      '½ tsp garlic powder',
+      '½ tsp dried oregano',
+      '1 tsp salt',
+      '½ tsp black pepper',
+      '¼ cup chicken broth or water',
+      'Fresh parsley for garnish',
+    ],
+    instructions: [
+      'Heat olive oil in a large skillet over medium heat. Add onion and bell pepper. Cook 4 minutes.',
+      'Add garlic and cook 30 seconds.',
+      'Add sweet potato. Cook 5 minutes, stirring occasionally.',
+      'Add ground turkey, breaking it apart. Cook 6–8 minutes until no pink remains.',
+      'Drain any excess fat or liquid.',
+      'Add cumin, paprika, garlic powder, oregano, salt, and pepper. Stir to coat.',
+      'Add chicken broth. Cover and cook 5 minutes until sweet potato is fork-tender.',
+      'Garnish with fresh parsley and serve directly from the pan.',
+    ],
+  },
+  stuffed: {
+    title: 'Ground Turkey Stuffed Sweet Potato',
+    description: 'Sweet potatoes stuffed with seasoned ground turkey — a naturally sweet, satisfying meal with zero cleanup.',
+    time: '50 min',
+    servings: '4 servings',
+    ingredients: [
+      '1 lb ground turkey',
+      '4 medium sweet potatoes',
+      '1 tbsp olive oil',
+      '1 small onion, diced',
+      '3 cloves garlic, minced',
+      '1 tsp cumin',
+      '1 tsp smoked paprika',
+      '½ tsp chili powder',
+      '1 tsp salt',
+      '½ tsp black pepper',
+      '2 tbsp chicken broth',
+      '1 can (14 oz) black beans, drained (optional)',
+      'Fresh cilantro and lime for serving',
+    ],
+    instructions: [
+      'Preheat oven to 400°F. Pierce sweet potatoes all over with a fork. Place on a baking sheet and roast 40–45 minutes until tender.',
+      'While potatoes bake, heat olive oil in a skillet over medium heat. Add onion and cook 3 minutes.',
+      'Add garlic and cook 30 seconds. Add ground turkey and break apart. Cook 6–8 minutes until done.',
+      'Add cumin, paprika, chili powder, salt, pepper, and broth. Stir and cook 1 minute.',
+      'If using black beans, stir them in now and cook 2 more minutes.',
+      'Slice baked sweet potatoes lengthwise. Fluff the inside with a fork.',
+      'Spoon ground turkey filling generously into each sweet potato.',
+      'Top with cilantro and a squeeze of lime.',
     ],
   },
   soup: {
-    title: 'Chicken and Rice Soup',
-    description: 'A rich, warming chicken soup with tender rice — made from scratch in under an hour.',
-    time: '50 min',
-    servings: '6 servings',
+    title: 'Ground Turkey Sweet Potato Soup',
+    description: 'A warming, nourishing soup with ground turkey, sweet potato, and aromatic spices — cozy and ready in 30 minutes.',
+    time: '30 min',
+    servings: '4 servings',
     ingredients: [
-      '1.5 lbs boneless, skinless chicken breasts or thighs',
-      '¾ cup long-grain white rice',
-      '6 cups chicken broth',
-      '3 medium carrots, sliced',
-      '3 stalks celery, sliced',
-      '1 medium onion, diced',
-      '3 cloves garlic, minced',
+      '1 lb ground turkey',
+      '2 medium sweet potatoes, peeled and diced',
       '1 tbsp olive oil',
-      '1 tsp dried thyme',
-      '1 tsp dried parsley',
-      '1 bay leaf',
+      '1 small onion, diced',
+      '3 cloves garlic, minced',
+      '4 cups chicken broth',
+      '1 can (14 oz) diced tomatoes',
+      '1 tsp cumin',
+      '1 tsp smoked paprika',
+      '½ tsp coriander',
       '1 tsp salt',
       '½ tsp black pepper',
+      'Fresh parsley or cilantro for garnish',
     ],
     instructions: [
-      'Heat olive oil in a large pot over medium heat.',
-      'Add onion, carrots, and celery. Cook 5 minutes until softened.',
-      'Add garlic and cook 30 seconds.',
-      'Add whole chicken breasts or thighs, chicken broth, thyme, parsley, bay leaf, salt, and pepper.',
-      'Bring to a boil, then reduce heat to a simmer. Cook 20 minutes.',
-      'Remove chicken and shred with two forks.',
-      'Add rice to the pot and cook 15–18 minutes until tender.',
-      'Return shredded chicken to the pot. Remove bay leaf.',
-      'Taste, adjust seasoning, and serve.',
-    ],
-  },
-  casserole: {
-    title: 'Chicken and Rice Casserole',
-    description: 'A hearty baked casserole with juicy chicken and fluffy rice — no canned soup, all from scratch.',
-    time: '1 hr 15 min',
-    servings: '6 servings',
-    ingredients: [
-      '4 boneless, skinless chicken breasts',
-      '1½ cups long-grain white rice (uncooked)',
-      '2½ cups chicken broth',
-      '1 small onion, finely diced',
-      '3 cloves garlic, minced',
-      '2 tbsp olive oil',
-      '1 tsp garlic powder',
-      '1 tsp onion powder',
-      '1 tsp smoked paprika',
-      '½ tsp dried thyme',
-      '1½ tsp salt, divided',
-      '½ tsp black pepper, divided',
-    ],
-    instructions: [
-      'Preheat oven to 375°F (190°C). Grease a 9x13-inch baking dish.',
-      'Heat 1 tbsp olive oil in a skillet over medium heat. Sauté onion 3 minutes, add garlic and cook 30 seconds.',
-      'Spread uncooked rice evenly in the baking dish. Scatter sautéed onion and garlic over the rice.',
-      'Pour chicken broth over the rice mixture. Add ½ tsp salt and ¼ tsp pepper to the broth.',
-      'Season chicken breasts on both sides with garlic powder, onion powder, paprika, thyme, 1 tsp salt, and ¼ tsp pepper.',
-      'Drizzle remaining 1 tbsp olive oil over chicken and nestle on top of the rice.',
-      'Cover tightly with foil and bake 50 minutes.',
-      'Remove foil and bake 10–15 more minutes until chicken is golden and rice is fully cooked.',
-      'Rest 5 minutes before serving.',
-    ],
-  },
-  bowl: {
-    title: 'Chicken Rice Bowl',
-    description: 'Grilled or pan-seared chicken over seasoned rice with fresh toppings — better than takeout.',
-    time: '30 min',
-    servings: '2 servings',
-    ingredients: [
-      '2 boneless, skinless chicken breasts',
-      '1½ cups cooked white or brown rice',
-      '1 tbsp olive oil',
-      '1 tsp garlic powder',
-      '1 tsp smoked paprika',
-      '½ tsp cumin',
-      '½ tsp onion powder',
-      '1 tsp salt',
-      '¼ tsp black pepper',
-      '1 lime, juiced',
-      '1 avocado, sliced',
-      '½ cup cucumber, sliced',
-      '2 tbsp fresh cilantro (optional)',
-    ],
-    instructions: [
-      'Mix garlic powder, paprika, cumin, onion powder, salt, and pepper.',
-      'Rub the spice mixture over both sides of each chicken breast.',
-      'Heat olive oil in a skillet over medium-high heat.',
-      'Cook chicken 6–7 minutes per side until internal temperature reaches 165°F.',
-      'Rest 5 minutes, then slice against the grain.',
-      'Divide cooked rice between two bowls.',
-      'Top with sliced chicken, avocado, and cucumber.',
-      'Squeeze lime juice over everything and garnish with cilantro if using.',
+      'Heat olive oil in a large pot over medium heat. Add onion and cook 3 minutes.',
+      'Add garlic and cook 30 seconds. Add ground turkey and break apart. Cook 5 minutes until mostly done.',
+      'Add cumin, paprika, coriander, salt, and pepper. Stir to coat.',
+      'Add sweet potatoes, chicken broth, and diced tomatoes. Stir to combine.',
+      'Bring to a boil, then reduce heat and simmer 15 minutes until sweet potato is very tender.',
+      'Taste and adjust seasoning.',
+      'Serve garnished with fresh parsley or cilantro.',
     ],
   },
 };
 
 const TABS: { key: Tab; label: string }[] = [
-  { key: 'classic', label: 'Classic Chicken and Rice' },
-  { key: 'soup', label: 'Chicken and Rice Soup' },
-  { key: 'casserole', label: 'Chicken and Rice Casserole' },
-  { key: 'bowl', label: 'Chicken Rice Bowl' },
+  { key: 'bowl', label: 'Sweet Potato Bowl' },
+  { key: 'skillet', label: 'Sweet Potato Skillet' },
+  { key: 'stuffed', label: 'Stuffed Sweet Potato' },
+  { key: 'soup', label: 'Sweet Potato Soup' },
 ];
 
 const AMAZON_LINK = 'https://amzn.to/40ZcXPs';
 const PANTRYPIVOT_LINK = 'https://pantrypivot.com';
 
-const ChickenAndRice: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<Tab>('classic');
+const GroundTurkeySweetPotato: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<Tab>('bowl');
   const [copied, setCopied] = useState(false);
   const recipe = recipes[activeTab];
+
   useEffect(() => {
-    const PAGE_TITLE = 'Chicken and Rice Recipes | PantryPivot';
-    const PAGE_DESC = 'Easy chicken and rice recipes — classic, soup, creamy casserole, and rice bowls. Simple meat-only dinners the whole family loves.';
-    const PAGE_URL = 'https://pantrypivot.com/recipes/chicken-and-rice';
+    const PAGE_TITLE = 'Ground Turkey Sweet Potato Recipes | PantryPivot';
+    const PAGE_DESC = 'Easy ground turkey and sweet potato recipes — bowls, skillet, stuffed sweet potato, and soup. Healthy meat-only meals ready in 30 minutes.';
+    const PAGE_URL = 'https://pantrypivot.com/recipes/ground-turkey-sweet-potato';
     document.title = PAGE_TITLE;
     const update = (sel: string, attr: string, val: string): string => {
       const el = document.querySelector(sel);
@@ -196,35 +197,34 @@ const ChickenAndRice: React.FC = () => {
     script.textContent = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Recipe",
-      "name": "Chicken and Rice",
-      "description": "Easy chicken and rice recipes — classic, soup, creamy casserole, and rice bowls. Simple meat-only dinners the whole family loves.",
+      "name": "Ground Turkey Sweet Potato",
+      "description": "Easy ground turkey and sweet potato recipes — bowls, skillet, stuffed sweet potato, and soup. Healthy meat-only meals ready in 30 minutes.",
       "image": "https://pantrypivot.com/og-image.png",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
-      "cookTime": "PT40M",
+      "cookTime": "PT30M",
       "recipeCategory": "Main Course",
       "recipeCuisine": "American",
-      "keywords": "chicken and rice, chicken and rice recipe, easy chicken dinner",
-      "url": "https://pantrypivot.com/recipes/chicken-and-rice",
+      "keywords": "ground turkey sweet potato, ground turkey sweet potato bowl, healthy ground turkey recipes",
+      "url": "https://pantrypivot.com/recipes/ground-turkey-sweet-potato",
       "recipeIngredient": [
-        "4 bone-in, skin-on chicken thighs",
-        "1\u00bd cups long-grain white rice",
-        "2\u00bd cups chicken broth",
-        "1 small onion, diced",
-        "3 cloves garlic, minced"
+        "1 lb ground turkey (93% lean)",
+        "2 medium sweet potatoes, diced into 1-inch cubes",
+        "1 tbsp olive oil (for turkey)",
+        "1 tbsp olive oil (for sweet potato)",
+        "1 small onion, diced"
       ],
       "recipeYield": "4 servings",
       "recipeInstructions": [
-        { "@type": "HowToStep", "text": "Season chicken thighs on both sides with paprika, garlic powder, onion powder, salt, and pepper." },
-        { "@type": "HowToStep", "text": "Heat olive oil in a large, deep skillet or Dutch oven over medium-high heat." },
-        { "@type": "HowToStep", "text": "Sear chicken skin-side down for 5–6 minutes until golden. Flip and sear 3 more minutes. Remove and set aside." },
-        { "@type": "HowToStep", "text": "In the same pan, add onion and cook 3 minutes. Add garlic and cook 30 seconds." },
-        { "@type": "HowToStep", "text": "Add rice and stir to coat in the pan drippings for 1 minute." },
-        { "@type": "HowToStep", "text": "Pour in chicken broth and add thyme. Stir and bring to a boil." },
-        { "@type": "HowToStep", "text": "Nestle the chicken thighs on top of the rice, skin-side up." },
-        { "@type": "HowToStep", "text": "Reduce heat to low, cover tightly, and cook 25 minutes until rice is tender and chicken is cooked through." },
-        { "@type": "HowToStep", "text": "Let rest 5 minutes before serving." }
+        { "@type": "HowToStep", "text": "Preheat oven to 425°F. Toss diced sweet potato with 1 tbsp olive oil, ½ tsp salt, and a pinch of paprika. Spread on a baking sheet." },
+        { "@type": "HowToStep", "text": "Roast sweet potatoes 20–25 minutes, flipping once, until golden and tender." },
+        { "@type": "HowToStep", "text": "Meanwhile, heat 1 tbsp olive oil in a large skillet over medium-high heat. Add onion and cook 3 minutes." },
+        { "@type": "HowToStep", "text": "Add garlic and cook 30 seconds. Add ground turkey and break apart with a spatula." },
+        { "@type": "HowToStep", "text": "Cook turkey 6–8 minutes until browned and cooked through. Drain excess liquid." },
+        { "@type": "HowToStep", "text": "Add cumin, paprika, chili powder, salt, and pepper. Stir to coat. Add broth and cook 1 minute." },
+        { "@type": "HowToStep", "text": "Assemble bowls: rice or quinoa → seasoned turkey → roasted sweet potato." },
+        { "@type": "HowToStep", "text": "Top with fresh cilantro and a squeeze of lime." }
       ]
     });
     document.head.appendChild(script);
@@ -236,6 +236,7 @@ const ChickenAndRice: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50">
+      {/* Header */}
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
           <a href="/" className="text-xl font-bold text-orange-600 flex items-center gap-2">
@@ -252,17 +253,28 @@ const ChickenAndRice: React.FC = () => {
             <li className="text-slate-300">›</li>
             <li>Recipes</li>
             <li className="text-slate-300">›</li>
-            <li className="text-slate-600 font-medium">Chicken and Rice</li>
+            <li className="text-slate-600 font-medium">Ground Turkey Sweet Potato</li>
           </ol>
         </nav>
-        {/* TODO: Add recipe hero image here, e.g. <img src="..." alt="Chicken and rice in a bowl with herbs and seasoning" /> */}
+
+        {/* Hero */}
+        {/* TODO: Add recipe hero image here, e.g. <img src="..." alt="Ground turkey sweet potato bowl with cilantro and lime" /> */}
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Chicken and Rice Recipes</h1>
+          <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Ground Turkey Sweet Potato Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
-            Classic comfort food made easy — juicy chicken and perfectly cooked rice in four delicious ways.
+            Healthy, hearty, and ready in 30 minutes — ground turkey and sweet potato recipes your whole family will love.
           </p>
         </div>
 
+        {/* Cookware CTA */}
+        <div className="text-center mb-6">
+          <a href="https://amzn.to/4bvEX2h" target="_blank" rel="noopener noreferrer"
+            className="inline-block border-2 border-orange-400 text-orange-600 hover:bg-orange-50 font-bold py-2.5 px-6 rounded-2xl transition-all text-sm">
+            Shop Skillets on Amazon →
+          </a>
+        </div>
+
+        {/* Tabs */}
         <div className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (
             <button
@@ -279,7 +291,9 @@ const ChickenAndRice: React.FC = () => {
           ))}
         </div>
 
+        {/* Recipe Card */}
         <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+          {/* Recipe Header */}
           <div className="bg-orange-50 border-b border-orange-100 px-8 py-6">
             <h2 className="text-2xl font-black text-slate-900 mb-1">{recipe.title}</h2>
             <p className="text-slate-500 mb-4">{recipe.description}</p>
@@ -290,8 +304,11 @@ const ChickenAndRice: React.FC = () => {
           </div>
 
           <div className="p-8 grid md:grid-cols-2 gap-10">
+            {/* Ingredients */}
             <div>
-              <h3 className="text-sm font-black text-orange-600 uppercase tracking-wide mb-4">Ingredients</h3>
+              <h3 className="text-lg font-black text-slate-900 mb-4 uppercase tracking-wide text-sm text-orange-600">
+                Ingredients
+              </h3>
               <ul className="space-y-2">
                 {recipe.ingredients.map((ing, i) => (
                   <li key={i} className="flex items-start gap-2 text-slate-700">
@@ -302,8 +319,11 @@ const ChickenAndRice: React.FC = () => {
               </ul>
             </div>
 
+            {/* Instructions */}
             <div>
-              <h3 className="text-sm font-black text-orange-600 uppercase tracking-wide mb-4">Instructions</h3>
+              <h3 className="text-lg font-black text-slate-900 mb-4 uppercase tracking-wide text-sm text-orange-600">
+                Instructions
+              </h3>
               <ol className="space-y-4">
                 {recipe.instructions.map((step, i) => (
                   <li key={i} className="flex items-start gap-3">
@@ -317,6 +337,7 @@ const ChickenAndRice: React.FC = () => {
             </div>
           </div>
 
+          {/* CTAs */}
           <div className="px-8 pb-8 flex flex-col sm:flex-row gap-3">
             <a
               href={AMAZON_LINK}
@@ -351,14 +372,14 @@ const ChickenAndRice: React.FC = () => {
         <div className="mt-16">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-6">More Recipes</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <Link to="/recipes/air-fryer-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
-              <span className="text-2xl">🍗</span> Air Fryer Chicken
+            <Link to="/recipes/ground-turkey" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🦃</span> Ground Turkey
             </Link>
-            <Link to="/recipes/crockpot-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
-              <span className="text-2xl">🍲</span> Crockpot Chicken
+            <Link to="/recipes/chicken-and-rice" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍚</span> Chicken and Rice
             </Link>
-            <Link to="/recipes/instant-pot-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
-              <span className="text-2xl">⚡</span> Instant Pot Chicken
+            <Link to="/recipes/salmon" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🐟</span> Salmon Recipes
             </Link>
           </div>
         </div>
@@ -375,10 +396,12 @@ const ChickenAndRice: React.FC = () => {
           <Link to="/recipes/crockpot-chicken" className="text-slate-500 hover:text-orange-600 transition-colors">Crockpot Chicken</Link>
           <Link to="/recipes/salmon" className="text-slate-500 hover:text-orange-600 transition-colors">Salmon Recipes</Link>
           <Link to="/recipes/ground-turkey" className="text-slate-500 hover:text-orange-600 transition-colors">Ground Turkey</Link>
+          <Link to="/recipes/chicken-and-rice" className="text-slate-500 hover:text-orange-600 transition-colors">Chicken and Rice</Link>
           <Link to="/recipes/ground-beef-pasta" className="text-slate-500 hover:text-orange-600 transition-colors">Ground Beef Pasta</Link>
           <Link to="/recipes/instant-pot-chicken" className="text-slate-500 hover:text-orange-600 transition-colors">Instant Pot Chicken</Link>
-          <Link to="/recipes/chicken-soup" className="text-slate-500 hover:text-orange-600 transition-colors">Chicken Soup</Link>
+          <Link to="/recipes/beef-stew" className="text-slate-500 hover:text-orange-600 transition-colors">Beef Stew</Link>
           <Link to="/recipes/roast-chicken" className="text-slate-500 hover:text-orange-600 transition-colors">Roast Chicken</Link>
+          <Link to="/recipes/chicken-soup" className="text-slate-500 hover:text-orange-600 transition-colors">Chicken Soup</Link>
         </div>
         <p className="text-[10px] text-slate-400 font-medium uppercase tracking-widest leading-relaxed text-center">
           Disclosure: PantryPivot participates in the Amazon Associates Program. <br />
@@ -389,4 +412,4 @@ const ChickenAndRice: React.FC = () => {
   );
 };
 
-export default ChickenAndRice;
+export default GroundTurkeySweetPotato;

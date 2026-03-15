@@ -200,6 +200,17 @@ const InstantPotChicken: React.FC = () => {
         "1 tbsp olive oil",
         "1 tsp garlic powder",
         "1 tsp onion powder"
+      ],
+      "recipeYield": "4 servings",
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Mix garlic powder, onion powder, paprika, thyme, salt, and pepper. Rub over all sides of each chicken breast." },
+        { "@type": "HowToStep", "text": "Set Instant Pot to Sauté mode. Add olive oil and sear chicken breasts 2 minutes per side for color. Press Cancel." },
+        { "@type": "HowToStep", "text": "Remove chicken. Pour chicken broth into the pot and scrape up any browned bits." },
+        { "@type": "HowToStep", "text": "Place the trivet inside the pot and set chicken breasts on the trivet." },
+        { "@type": "HowToStep", "text": "Seal the lid and set the valve to Sealing." },
+        { "@type": "HowToStep", "text": "Cook on Manual (High Pressure) for 8 minutes for average-sized breasts (add 2 minutes for extra large)." },
+        { "@type": "HowToStep", "text": "Let pressure naturally release for 5 minutes, then carefully quick-release the remaining pressure." },
+        { "@type": "HowToStep", "text": "Check internal temperature — it should read 165°F. Rest 5 minutes before slicing." }
       ]
     });
     document.head.appendChild(script);
@@ -237,6 +248,32 @@ const InstantPotChicken: React.FC = () => {
             Pressure-cooked chicken that's juicy every time — quick weeknight dinners with almost no effort.
           </p>
         </div>
+
+        {/* Amazon CTA */}
+        <div className="text-center mb-4">
+          <a
+            href="https://amzn.to/47MV8a6"
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full transition-colors text-sm"
+          >
+            Shop Top-Rated Instant Pots on Amazon →
+          </a>
+        </div>
+
+        {/* Seasonal Banner */}
+        {[6, 9, 10].includes(new Date().getMonth()) && (
+          <a
+            href="https://amzn.to/47MV8a6"
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className="block text-center bg-orange-500 text-white font-bold py-3 px-4 mb-6 text-sm hover:bg-orange-600 transition-colors rounded"
+          >
+            {new Date().getMonth() === 6 && '🛒 Prime Day — Save big on Instant Pots!'}
+            {new Date().getMonth() === 9 && '🎃 Prime Big Deal Days — Limited-time deals on Instant Pots!'}
+            {new Date().getMonth() === 10 && '🦃 Black Friday — Best prices of the year on Instant Pots!'}
+          </a>
+        )}
 
         <div className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (

@@ -195,6 +195,15 @@ const SalmonRecipes: React.FC = () => {
         "3 cloves garlic, minced",
         "1 lemon, zested and juiced",
         "1 tsp dried dill or fresh dill"
+      ],
+      "recipeYield": "4 servings",
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Preheat oven to 400°F (200°C). Line a baking dish with parchment paper." },
+        { "@type": "HowToStep", "text": "Place salmon fillets in the baking dish, skin-side down." },
+        { "@type": "HowToStep", "text": "In a small bowl, mix olive oil, garlic, lemon zest, lemon juice, dill, paprika, salt, and pepper." },
+        { "@type": "HowToStep", "text": "Spoon the mixture evenly over the top of each fillet." },
+        { "@type": "HowToStep", "text": "Bake for 12–15 minutes, depending on thickness, until salmon flakes easily with a fork. Internal temperature should reach 125–130°F for medium or 145°F for well done." },
+        { "@type": "HowToStep", "text": "Serve immediately with lemon slices and your choice of side." }
       ]
     });
     document.head.appendChild(script);

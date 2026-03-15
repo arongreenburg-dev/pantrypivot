@@ -214,6 +214,17 @@ const Shakshuka: React.FC = () => {
         "1 medium onion, diced",
         "1 red bell pepper, diced",
         "4 cloves garlic, minced"
+      ],
+      "recipeYield": "4 servings",
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Heat olive oil in a large skillet over medium heat." },
+        { "@type": "HowToStep", "text": "Add onion and bell pepper. Cook 5–6 minutes until softened." },
+        { "@type": "HowToStep", "text": "Add garlic, cumin, paprika, coriander, cayenne, salt, and black pepper. Cook 1 minute until fragrant." },
+        { "@type": "HowToStep", "text": "Pour in crushed tomatoes. Stir to combine and bring to a simmer." },
+        { "@type": "HowToStep", "text": "Cook sauce 8–10 minutes, stirring occasionally, until slightly thickened." },
+        { "@type": "HowToStep", "text": "Taste and adjust seasoning. Use a spoon to make 6 wells in the sauce." },
+        { "@type": "HowToStep", "text": "Crack one egg into each well. Cover the skillet and cook 6–8 minutes until whites are set but yolks are still runny (cook longer for firm yolks)." },
+        { "@type": "HowToStep", "text": "Garnish with fresh herbs and serve directly from the pan." }
       ]
     });
     document.head.appendChild(script);

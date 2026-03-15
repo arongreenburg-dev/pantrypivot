@@ -191,6 +191,16 @@ const AirFryerChicken: React.FC = () => {
         "1 tsp garlic powder",
         "1 tsp onion powder",
         "1 tsp smoked paprika"
+      ],
+      "recipeYield": "4 servings",
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Preheat the air fryer to 375°F (190°C) for 3 minutes." },
+        { "@type": "HowToStep", "text": "Pat the chicken breasts dry with paper towels — this helps them brown evenly." },
+        { "@type": "HowToStep", "text": "Drizzle olive oil over both sides of each breast." },
+        { "@type": "HowToStep", "text": "Mix garlic powder, onion powder, paprika, oregano, salt, and pepper. Rub evenly over both sides of the chicken." },
+        { "@type": "HowToStep", "text": "Place chicken in the air fryer basket in a single layer, not touching." },
+        { "@type": "HowToStep", "text": "Cook at 375°F for 10 minutes, then flip and cook another 6–8 minutes until internal temperature reaches 165°F." },
+        { "@type": "HowToStep", "text": "Rest for 5 minutes before slicing to keep the juices locked in." }
       ]
     });
     document.head.appendChild(script);
@@ -230,6 +240,32 @@ const AirFryerChicken: React.FC = () => {
             Quick, juicy, and full of flavor — these air fryer chicken recipes are ready in under 25 minutes.
           </p>
         </div>
+
+        {/* Amazon CTA */}
+        <div className="text-center mb-4">
+          <a
+            href="https://amzn.to/47MV8a6"
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full transition-colors text-sm"
+          >
+            Shop Top-Rated Air Fryers on Amazon →
+          </a>
+        </div>
+
+        {/* Seasonal Banner */}
+        {[6, 9, 10].includes(new Date().getMonth()) && (
+          <a
+            href="https://amzn.to/47MV8a6"
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className="block text-center bg-orange-500 text-white font-bold py-3 px-4 mb-6 text-sm hover:bg-orange-600 transition-colors rounded"
+          >
+            {new Date().getMonth() === 6 && '🛒 Prime Day — Save big on air fryers!'}
+            {new Date().getMonth() === 9 && '🎃 Prime Big Deal Days — Limited-time deals on air fryers!'}
+            {new Date().getMonth() === 10 && '🦃 Black Friday — Best prices of the year on air fryers!'}
+          </a>
+        )}
 
         {/* Tabs */}
         <div className="flex gap-2 flex-wrap justify-center mb-8">

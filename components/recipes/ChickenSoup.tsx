@@ -205,6 +205,17 @@ const ChickenSoup: React.FC = () => {
         "3 stalks celery with leaves, sliced",
         "1 large onion, quartered",
         "4 cloves garlic, smashed"
+      ],
+      "recipeYield": "4 servings",
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Place chicken in a large stockpot. Cover with cold water." },
+        { "@type": "HowToStep", "text": "Bring to a boil over high heat, skimming foam and impurities from the surface for the first 10 minutes." },
+        { "@type": "HowToStep", "text": "Add onion, garlic, bay leaves, dill, salt, and pepper. Reduce heat to low." },
+        { "@type": "HowToStep", "text": "Simmer partially covered for 45 minutes." },
+        { "@type": "HowToStep", "text": "Add carrots, celery, and parsnips. Continue simmering 30 more minutes until vegetables are tender and chicken is falling off the bone." },
+        { "@type": "HowToStep", "text": "Remove chicken from pot and let cool slightly. Shred meat, discarding skin and bones." },
+        { "@type": "HowToStep", "text": "Remove and discard bay leaves. Skim excess fat from the surface if desired." },
+        { "@type": "HowToStep", "text": "Return shredded chicken to the pot. Adjust seasoning and serve garnished with fresh parsley." }
       ]
     });
     document.head.appendChild(script);
@@ -243,6 +254,18 @@ const ChickenSoup: React.FC = () => {
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
             Soul-warming chicken soup recipes for every craving — classic broth, noodles, rice, and bright lemon.
           </p>
+        </div>
+
+        {/* Amazon CTA */}
+        <div className="text-center mb-6">
+          <a
+            href="https://amzn.to/4bvEX2h"
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full transition-colors text-sm"
+          >
+            Shop Soup Pots on Amazon →
+          </a>
         </div>
 
         {/* Tabs */}

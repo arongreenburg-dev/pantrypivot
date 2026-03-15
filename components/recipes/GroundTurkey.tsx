@@ -209,6 +209,17 @@ const GroundTurkey: React.FC = () => {
         "1 small onion, diced",
         "3 cloves garlic, minced",
         "1 tsp cumin"
+      ],
+      "recipeYield": "4 servings",
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Heat olive oil in a large skillet over medium-high heat." },
+        { "@type": "HowToStep", "text": "Add diced onion and cook 3–4 minutes until softened." },
+        { "@type": "HowToStep", "text": "Add garlic and cook 30 seconds until fragrant." },
+        { "@type": "HowToStep", "text": "Add ground turkey, breaking it apart with a spatula. Cook 6–8 minutes until no pink remains." },
+        { "@type": "HowToStep", "text": "Drain any excess liquid from the pan." },
+        { "@type": "HowToStep", "text": "Add cumin, paprika, chili powder, oregano, salt, and pepper. Stir to coat." },
+        { "@type": "HowToStep", "text": "Add broth or water and stir, scraping up any browned bits. Cook 1–2 more minutes." },
+        { "@type": "HowToStep", "text": "Taste and adjust seasoning. Serve over rice, in tacos, or in lettuce wraps." }
       ]
     });
     document.head.appendChild(script);
@@ -245,6 +256,18 @@ const GroundTurkey: React.FC = () => {
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
             Lean, flavorful, and endlessly versatile — ground turkey recipes the whole family will love.
           </p>
+        </div>
+
+        {/* Amazon CTA */}
+        <div className="text-center mb-6">
+          <a
+            href="https://amzn.to/4bvEX2h"
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full transition-colors text-sm"
+          >
+            Shop Skillets and Pans on Amazon →
+          </a>
         </div>
 
         <div className="flex gap-2 flex-wrap justify-center mb-8">

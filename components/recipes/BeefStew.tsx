@@ -224,6 +224,17 @@ const BeefStew: React.FC = () => {
         "1 large onion, diced",
         "4 cloves garlic, minced",
         "3 medium carrots, sliced"
+      ],
+      "recipeYield": "4 servings",
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Pat beef dry with paper towels. Toss with flour, salt, pepper, and paprika until coated." },
+        { "@type": "HowToStep", "text": "Heat 2 tbsp oil in a large Dutch oven over medium-high heat. Brown beef in batches without crowding, 3–4 min per side. Remove and set aside." },
+        { "@type": "HowToStep", "text": "Add remaining oil to pot. Sauté onion 3 minutes until softened. Add garlic and cook 1 minute." },
+        { "@type": "HowToStep", "text": "Stir in tomato paste and cook 1 minute." },
+        { "@type": "HowToStep", "text": "Return beef to pot. Pour in beef broth and diced tomatoes. Scrape up any browned bits." },
+        { "@type": "HowToStep", "text": "Add carrots, celery, potatoes, thyme, rosemary, and bay leaves. Bring to a boil." },
+        { "@type": "HowToStep", "text": "Reduce heat to low, cover, and simmer 1.5–2 hours until beef is fork-tender." },
+        { "@type": "HowToStep", "text": "Remove bay leaves. Taste and adjust seasoning before serving." }
       ]
     });
     document.head.appendChild(script);
@@ -262,6 +273,18 @@ const BeefStew: React.FC = () => {
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
             Rich, hearty beef stew for every cooking method — stovetop, slow cooker, Instant Pot, and loaded with vegetables.
           </p>
+        </div>
+
+        {/* Amazon CTA */}
+        <div className="text-center mb-6">
+          <a
+            href="https://amzn.to/4bvEX2h"
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full transition-colors text-sm"
+          >
+            Shop Dutch Ovens and Stockpots on Amazon →
+          </a>
         </div>
 
         {/* Tabs */}

@@ -201,6 +201,17 @@ const RoastChicken: React.FC = () => {
         "1 tsp garlic powder",
         "1 tsp onion powder",
         "1 tsp smoked paprika"
+      ],
+      "recipeYield": "4 servings",
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Preheat oven to 425°F (220°C). Remove giblets and pat chicken dry inside and out with paper towels — this is key for crispy skin." },
+        { "@type": "HowToStep", "text": "Mix olive oil, garlic powder, onion powder, paprika, thyme, salt, and pepper into a paste." },
+        { "@type": "HowToStep", "text": "Rub the mixture all over the outside of the chicken and carefully work some under the breast skin." },
+        { "@type": "HowToStep", "text": "Stuff the cavity with the halved garlic head, quartered onion, and herb sprigs." },
+        { "@type": "HowToStep", "text": "Tie the legs together with kitchen twine and tuck the wing tips underneath." },
+        { "@type": "HowToStep", "text": "Place breast-side up in a cast iron skillet or roasting pan." },
+        { "@type": "HowToStep", "text": "Roast 1 hour 15 minutes to 1 hour 30 minutes, until juices run clear and the thigh reads 165°F on an instant-read thermometer." },
+        { "@type": "HowToStep", "text": "Rest 10–15 minutes before carving. Spoon the pan drippings over the top." }
       ]
     });
     document.head.appendChild(script);
@@ -239,6 +250,18 @@ const RoastChicken: React.FC = () => {
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
             Golden-skinned, juicy roast chicken for every occasion — whole bird or thighs, simple or herb-packed.
           </p>
+        </div>
+
+        {/* Amazon CTA */}
+        <div className="text-center mb-6">
+          <a
+            href="https://amzn.to/4bvEX2h"
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full transition-colors text-sm"
+          >
+            Shop Roasting Pans on Amazon →
+          </a>
         </div>
 
         {/* Tabs */}
