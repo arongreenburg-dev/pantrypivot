@@ -54,6 +54,7 @@ export interface GenerationResponse {
   recipeCards: RecipeCard[];
   selectedRecipe: DetailedRecipe;
   ideas?: MealIdea[];
+  kosherForPassover?: boolean;
 }
 
 export interface AppSettings {
@@ -96,6 +97,7 @@ export interface WizardState {
   unitSystem: UnitSystem;
   kidFriendly?: boolean;
   favoriteChef?: string;
+  kosherForPassover?: boolean;
 }
 
 export interface SavedRecipe {

@@ -23,6 +23,8 @@ const ChickenSoup = lazy(() => import('./components/recipes/ChickenSoup'));
 const Shakshuka = lazy(() => import('./components/recipes/Shakshuka'));
 const GroundTurkeySweetPotato = lazy(() => import('./components/recipes/GroundTurkeySweetPotato'));
 const PareveMarryMeChicken = lazy(() => import('./components/recipes/PareveMarryMeChicken'));
+const PassoverRecipes = lazy(() => import('./components/recipes/PassoverRecipes'));
+const EasterRecipes = lazy(() => import('./components/recipes/EasterRecipes'));
 import ReactGA from 'react-ga4';
 
 type View = 'home' | 'results' | 'detail' | 'settings' | 'saved';
@@ -58,6 +60,12 @@ const App: React.FC = () => {
   useEffect(() => {
     ReactGA.send({ hitType: 'pageview', page: window.location.pathname });
   }, []);
+
+  const _now = new Date();
+  const _md = _now.getMonth() * 100 + _now.getDate(); // 0-indexed month * 100 + day
+  const showPassoverBanner = _md >= 215 && _md <= 313; // Mar 15 – Apr 13
+  const showEasterBanner   = _md >= 215 && _md <= 320; // Mar 15 – Apr 20
+  const showEasterGrid     = _md >= 215 && _md <= 325; // Mar 15 – Apr 25
 
   const [settings, setSettings] = useState<AppSettings>(getSettings());
   const [currentView, setCurrentView] = useState<View>('home');
@@ -114,6 +122,17 @@ const App: React.FC = () => {
           </div>
         </div>
       </header>
+
+      {currentView === 'home' && showPassoverBanner && (
+        <Link to="/recipes/passover" className="block w-full bg-gradient-to-r from-indigo-800 to-blue-700 text-white text-center py-3 px-6 font-bold hover:from-indigo-700 hover:to-blue-600 transition-all text-sm">
+          🍷 Passover is April 13 — Generate your Seder menu on PantryPivot →
+        </Link>
+      )}
+      {currentView === 'home' && showEasterBanner && (
+        <Link to="/recipes/easter" className="block w-full bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-center py-3 px-6 font-bold hover:from-emerald-500 hover:to-teal-500 transition-all text-sm">
+          🐣 Easter dinner ideas — Generate recipes from what you have →
+        </Link>
+      )}
 
       <main className="max-w-4xl mx-auto px-4 py-8">
         {error && (
@@ -184,6 +203,8 @@ const App: React.FC = () => {
                   { label: 'Shakshuka', href: '/recipes/shakshuka', emoji: '🍳' },
                   { label: 'Turkey & Sweet Potato', href: '/recipes/ground-turkey-sweet-potato', emoji: '🍠' },
                   { label: 'Dairy-Free Marry Me Chicken', href: '/recipes/dairy-free-marry-me-chicken', emoji: '🍋' },
+                  { label: 'Passover Recipes', href: '/recipes/passover', emoji: '🍷' },
+                  ...(showEasterGrid ? [{ label: 'Easter Dinner', href: '/recipes/easter', emoji: '🐣' }] : []),
                 ].map(({ label, href, emoji }) => (
                   <Link
                     key={href}
@@ -208,11 +229,20 @@ const App: React.FC = () => {
         )}
 
         {currentView === 'detail' && selectedRecipe && (
-          <RecipeDetail
-            recipe={selectedRecipe}
-            onSave={() => handleSave(selectedRecipe)}
-            onStartOver={() => setCurrentView('results')}
-          />
+          <>
+            {generationResults?.kosherForPassover && (
+              <div className="mb-4 text-center">
+                <span className="inline-flex items-center gap-2 bg-indigo-50 border border-indigo-200 text-indigo-700 font-bold px-4 py-2 rounded-full text-sm">
+                  🍷 Kosher for Passover
+                </span>
+              </div>
+            )}
+            <RecipeDetail
+              recipe={selectedRecipe}
+              onSave={() => handleSave(selectedRecipe)}
+              onStartOver={() => setCurrentView('results')}
+            />
+          </>
         )}
 
         {currentView === 'settings' && (
@@ -270,6 +300,8 @@ const App: React.FC = () => {
         <Route path="/recipes/shakshuka" element={<Shakshuka />} />
         <Route path="/recipes/ground-turkey-sweet-potato" element={<GroundTurkeySweetPotato />} />
         <Route path="/recipes/dairy-free-marry-me-chicken" element={<PareveMarryMeChicken />} />
+        <Route path="/recipes/passover" element={<PassoverRecipes />} />
+        <Route path="/recipes/easter" element={<EasterRecipes />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>

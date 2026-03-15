@@ -36,6 +36,7 @@ function buildRecipePrompt(input) {
     `Religious/Dietary Notes: ${input.customReligious || 'None'}`,
     `Avoid: ${input.avoidList?.join(', ') || 'None'}`,
     `Kosher: ${input.isKosher ? `Yes (${input.kosherType?.join(', ') || 'General'})` : 'No'}`,
+    input.kosherForPassover ? 'This recipe must be strictly Kosher for Passover. No chametz (no wheat, barley, oats, rye, spelt in any leavened form). No kitniyot (no rice, corn, beans, lentils, peas, sesame, mustard, peanuts). Use only Passover-compliant ingredients and substitutions such as matzo meal, potato starch, and almond flour. Label the recipe as Kosher for Passover.' : '',
     input.favoriteChef ? `Style Inspiration: ${input.favoriteChef}` : '',
     input.kidFriendly ? 'Kid-Friendly: Yes — mild flavors, simple textures, fun presentation, no spicy ingredients' : '',
     '',
@@ -108,6 +109,7 @@ app.post('/api/generateRecipes', async (req, res) => {
   try {
     const prompt = buildRecipePrompt(req.body);
     const data = await callGemini(prompt, req.body.ingredientPhoto);
+    if (req.body.kosherForPassover) data.kosherForPassover = true;
     res.json(data);
   } catch (err) {
     console.error('generateRecipes error:', err);

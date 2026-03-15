@@ -39,7 +39,8 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
     skillLevel: settings.skillLevel,
     unitSystem: settings.unitSystem,
     kidFriendly: false,
-    favoriteChef: settings.favoriteChef
+    favoriteChef: settings.favoriteChef,
+    kosherForPassover: false,
   });
   const updateForm = (key: keyof WizardState, value: any) => {
     setFormData(prev => ({ ...prev, [key]: value }));
@@ -228,21 +229,35 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
                 </button>
               </div>
             </div>
-            {/* Kid-Friendly Toggle */}
+            {/* Kid-Friendly & Passover Toggles */}
             <div className="space-y-4">
               <p className="text-xs font-bold text-slate-500">Household</p>
-              <button
-                type="button"
-                onClick={() => updateForm('kidFriendly', !formData.kidFriendly)}
-                className={`flex items-center gap-3 px-5 py-3 rounded-2xl border-2 font-bold text-sm transition-all ${
-                  formData.kidFriendly
-                    ? 'bg-yellow-50 border-yellow-400 text-yellow-700'
-                    : 'border-slate-200 text-slate-600 hover:border-yellow-300'
-                }`}
-              >
-                <span className="text-xl">👶</span>
-                {formData.kidFriendly ? 'Kid-Friendly ON' : 'Kid-Friendly'}
-              </button>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  onClick={() => updateForm('kidFriendly', !formData.kidFriendly)}
+                  className={`flex items-center gap-3 px-5 py-3 rounded-2xl border-2 font-bold text-sm transition-all ${
+                    formData.kidFriendly
+                      ? 'bg-yellow-50 border-yellow-400 text-yellow-700'
+                      : 'border-slate-200 text-slate-600 hover:border-yellow-300'
+                  }`}
+                >
+                  <span className="text-xl">👶</span>
+                  {formData.kidFriendly ? 'Kid-Friendly ON' : 'Kid-Friendly'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => updateForm('kosherForPassover', !formData.kosherForPassover)}
+                  className={`flex items-center gap-3 px-5 py-3 rounded-2xl border-2 font-bold text-sm transition-all ${
+                    formData.kosherForPassover
+                      ? 'bg-indigo-50 border-indigo-400 text-indigo-700'
+                      : 'border-slate-200 text-slate-600 hover:border-indigo-300'
+                  }`}
+                >
+                  <span className="text-xl">🍽</span>
+                  {formData.kosherForPassover ? 'Kosher for Passover ON' : 'Kosher for Passover'}
+                </button>
+              </div>
             </div>
             {/* Meal Type + Time */}
             <div className="grid grid-cols-2 gap-6">
