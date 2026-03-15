@@ -15,6 +15,7 @@ import GroundTurkey from './components/recipes/GroundTurkey';
 import ChickenAndRice from './components/recipes/ChickenAndRice';
 import GroundBeefPasta from './components/recipes/GroundBeefPasta';
 import InstantPotChicken from './components/recipes/InstantPotChicken';
+import NotFound from './components/NotFound';
 import ReactGA from 'react-ga4';
 
 type View = 'home' | 'results' | 'detail' | 'settings' | 'saved';
@@ -241,6 +242,7 @@ const App: React.FC = () => {
 
   return (
     <Routes>
+      <Route path="/" element={homeView} />
       <Route path="/recipes/air-fryer-chicken" element={<AirFryerChicken />} />
       <Route path="/recipes/crockpot-chicken" element={<CrockpotChicken />} />
       <Route path="/recipes/salmon" element={<SalmonRecipes />} />
@@ -248,7 +250,7 @@ const App: React.FC = () => {
       <Route path="/recipes/chicken-and-rice" element={<ChickenAndRice />} />
       <Route path="/recipes/ground-beef-pasta" element={<GroundBeefPasta />} />
       <Route path="/recipes/instant-pot-chicken" element={<InstantPotChicken />} />
-      <Route path="*" element={homeView} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };

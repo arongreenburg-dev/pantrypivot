@@ -4,4 +4,32 @@
     <loc>https://pantrypivot.com/</loc>
     <priority>1.0</priority>
   </url>
+  <url>
+    <loc>https://pantrypivot.com/recipes/air-fryer-chicken</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pantrypivot.com/recipes/crockpot-chicken</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pantrypivot.com/recipes/salmon</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pantrypivot.com/recipes/ground-turkey</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pantrypivot.com/recipes/chicken-and-rice</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pantrypivot.com/recipes/ground-beef-pasta</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://pantrypivot.com/recipes/instant-pot-chicken</loc>
+    <priority>0.8</priority>
+  </url>
 </urlset>

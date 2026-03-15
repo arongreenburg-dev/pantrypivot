@@ -187,12 +187,37 @@ const CrockpotChicken: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('classic');
   const recipe = recipes[activeTab];
   useEffect(() => {
-    document.title = 'Crockpot Chicken Recipes | PantryPivot';
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute('content', 'Set-it-and-forget-it crockpot chicken recipes. Classic, few ingredients, chicken legs, and thighs. Includes Thanksgiving turkey section.');
+    const PAGE_TITLE = 'Crockpot Chicken Recipes | PantryPivot';
+    const PAGE_DESC = 'Set-it-and-forget-it crockpot chicken recipes. Classic, few ingredients, chicken legs, and thighs. Includes Thanksgiving turkey section.';
+    const PAGE_URL = 'https://pantrypivot.com/recipes/crockpot-chicken';
+    document.title = PAGE_TITLE;
+    const update = (sel: string, attr: string, val: string): string => {
+      const el = document.querySelector(sel);
+      const prev = el ? (el.getAttribute(attr) ?? '') : '';
+      if (el) el.setAttribute(attr, val);
+      return prev;
+    };
+    const prevDesc = update('meta[name="description"]', 'content', PAGE_DESC);
+    const prevOgTitle = update('meta[property="og:title"]', 'content', PAGE_TITLE);
+    const prevOgDesc = update('meta[property="og:description"]', 'content', PAGE_DESC);
+    const prevOgUrl = update('meta[property="og:url"]', 'content', PAGE_URL);
+    const existingCanonical = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    const prevCanonical = existingCanonical ? existingCanonical.getAttribute('href') : null;
+    const canonRef: HTMLLinkElement = existingCanonical || (() => {
+      const el = document.createElement('link') as HTMLLinkElement;
+      el.rel = 'canonical';
+      document.head.appendChild(el);
+      return el;
+    })();
+    canonRef.href = PAGE_URL;
     return () => {
       document.title = 'Recipes for Ingredients You Have | AI Recipe Generator';
-      if (meta) meta.setAttribute('content', 'Stop staring at the fridge. Find recipes for the ingredients you already have. AI generates a custom recipe in under 30 seconds.');
+      update('meta[name="description"]', 'content', prevDesc);
+      update('meta[property="og:title"]', 'content', prevOgTitle);
+      update('meta[property="og:description"]', 'content', prevOgDesc);
+      update('meta[property="og:url"]', 'content', prevOgUrl);
+      if (prevCanonical !== null) canonRef.href = prevCanonical;
+      else canonRef.remove();
     };
   }, []);
 
@@ -211,7 +236,18 @@ const CrockpotChicken: React.FC = () => {
       </header>
 
       <main className="max-w-4xl mx-auto px-4 py-10">
+        {/* Breadcrumb */}
+        <nav aria-label="breadcrumb" className="text-xs text-slate-400 mb-8">
+          <ol className="flex items-center gap-1.5">
+            <li><a href="https://pantrypivot.com" className="hover:text-orange-500 transition-colors">Home</a></li>
+            <li className="text-slate-300">›</li>
+            <li>Recipes</li>
+            <li className="text-slate-300">›</li>
+            <li className="text-slate-600 font-medium">Crockpot Chicken</li>
+          </ol>
+        </nav>
         {/* Hero */}
+        {/* TODO: Add recipe hero image here, e.g. <img src="..." alt="Crockpot chicken breast in slow cooker with herbs" /> */}
         <div className="text-center mb-10">
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Crockpot Chicken Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
@@ -389,8 +425,21 @@ const CrockpotChicken: React.FC = () => {
         </div>
       </main>
 
-      <footer className="max-w-4xl mx-auto px-4 py-8 border-t border-slate-200 mt-12 text-center">
-        <p className="text-[10px] text-slate-400 font-medium uppercase tracking-widest leading-relaxed">
+      <footer className="max-w-4xl mx-auto px-4 pt-10 pb-8 border-t border-slate-200 mt-12">
+        <div className="text-center mb-6">
+          <a href="https://pantrypivot.com" className="inline-block bg-slate-900 hover:bg-slate-700 text-white font-bold py-3 px-8 rounded-2xl transition-all text-sm">
+            Generate More Recipes on PantryPivot →
+          </a>
+        </div>
+        <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 mb-8 text-sm">
+          <Link to="/recipes/air-fryer-chicken" className="text-slate-500 hover:text-orange-600 transition-colors">Air Fryer Chicken</Link>
+          <Link to="/recipes/salmon" className="text-slate-500 hover:text-orange-600 transition-colors">Salmon Recipes</Link>
+          <Link to="/recipes/ground-turkey" className="text-slate-500 hover:text-orange-600 transition-colors">Ground Turkey</Link>
+          <Link to="/recipes/chicken-and-rice" className="text-slate-500 hover:text-orange-600 transition-colors">Chicken and Rice</Link>
+          <Link to="/recipes/ground-beef-pasta" className="text-slate-500 hover:text-orange-600 transition-colors">Ground Beef Pasta</Link>
+          <Link to="/recipes/instant-pot-chicken" className="text-slate-500 hover:text-orange-600 transition-colors">Instant Pot Chicken</Link>
+        </div>
+        <p className="text-[10px] text-slate-400 font-medium uppercase tracking-widest leading-relaxed text-center">
           Disclosure: PantryPivot participates in the Amazon Associates Program. <br />
           As an Amazon Associate, we may earn from qualifying purchases at no additional cost to you.
         </p>
