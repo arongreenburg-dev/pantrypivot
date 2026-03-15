@@ -231,7 +231,7 @@ const CrockpotChicken: React.FC = () => {
       "@type": "Recipe",
       "name": "Crockpot Chicken",
       "description": "Set-it-and-forget-it crockpot chicken recipes. Classic, few ingredients, chicken legs, and thighs. Includes Thanksgiving turkey section.",
-      "image": "https://pantrypivot.com/og-image.png",
+      "image": "https://images.pexels.com/photos/31648205/pexels-photo-31648205.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -289,8 +289,19 @@ const CrockpotChicken: React.FC = () => {
             <li className="text-slate-600 font-medium">Crockpot Chicken</li>
           </ol>
         </nav>
-        {/* Hero */}
-        {/* TODO: Add recipe hero image here, e.g. <img src="..." alt="Crockpot chicken breast in slow cooker with herbs" /> */}
+        {/* Hero Image */}
+        <div className="mb-8 rounded-2xl overflow-hidden">
+          <img
+            src="https://images.pexels.com/photos/31648205/pexels-photo-31648205.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            alt="Slow cooker chicken with herbs and vegetables"
+            width={800}
+            height={500}
+            loading="lazy"
+            fetchPriority="high"
+            className="w-full object-cover rounded-2xl"
+          />
+          <p className="text-xs text-slate-400 text-center mt-1">Photo by Elmer Domingo via Pexels</p>
+        </div>
         <div className="text-center mb-10">
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Crockpot Chicken Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">

@@ -22,6 +22,7 @@ const RoastChicken = lazy(() => import('./components/recipes/RoastChicken'));
 const ChickenSoup = lazy(() => import('./components/recipes/ChickenSoup'));
 const Shakshuka = lazy(() => import('./components/recipes/Shakshuka'));
 const GroundTurkeySweetPotato = lazy(() => import('./components/recipes/GroundTurkeySweetPotato'));
+const PareveMarryMeChicken = lazy(() => import('./components/recipes/PareveMarryMeChicken'));
 import ReactGA from 'react-ga4';
 
 type View = 'home' | 'results' | 'detail' | 'settings' | 'saved';
@@ -182,6 +183,7 @@ const App: React.FC = () => {
                   { label: 'Chicken Soup', href: '/recipes/chicken-soup', emoji: '🍜' },
                   { label: 'Shakshuka', href: '/recipes/shakshuka', emoji: '🍳' },
                   { label: 'Turkey & Sweet Potato', href: '/recipes/ground-turkey-sweet-potato', emoji: '🍠' },
+                  { label: 'Dairy-Free Marry Me Chicken', href: '/recipes/dairy-free-marry-me-chicken', emoji: '🍋' },
                 ].map(({ label, href, emoji }) => (
                   <Link
                     key={href}
@@ -267,6 +269,7 @@ const App: React.FC = () => {
         <Route path="/recipes/chicken-soup" element={<ChickenSoup />} />
         <Route path="/recipes/shakshuka" element={<Shakshuka />} />
         <Route path="/recipes/ground-turkey-sweet-potato" element={<GroundTurkeySweetPotato />} />
+        <Route path="/recipes/dairy-free-marry-me-chicken" element={<PareveMarryMeChicken />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>

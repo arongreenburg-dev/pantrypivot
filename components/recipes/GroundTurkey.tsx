@@ -194,7 +194,7 @@ const GroundTurkey: React.FC = () => {
       "@type": "Recipe",
       "name": "Ground Turkey Recipes",
       "description": "Easy ground turkey recipes — classic, bowls, sweet potato, and healthy dinner ideas. Quick meat-only meals under 30 minutes.",
-      "image": "https://pantrypivot.com/og-image.png",
+      "image": "https://images.pexels.com/photos/34429593/pexels-photo-34429593.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -250,7 +250,19 @@ const GroundTurkey: React.FC = () => {
             <li className="text-slate-600 font-medium">Ground Turkey</li>
           </ol>
         </nav>
-        {/* TODO: Add recipe hero image here, e.g. <img src="..." alt="Seasoned ground turkey browning in a skillet" /> */}
+        {/* Hero Image */}
+        <div className="mb-8 rounded-2xl overflow-hidden">
+          <img
+            src="https://images.pexels.com/photos/34429593/pexels-photo-34429593.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            alt="Seasoned ground turkey cooking in a skillet"
+            width={800}
+            height={500}
+            loading="lazy"
+            fetchPriority="high"
+            className="w-full object-cover rounded-2xl"
+          />
+          <p className="text-xs text-slate-400 text-center mt-1">Photo by Laura oliveira via Pexels</p>
+        </div>
         <div className="text-center mb-10">
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Ground Turkey Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">

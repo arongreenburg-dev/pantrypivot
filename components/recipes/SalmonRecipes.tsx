@@ -180,7 +180,7 @@ const SalmonRecipes: React.FC = () => {
       "@type": "Recipe",
       "name": "Baked Salmon",
       "description": "Easy pareve salmon recipes — baked, sheet pan, air fryer, and salmon with sweet potato. Kosher-friendly weeknight dinners.",
-      "image": "https://pantrypivot.com/og-image.png",
+      "image": "https://images.pexels.com/photos/5014596/pexels-photo-5014596.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -235,8 +235,19 @@ const SalmonRecipes: React.FC = () => {
             <li className="text-slate-600 font-medium">Salmon Recipes</li>
           </ol>
         </nav>
-        {/* Hero */}
-        {/* TODO: Add recipe hero image here, e.g. <img src="..." alt="Baked salmon fillet with lemon and herbs on a sheet pan" /> */}
+        {/* Hero Image */}
+        <div className="mb-8 rounded-2xl overflow-hidden">
+          <img
+            src="https://images.pexels.com/photos/5014596/pexels-photo-5014596.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            alt="Baked salmon fillet with lemon and herbs on a sheet pan"
+            width={800}
+            height={500}
+            loading="lazy"
+            fetchPriority="high"
+            className="w-full object-cover rounded-2xl"
+          />
+          <p className="text-xs text-slate-400 text-center mt-1">Photo by Anastasia Yudin via Pexels</p>
+        </div>
         <div className="text-center mb-10">
           <span className="inline-block bg-blue-100 text-blue-700 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
             Pareve

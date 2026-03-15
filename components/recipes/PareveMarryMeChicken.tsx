@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-type Tab = 'classic' | 'noodle' | 'rice' | 'lemon';
+type Tab = 'classic' | 'soup' | 'instantpot' | 'crockpot';
 
 interface Recipe {
   title: string;
@@ -14,142 +14,150 @@ interface Recipe {
 
 const recipes: Record<Tab, Recipe> = {
   classic: {
-    title: 'Classic Chicken Soup',
-    description: 'A rich, clear-broth chicken soup made from scratch — deeply comforting and soul-warming.',
-    time: '1 hr 30 min',
-    servings: '6 servings',
+    title: 'Classic Dairy-Free Marry Me Chicken',
+    description: 'Rich, creamy, and completely dairy-free — sun-dried tomatoes and coconut cream create an irresistible sauce. Fully pareve and kosher-friendly.',
+    time: '35 min',
+    servings: '4 servings',
     ingredients: [
-      '1 whole chicken (3–4 lbs) or 3 lbs bone-in chicken pieces',
-      '3 medium carrots, sliced',
-      '3 stalks celery with leaves, sliced',
-      '1 large onion, quartered',
-      '4 cloves garlic, smashed',
-      '2 parsnips, sliced',
-      '10 cups cold water',
-      '2 tsp salt (plus more to taste)',
+      '4 boneless, skinless chicken breasts (6–8 oz each)',
+      '1 can (13.5 oz) full-fat coconut cream',
+      '½ cup sun-dried tomatoes in oil, drained and chopped',
+      '4 cloves garlic, minced',
+      '1 cup chicken broth',
+      '2 tbsp olive oil',
+      '1 tsp smoked paprika',
+      '1 tsp Italian seasoning',
+      '½ tsp red pepper flakes',
+      '1 tsp salt',
       '½ tsp black pepper',
-      '1 tsp dried dill',
-      '2 bay leaves',
-      'Fresh parsley for garnish',
+      'Fresh basil or parsley for garnish',
     ],
     instructions: [
-      'Place chicken in a large stockpot. Cover with cold water.',
-      'Bring to a boil over high heat, skimming foam and impurities from the surface for the first 10 minutes.',
-      'Add onion, garlic, bay leaves, dill, salt, and pepper. Reduce heat to low.',
-      'Simmer partially covered for 45 minutes.',
-      'Add carrots, celery, and parsnips. Continue simmering 30 more minutes until vegetables are tender and chicken is falling off the bone.',
-      'Remove chicken from pot and let cool slightly. Shred meat, discarding skin and bones.',
-      'Remove and discard bay leaves. Skim excess fat from the surface if desired.',
-      'Return shredded chicken to the pot. Adjust seasoning and serve garnished with fresh parsley.',
+      'Season chicken breasts on both sides with paprika, salt, and pepper.',
+      'Heat olive oil in a large skillet over medium-high heat. Sear chicken 4–5 minutes per side until golden. Remove and set aside.',
+      'In the same skillet, reduce heat to medium. Add garlic and cook 30 seconds until fragrant.',
+      'Add sun-dried tomatoes and Italian seasoning. Stir and cook 1 minute.',
+      'Pour in chicken broth and scrape up any browned bits from the pan.',
+      'Add coconut cream and red pepper flakes. Stir well to combine. Bring to a gentle simmer.',
+      'Return chicken to the skillet. Spoon sauce over the top.',
+      'Simmer uncovered 10–12 minutes until chicken is cooked through (165°F) and sauce has thickened.',
+      'Garnish with fresh basil or parsley and serve immediately.',
     ],
   },
-  noodle: {
-    title: 'Chicken Noodle Soup',
-    description: 'Classic chicken noodle soup with egg noodles in a rich golden broth — hearty, comforting, and ready in an hour.',
-    time: '1 hr',
+  soup: {
+    title: 'Dairy-Free Marry Me Chicken Soup',
+    description: 'All the flavors of Marry Me Chicken in a cozy, creamy soup — with gnocchi, spinach, and coconut cream. No dairy, all comfort.',
+    time: '40 min',
     servings: '6 servings',
     ingredients: [
       '1.5 lbs boneless, skinless chicken breasts or thighs',
-      '3 medium carrots, sliced',
-      '3 stalks celery, sliced',
+      '1 can (13.5 oz) full-fat coconut cream',
+      '½ cup sun-dried tomatoes, chopped',
+      '4 cups chicken broth',
+      '1 lb potato gnocchi (or small pasta)',
+      '3 cups fresh spinach',
       '1 medium onion, diced',
-      '3 cloves garlic, minced',
-      '8 cups chicken broth',
-      '3 cups wide egg noodles',
-      '1 tbsp olive oil',
-      '1 tsp dried thyme',
+      '4 cloves garlic, minced',
+      '2 tbsp olive oil',
+      '1 tsp Italian seasoning',
+      '½ tsp red pepper flakes',
+      '1 tsp smoked paprika',
       '1 tsp salt',
       '½ tsp black pepper',
-      'Fresh parsley, chopped, for garnish',
+      'Fresh basil for garnish',
     ],
     instructions: [
-      'Heat olive oil in a large pot over medium heat. Add onion and cook 3–4 minutes until softened. Add garlic and cook 1 minute.',
-      'Add whole chicken pieces and chicken broth. Bring to a boil.',
-      'Reduce heat and simmer 20 minutes until chicken is cooked through.',
-      'Remove chicken, shred with two forks, and return to the pot.',
-      'Add carrots, celery, thyme, salt, and pepper. Simmer 10 minutes until vegetables are tender.',
-      'Add egg noodles and cook 7–8 minutes until al dente.',
-      'Taste and adjust seasoning. Serve hot, garnished with fresh parsley.',
+      'Heat olive oil in a large pot over medium heat. Add onion and cook 4 minutes. Add garlic and cook 30 seconds.',
+      'Add whole chicken breasts, chicken broth, paprika, Italian seasoning, red pepper flakes, salt, and pepper.',
+      'Bring to a boil, reduce heat, and simmer 20 minutes until chicken is cooked through.',
+      'Remove chicken, shred with two forks, and return to pot.',
+      'Add sun-dried tomatoes and coconut cream. Stir to combine and bring back to a gentle simmer.',
+      'Add gnocchi and cook 3–4 minutes until they float and are tender.',
+      'Stir in fresh spinach and cook 1–2 minutes until wilted.',
+      'Taste and adjust seasoning. Garnish with fresh basil and serve hot.',
     ],
   },
-  rice: {
-    title: 'Chicken Rice Soup',
-    description: 'Cozy chicken and rice soup with a light, savory broth — simple, nourishing, and endlessly satisfying.',
-    time: '50 min',
-    servings: '6 servings',
+  instantpot: {
+    title: 'Instant Pot Dairy-Free Marry Me Chicken',
+    description: 'Pressure-cooked marry me chicken with coconut cream and sun-dried tomatoes — tender, saucy, and completely dairy-free in under 30 minutes.',
+    time: '30 min',
+    servings: '4 servings',
     ingredients: [
-      '1.5 lbs boneless, skinless chicken breasts or thighs',
-      '¾ cup long-grain white rice',
-      '3 medium carrots, sliced',
-      '3 stalks celery, sliced',
-      '1 medium onion, diced',
-      '3 cloves garlic, minced',
-      '8 cups chicken broth',
-      '1 tbsp olive oil',
-      '1 tsp dried thyme',
+      '4 boneless, skinless chicken breasts',
+      '1 can (13.5 oz) full-fat coconut cream',
+      '½ cup sun-dried tomatoes, chopped',
+      '4 cloves garlic, minced',
+      '½ cup chicken broth',
+      '2 tbsp olive oil',
+      '1 tsp smoked paprika',
+      '1 tsp Italian seasoning',
+      '½ tsp red pepper flakes',
       '1 tsp salt',
       '½ tsp black pepper',
-      'Fresh dill or parsley for garnish',
+      'Fresh basil for garnish',
     ],
     instructions: [
-      'Heat olive oil over medium heat. Sauté onion 3 minutes, add garlic 1 minute.',
-      'Add chicken and broth. Bring to a boil.',
-      'Reduce heat and simmer 20 minutes until chicken is cooked through. Remove, shred with two forks, and return to pot.',
-      'Add carrots, celery, rice, thyme, salt, and pepper.',
-      'Simmer 20 minutes until rice and vegetables are tender.',
-      'Adjust seasoning. Serve garnished with fresh dill or parsley.',
+      'Season chicken breasts with paprika, salt, and pepper.',
+      'Set Instant Pot to Sauté. Heat olive oil and sear chicken 2–3 minutes per side. Press Cancel.',
+      'Remove chicken. Add chicken broth and scrape up any browned bits.',
+      'Add garlic, sun-dried tomatoes, Italian seasoning, and red pepper flakes.',
+      'Return chicken to the pot. Seal lid, set valve to Sealing.',
+      'Cook on Manual High Pressure for 8 minutes.',
+      'Natural release 5 minutes, then quick-release remaining pressure.',
+      'Remove chicken. Set Instant Pot to Sauté. Stir in coconut cream and simmer 3–4 minutes until sauce thickens.',
+      'Return chicken and spoon sauce over the top. Garnish with fresh basil.',
     ],
   },
-  lemon: {
-    title: 'Lemon Chicken Soup',
-    description: 'A bright, zesty chicken soup with lemon and herbs — light and clean yet deeply flavorful.',
-    time: '50 min',
-    servings: '6 servings',
+  crockpot: {
+    title: 'Crockpot Dairy-Free Marry Me Chicken',
+    description: 'Set-it-and-forget-it dairy-free marry me chicken with coconut cream — slow-cooked to fall-apart tenderness with a rich, creamy sauce.',
+    time: '6 hrs (low) or 3 hrs (high)',
+    servings: '4 servings',
     ingredients: [
-      '1.5 lbs boneless, skinless chicken breasts',
-      '½ cup orzo or small pasta',
-      '3 medium carrots, sliced',
-      '1 medium onion, diced',
-      '3 cloves garlic, minced',
-      '8 cups chicken broth',
-      'Juice of 2 lemons (about ¼ cup)',
-      'Zest of 1 lemon',
-      '1 tbsp olive oil',
-      '1 tsp dried dill',
+      '4 boneless, skinless chicken breasts',
+      '1 can (13.5 oz) full-fat coconut cream',
+      '½ cup sun-dried tomatoes, chopped',
+      '4 cloves garlic, minced',
+      '½ cup chicken broth',
+      '1 tsp smoked paprika',
+      '1 tsp Italian seasoning',
+      '½ tsp red pepper flakes',
       '1 tsp salt',
       '½ tsp black pepper',
-      'Fresh parsley or dill for garnish',
+      'Fresh basil or parsley for garnish',
     ],
     instructions: [
-      'Heat olive oil over medium. Sauté onion 3 minutes, add garlic 1 minute.',
-      'Add chicken and broth. Bring to a boil. Reduce heat and simmer 20 minutes.',
-      'Remove chicken, shred, and return to pot.',
-      'Add carrots and orzo. Simmer 10 minutes until tender.',
-      'Stir in lemon juice, lemon zest, dill, salt, and pepper.',
-      'Simmer 5 more minutes. Taste and adjust acidity with more lemon if desired. Serve with fresh herbs.',
+      'Season chicken breasts with paprika, salt, and pepper. Place in the crockpot.',
+      'Add minced garlic, sun-dried tomatoes, Italian seasoning, and red pepper flakes on top of and around the chicken.',
+      'Pour chicken broth around the chicken.',
+      'Cook on LOW for 6 hours or HIGH for 3 hours, until chicken is very tender.',
+      'Remove chicken from the crockpot. Stir coconut cream into the cooking liquid.',
+      'Return chicken and let it rest in the sauce for 10 minutes.',
+      'Optionally shred the chicken or leave whole. Spoon sauce generously over the top.',
+      'Garnish with fresh basil or parsley and serve over rice or pasta.',
     ],
   },
 };
 
 const TABS: { key: Tab; label: string }[] = [
-  { key: 'classic', label: 'Classic Chicken Soup' },
-  { key: 'noodle', label: 'Chicken Noodle' },
-  { key: 'rice', label: 'Chicken Rice Soup' },
-  { key: 'lemon', label: 'Lemon Chicken Soup' },
+  { key: 'classic', label: 'Dairy-Free Classic' },
+  { key: 'soup', label: 'Dairy-Free Soup' },
+  { key: 'instantpot', label: 'Dairy-Free Instant Pot' },
+  { key: 'crockpot', label: 'Dairy-Free Crockpot' },
 ];
 
 const AMAZON_LINK = 'https://amzn.to/40ZcXPs';
 const PANTRYPIVOT_LINK = 'https://pantrypivot.com';
 
-const ChickenSoup: React.FC = () => {
+const PareveMarryMeChicken: React.FC = () => {
   const [activeTab, setActiveTab] = useState<Tab>('classic');
   const [copied, setCopied] = useState(false);
   const recipe = recipes[activeTab];
 
   useEffect(() => {
-    const PAGE_TITLE = 'Chicken Soup Recipes | PantryPivot';
-    const PAGE_DESC = 'Comforting chicken soup recipes — classic, chicken noodle, chicken rice, and lemon chicken soup. Meat-only, no dairy.';
-    const PAGE_URL = 'https://pantrypivot.com/recipes/chicken-soup';
+    const PAGE_TITLE = 'Dairy-Free Marry Me Chicken | PantryPivot';
+    const PAGE_DESC = 'Dairy-free Marry Me Chicken made with coconut cream — classic, soup, Instant Pot, and Crockpot versions. Kosher-friendly and delicious.';
+    const PAGE_URL = 'https://pantrypivot.com/recipes/dairy-free-marry-me-chicken';
     document.title = PAGE_TITLE;
     const update = (sel: string, attr: string, val: string): string => {
       const el = document.querySelector(sel);
@@ -188,34 +196,35 @@ const ChickenSoup: React.FC = () => {
     script.textContent = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Recipe",
-      "name": "Classic Chicken Soup",
-      "description": "Comforting chicken soup recipes — classic, chicken noodle, chicken rice, and lemon chicken soup. Meat-only, no dairy.",
-      "image": "https://images.pexels.com/photos/10172749/pexels-photo-10172749.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "name": "Dairy-Free Marry Me Chicken",
+      "description": "Dairy-free Marry Me Chicken made with coconut cream — classic, soup, Instant Pot, and Crockpot versions. Kosher-friendly and delicious.",
+      "image": "https://images.pexels.com/photos/17321116/pexels-photo-17321116.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
-      "cookTime": "PT90M",
+      "cookTime": "PT35M",
       "recipeCategory": "Main Course",
       "recipeCuisine": "American",
-      "keywords": "chicken soup, chicken noodle soup, homemade chicken soup",
-      "url": "https://pantrypivot.com/recipes/chicken-soup",
+      "keywords": "dairy-free marry me chicken, pareve marry me chicken, coconut cream chicken, kosher chicken",
+      "url": "https://pantrypivot.com/recipes/dairy-free-marry-me-chicken",
       "recipeIngredient": [
-        "1 whole chicken (3\u20134 lbs) or 3 lbs bone-in chicken pieces",
-        "3 medium carrots, sliced",
-        "3 stalks celery with leaves, sliced",
-        "1 large onion, quartered",
-        "4 cloves garlic, smashed"
+        "4 boneless, skinless chicken breasts (6\u20138 oz each)",
+        "1 can (13.5 oz) full-fat coconut cream",
+        "\u00bd cup sun-dried tomatoes in oil, drained and chopped",
+        "4 cloves garlic, minced",
+        "1 cup chicken broth"
       ],
       "recipeYield": "4 servings",
       "recipeInstructions": [
-        { "@type": "HowToStep", "text": "Place chicken in a large stockpot. Cover with cold water." },
-        { "@type": "HowToStep", "text": "Bring to a boil over high heat, skimming foam and impurities from the surface for the first 10 minutes." },
-        { "@type": "HowToStep", "text": "Add onion, garlic, bay leaves, dill, salt, and pepper. Reduce heat to low." },
-        { "@type": "HowToStep", "text": "Simmer partially covered for 45 minutes." },
-        { "@type": "HowToStep", "text": "Add carrots, celery, and parsnips. Continue simmering 30 more minutes until vegetables are tender and chicken is falling off the bone." },
-        { "@type": "HowToStep", "text": "Remove chicken from pot and let cool slightly. Shred meat, discarding skin and bones." },
-        { "@type": "HowToStep", "text": "Remove and discard bay leaves. Skim excess fat from the surface if desired." },
-        { "@type": "HowToStep", "text": "Return shredded chicken to the pot. Adjust seasoning and serve garnished with fresh parsley." }
+        { "@type": "HowToStep", "text": "Season chicken breasts on both sides with paprika, salt, and pepper." },
+        { "@type": "HowToStep", "text": "Heat olive oil in a large skillet over medium-high heat. Sear chicken 4\u20135 minutes per side until golden. Remove and set aside." },
+        { "@type": "HowToStep", "text": "In the same skillet, reduce heat to medium. Add garlic and cook 30 seconds until fragrant." },
+        { "@type": "HowToStep", "text": "Add sun-dried tomatoes and Italian seasoning. Stir and cook 1 minute." },
+        { "@type": "HowToStep", "text": "Pour in chicken broth and scrape up any browned bits from the pan." },
+        { "@type": "HowToStep", "text": "Add coconut cream and red pepper flakes. Stir well to combine. Bring to a gentle simmer." },
+        { "@type": "HowToStep", "text": "Return chicken to the skillet. Spoon sauce over the top." },
+        { "@type": "HowToStep", "text": "Simmer uncovered 10\u201312 minutes until chicken is cooked through (165\u00b0F) and sauce has thickened." },
+        { "@type": "HowToStep", "text": "Garnish with fresh basil or parsley and serve immediately." }
       ]
     });
     document.head.appendChild(script);
@@ -244,39 +253,43 @@ const ChickenSoup: React.FC = () => {
             <li className="text-slate-300">›</li>
             <li>Recipes</li>
             <li className="text-slate-300">›</li>
-            <li className="text-slate-600 font-medium">Chicken Soup</li>
+            <li className="text-slate-600 font-medium">Dairy-Free Marry Me Chicken</li>
           </ol>
         </nav>
 
         {/* Hero Image */}
         <div className="mb-8 rounded-2xl overflow-hidden">
           <img
-            src="https://images.pexels.com/photos/10172749/pexels-photo-10172749.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-            alt="Chicken noodle soup in a bowl"
+            src="https://images.pexels.com/photos/17321116/pexels-photo-17321116.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            alt="Creamy dairy-free marry me chicken skillet with sun-dried tomatoes"
             width={800}
             height={500}
             loading="lazy"
             fetchPriority="high"
             className="w-full object-cover rounded-2xl"
           />
-          <p className="text-xs text-slate-400 text-center mt-1">Photo by Jana Ohajdova via Pexels</p>
+          <p className="text-xs text-slate-400 text-center mt-1">Photo by Shameel mukkath via Pexels</p>
         </div>
+
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Chicken Soup Recipes</h1>
+          <span className="inline-block bg-green-100 text-green-700 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
+            Dairy-Free
+          </span>
+          <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Dairy-Free Marry Me Chicken</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
-            Soul-warming chicken soup recipes for every craving — classic broth, noodles, rice, and bright lemon.
+            The viral recipe — made completely dairy-free with coconut cream. Classic, soup, Instant Pot, and Crockpot versions.
           </p>
         </div>
 
         {/* Amazon CTA */}
         <div className="text-center mb-6">
           <a
-            href="https://amzn.to/4bvEX2h"
+            href={AMAZON_LINK}
             target="_blank"
             rel="noopener noreferrer sponsored"
             className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full transition-colors text-sm"
           >
-            Shop Soup Pots on Amazon →
+            Order Ingredients on Amazon Fresh
           </a>
         </div>
 
@@ -299,7 +312,13 @@ const ChickenSoup: React.FC = () => {
 
         {/* Recipe Card */}
         <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+          {/* Recipe Header */}
           <div className="bg-orange-50 border-b border-orange-100 px-8 py-6">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="inline-block bg-green-100 text-green-700 font-black text-xs uppercase tracking-widest px-3 py-1 rounded-full">
+                Dairy-Free
+              </span>
+            </div>
             <h2 className="text-2xl font-black text-slate-900 mb-1">{recipe.title}</h2>
             <p className="text-slate-500 mb-4">{recipe.description}</p>
             <div className="flex gap-4 text-sm font-semibold text-slate-600">
@@ -309,10 +328,9 @@ const ChickenSoup: React.FC = () => {
           </div>
 
           <div className="p-8 grid md:grid-cols-2 gap-10">
+            {/* Ingredients */}
             <div>
-              <h3 className="text-lg font-black text-slate-900 mb-4 uppercase tracking-wide text-sm text-orange-600">
-                Ingredients
-              </h3>
+              <h3 className="text-sm font-black text-orange-600 uppercase tracking-wide mb-4">Ingredients</h3>
               <ul className="space-y-2">
                 {recipe.ingredients.map((ing, i) => (
                   <li key={i} className="flex items-start gap-2 text-slate-700">
@@ -322,10 +340,10 @@ const ChickenSoup: React.FC = () => {
                 ))}
               </ul>
             </div>
+
+            {/* Instructions */}
             <div>
-              <h3 className="text-lg font-black text-slate-900 mb-4 uppercase tracking-wide text-sm text-orange-600">
-                Instructions
-              </h3>
+              <h3 className="text-sm font-black text-orange-600 uppercase tracking-wide mb-4">Instructions</h3>
               <ol className="space-y-4">
                 {recipe.instructions.map((step, i) => (
                   <li key={i} className="flex items-start gap-3">
@@ -403,6 +421,9 @@ const ChickenSoup: React.FC = () => {
           <Link to="/recipes/instant-pot-chicken" className="text-slate-500 hover:text-orange-600 transition-colors">Instant Pot Chicken</Link>
           <Link to="/recipes/beef-stew" className="text-slate-500 hover:text-orange-600 transition-colors">Beef Stew</Link>
           <Link to="/recipes/roast-chicken" className="text-slate-500 hover:text-orange-600 transition-colors">Roast Chicken</Link>
+          <Link to="/recipes/chicken-soup" className="text-slate-500 hover:text-orange-600 transition-colors">Chicken Soup</Link>
+          <Link to="/recipes/shakshuka" className="text-slate-500 hover:text-orange-600 transition-colors">Shakshuka</Link>
+          <Link to="/recipes/ground-turkey-sweet-potato" className="text-slate-500 hover:text-orange-600 transition-colors">Turkey & Sweet Potato</Link>
         </div>
         <p className="text-[10px] text-slate-400 font-medium uppercase tracking-widest leading-relaxed text-center">
           Disclosure: PantryPivot participates in the Amazon Associates Program. <br />
@@ -413,4 +434,4 @@ const ChickenSoup: React.FC = () => {
   );
 };
 
-export default ChickenSoup;
+export default PareveMarryMeChicken;

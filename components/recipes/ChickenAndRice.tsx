@@ -198,7 +198,7 @@ const ChickenAndRice: React.FC = () => {
       "@type": "Recipe",
       "name": "Chicken and Rice",
       "description": "Easy chicken and rice recipes — classic, soup, creamy casserole, and rice bowls. Simple meat-only dinners the whole family loves.",
-      "image": "https://pantrypivot.com/og-image.png",
+      "image": "https://images.pexels.com/photos/28898628/pexels-photo-28898628.png?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -255,7 +255,19 @@ const ChickenAndRice: React.FC = () => {
             <li className="text-slate-600 font-medium">Chicken and Rice</li>
           </ol>
         </nav>
-        {/* TODO: Add recipe hero image here, e.g. <img src="..." alt="Chicken and rice in a bowl with herbs and seasoning" /> */}
+        {/* Hero Image */}
+        <div className="mb-8 rounded-2xl overflow-hidden">
+          <img
+            src="https://images.pexels.com/photos/28898628/pexels-photo-28898628.png?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            alt="Chicken and rice bowl with herbs and seasoning"
+            width={800}
+            height={500}
+            loading="lazy"
+            fetchPriority="high"
+            className="w-full object-cover rounded-2xl"
+          />
+          <p className="text-xs text-slate-400 text-center mt-1">Photo by Ayat Shahin via Pexels</p>
+        </div>
         <div className="text-center mb-10">
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Chicken and Rice Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">

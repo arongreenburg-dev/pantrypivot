@@ -52,4 +52,8 @@
     <loc>https://pantrypivot.com/recipes/ground-turkey-sweet-potato</loc>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://pantrypivot.com/recipes/dairy-free-marry-me-chicken</loc>
+    <priority>0.8</priority>
+  </url>
 </urlset>
