@@ -199,7 +199,7 @@ const Shakshuka: React.FC = () => {
       "@type": "Recipe",
       "name": "Classic Shakshuka",
       "description": "Easy shakshuka recipes — classic, spicy, green, and with chickpeas. All pareve, no meat, no dairy. Ready in 30 minutes.",
-      "image": "https://images.pexels.com/photos/6419606/pexels-photo-6419606.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "image": "https://images.pexels.com/photos/6275111/pexels-photo-6275111.jpeg?auto=compresshttps://images.pexels.com/photos/6275111/pexels-photo-6275111.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -260,7 +260,7 @@ const Shakshuka: React.FC = () => {
         {/* Hero Image */}
         <div className="mb-8 rounded-2xl overflow-hidden">
           <img
-            src="https://images.pexels.com/photos/6419606/pexels-photo-6419606.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            src="https://images.pexels.com/photos/6275111/pexels-photo-6275111.jpeg?auto=compresshttps://images.pexels.com/photos/6275111/pexels-photo-6275111.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
             alt="Shakshuka eggs poached in spiced tomato sauce"
             width={800}
             height={500}

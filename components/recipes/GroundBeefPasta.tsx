@@ -197,7 +197,7 @@ const GroundBeefPasta: React.FC = () => {
       "@type": "Recipe",
       "name": "Ground Beef Pasta",
       "description": "Easy ground beef pasta recipes — classic, penne, casserole, and taco pasta. Quick meat-only dinners ready in 30 minutes.",
-      "image": "https://images.pexels.com/photos/722670/spaghetti-bolognese-food-rustic-722670.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "image": "https://images.pexels.com/photos/6287525/pexels-photo-6287525.jpeg?auto=compresshttps://images.pexels.com/photos/6287525/pexels-photo-6287525.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -257,7 +257,7 @@ const GroundBeefPasta: React.FC = () => {
         {/* Hero Image */}
         <div className="mb-8 rounded-2xl overflow-hidden">
           <img
-            src="https://images.pexels.com/photos/722670/spaghetti-bolognese-food-rustic-722670.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            src="https://images.pexels.com/photos/6287525/pexels-photo-6287525.jpeg?auto=compresshttps://images.pexels.com/photos/6287525/pexels-photo-6287525.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
             alt="Pasta with ground beef and tomato sauce"
             width={800}
             height={500}

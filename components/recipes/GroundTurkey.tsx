@@ -194,7 +194,7 @@ const GroundTurkey: React.FC = () => {
       "@type": "Recipe",
       "name": "Ground Turkey Recipes",
       "description": "Easy ground turkey recipes — classic, bowls, sweet potato, and healthy dinner ideas. Quick meat-only meals under 30 minutes.",
-      "image": "https://images.pexels.com/photos/5908053/pexels-photo-5908053.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "image": "https://images.pexels.com/photos/34429593/pexels-photo-34429593.jpeg?auto=compresshttps://images.pexels.com/photos/34429593/pexels-photo-34429593.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -253,7 +253,7 @@ const GroundTurkey: React.FC = () => {
         {/* Hero Image */}
         <div className="mb-8 rounded-2xl overflow-hidden">
           <img
-            src="https://images.pexels.com/photos/5908053/pexels-photo-5908053.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            src="https://images.pexels.com/photos/34429593/pexels-photo-34429593.jpeg?auto=compresshttps://images.pexels.com/photos/34429593/pexels-photo-34429593.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
             alt="Seasoned ground turkey cooking in a skillet"
             width={800}
             height={500}
