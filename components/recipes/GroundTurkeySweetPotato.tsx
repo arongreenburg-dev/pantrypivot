@@ -256,21 +256,6 @@ const GroundTurkeySweetPotato: React.FC = () => {
             <li className="text-slate-600 font-medium">Ground Turkey Sweet Potato</li>
           </ol>
         </nav>
-
-        {/* Hero */}
-        {/* Hero Image */}
-        <div className="mb-8 rounded-2xl overflow-hidden">
-          <img
-            src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-            alt="Ground turkey and sweet potato bowl with fresh toppings"
-            width={800}
-            height={500}
-            loading="lazy"
-            fetchPriority="high"
-            className="w-full object-cover rounded-2xl"
-          />
-          <p className="text-xs text-slate-400 text-center mt-1">Photo by Laura oliveira via Pexels</p>
-        </div>
         <div className="text-center mb-10">
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Ground Turkey Sweet Potato Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">

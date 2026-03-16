@@ -243,20 +243,6 @@ const RoastChicken: React.FC = () => {
             <li className="text-slate-600 font-medium">Roast Chicken</li>
           </ol>
         </nav>
-
-        {/* Hero Image */}
-        <div className="mb-8 rounded-2xl overflow-hidden">
-          <img
-            src="https://images.pexels.com/photos/616354/pexels-photo-616354.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-            alt="Golden roast chicken dinner"
-            width={800}
-            height={500}
-            loading="lazy"
-            fetchPriority="high"
-            className="w-full object-cover rounded-2xl"
-          />
-          <p className="text-xs text-slate-400 text-center mt-1">Photo by Nadin Sh via Pexels</p>
-        </div>
         <div className="text-center mb-10">
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Roast Chicken Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">

@@ -266,20 +266,6 @@ const BeefStew: React.FC = () => {
             <li className="text-slate-600 font-medium">Beef Stew</li>
           </ol>
         </nav>
-
-        {/* Hero Image */}
-        <div className="mb-8 rounded-2xl overflow-hidden">
-          <img
-            src="https://images.pexels.com/photos/34822475/pexels-photo-34822475.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-            alt="Hearty beef stew in a bowl"
-            width={800}
-            height={500}
-            loading="lazy"
-            fetchPriority="high"
-            className="w-full object-cover rounded-2xl"
-          />
-          <p className="text-xs text-slate-400 text-center mt-1">Photo by tomateoignons via Pexels</p>
-        </div>
         <div className="text-center mb-10">
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Beef Stew Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">

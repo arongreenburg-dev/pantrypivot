@@ -244,20 +244,6 @@ const EasterRecipes: React.FC = () => {
           </ol>
         </nav>
 
-        {/* Hero Image */}
-        <div className="mb-8 rounded-2xl overflow-hidden">
-          <img
-            src={HERO_IMAGE}
-            alt="Easter roast lamb dinner"
-            width={800}
-            height={500}
-            loading="lazy"
-            fetchPriority="high"
-            className="w-full object-cover rounded-2xl"
-          />
-          <p className="text-xs text-slate-400 text-center mt-1">Photo by Snappr via Pexels</p>
-        </div>
-
         <div className="text-center mb-10">
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Easter Dinner Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">

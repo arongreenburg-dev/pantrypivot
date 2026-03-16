@@ -235,19 +235,6 @@ const SalmonRecipes: React.FC = () => {
             <li className="text-slate-600 font-medium">Salmon Recipes</li>
           </ol>
         </nav>
-        {/* Hero Image */}
-        <div className="mb-8 rounded-2xl overflow-hidden">
-          <img
-            src="https://images.pexels.com/photos/5639482/pexels-photo-5639482.jpeg?auto=compresshttps://images.pexels.com/photos/5639482/pexels-photo-5639482.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-            alt="Baked salmon fillet with lemon and herbs on a sheet pan"
-            width={800}
-            height={500}
-            loading="lazy"
-            fetchPriority="high"
-            className="w-full object-cover rounded-2xl"
-          />
-          <p className="text-xs text-slate-400 text-center mt-1">Photo by Anastasia Yudin via Pexels</p>
-        </div>
         <div className="text-center mb-10">
           <span className="inline-block bg-blue-100 text-blue-700 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
             Pareve

@@ -241,19 +241,6 @@ const InstantPotChicken: React.FC = () => {
             <li className="text-slate-600 font-medium">Instant Pot Chicken</li>
           </ol>
         </nav>
-        {/* Hero Image */}
-        <div className="mb-8 rounded-2xl overflow-hidden">
-          <img
-            src="https://images.pexels.com/photos/3764537/pexels-photo-3764537.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-            alt="Instant Pot pressure cooker with chicken"
-            width={800}
-            height={500}
-            loading="lazy"
-            fetchPriority="high"
-            className="w-full object-cover rounded-2xl"
-          />
-          <p className="text-xs text-slate-400 text-center mt-1">Photo by Patrick via Pexels</p>
-        </div>
         <div className="text-center mb-10">
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Instant Pot Chicken Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">

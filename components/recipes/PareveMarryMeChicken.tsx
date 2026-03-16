@@ -257,20 +257,6 @@ const PareveMarryMeChicken: React.FC = () => {
           </ol>
         </nav>
 
-        {/* Hero Image */}
-        <div className="mb-8 rounded-2xl overflow-hidden">
-          <img
-            src="https://images.pexels.com/photos/2673353/pexels-photo-2673353.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-            alt="Creamy dairy-free marry me chicken skillet with sun-dried tomatoes"
-            width={800}
-            height={500}
-            loading="lazy"
-            fetchPriority="high"
-            className="w-full object-cover rounded-2xl"
-          />
-          <p className="text-xs text-slate-400 text-center mt-1">Photo by Change C.C via Pexels</p>
-        </div>
-
         <div className="text-center mb-10">
           <span className="inline-block bg-green-100 text-green-700 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
             Dairy-Free

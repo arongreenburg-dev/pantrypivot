@@ -254,19 +254,6 @@ const GroundBeefPasta: React.FC = () => {
             <li className="text-slate-600 font-medium">Ground Beef Pasta</li>
           </ol>
         </nav>
-        {/* Hero Image */}
-        <div className="mb-8 rounded-2xl overflow-hidden">
-          <img
-            src="https://images.pexels.com/photos/6287525/pexels-photo-6287525.jpeg?auto=compresshttps://images.pexels.com/photos/6287525/pexels-photo-6287525.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-            alt="Pasta with ground beef and tomato sauce"
-            width={800}
-            height={500}
-            loading="lazy"
-            fetchPriority="high"
-            className="w-full object-cover rounded-2xl"
-          />
-          <p className="text-xs text-slate-400 text-center mt-1">Photo by ClickerHappy via Pexels</p>
-        </div>
         <div className="text-center mb-10">
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Ground Beef Pasta Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
