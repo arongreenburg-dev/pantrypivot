@@ -154,7 +154,7 @@ const GroundBeefPasta: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const recipe = recipes[activeTab];
   useEffect(() => {
-    const PAGE_TITLE = 'Ground Beef Pasta Recipes | PantryPivot';
+    const PAGE_TITLE = 'Ground Beef Pasta Recipes (Quick 30-Minute Dinners) | PantryPivot';
     const PAGE_DESC = 'Easy ground beef pasta recipes — classic, penne, casserole, and taco pasta. Quick meat-only dinners ready in 30 minutes.';
     const PAGE_URL = 'https://pantrypivot.com/recipes/ground-beef-pasta';
     document.title = PAGE_TITLE;
@@ -233,6 +233,27 @@ const GroundBeefPasta: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Should I drain ground beef for pasta sauce?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — always drain the excess fat after browning ground beef for pasta sauce. Leaving too much fat makes the sauce greasy. For 80/20 beef, drain most of the fat but leave a small amount for flavor. For 90/10 beef, very little drainage is needed." } },
+        { "@type": "Question", "name": "What pasta shape is best for meat sauce?", "acceptedAnswer": { "@type": "Answer", "text": "Chunky shapes like rigatoni, penne, or fusilli are ideal for meat sauce — the ridges and tubes trap the sauce. Spaghetti and linguine are classic and work well too. Avoid thin, delicate pasta like angel hair which can get lost in a thick beef sauce." } },
+        { "@type": "Question", "name": "Can I freeze ground beef pasta?", "acceptedAnswer": { "@type": "Answer", "text": "Freeze the meat sauce separately from the cooked pasta for best results. Pasta becomes mushy when frozen and reheated. The meat sauce freezes beautifully for up to 3 months. Reheat the sauce and cook fresh pasta when ready to serve." } },
+        { "@type": "Question", "name": "How do I make ground beef pasta sauce thicker?", "acceptedAnswer": { "@type": "Answer", "text": "Simmer the sauce uncovered for longer — evaporation thickens it naturally. You can also stir in 1–2 tbsp tomato paste for more body, or add a splash of pasta cooking water (the starch helps emulsify and thicken the sauce)." } }
+      ]
+    });
+    document.head.appendChild(script);
+    return () => {
+      const el = document.getElementById('faq-schema');
+      if (el) el.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">
@@ -254,14 +275,25 @@ const GroundBeefPasta: React.FC = () => {
             <li className="text-slate-600 font-medium">Ground Beef Pasta</li>
           </ol>
         </nav>
+        <nav className="mb-8 overflow-x-auto">
+          <div className="flex gap-2 text-sm font-semibold text-slate-500 whitespace-nowrap pb-1">
+            <span className="text-slate-400 text-xs uppercase tracking-wider self-center">Jump to:</span>
+            <a href="#recipe-ideas" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Recipes</a>
+            <a href="#cooking-tips" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Cooking Tips</a>
+            <a href="#substitutions" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Substitutions</a>
+            <a href="#faq" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">FAQ</a>
+            <a href="https://pantrypivot.com" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">✨ Custom Recipe</a>
+          </div>
+        </nav>
         <div className="text-center mb-10">
+          <span className="inline-block bg-red-100 text-red-700 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">🥩 Meat</span>
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Ground Beef Pasta Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
             Hearty, crowd-pleasing ground beef pasta dinners — from classic meat sauce to one-pan taco pasta.
           </p>
         </div>
 
-        <div className="flex gap-2 flex-wrap justify-center mb-8">
+        <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (
             <button
               key={tab.key}
@@ -345,18 +377,100 @@ const GroundBeefPasta: React.FC = () => {
           </div>
         </div>
 
+        {/* Cooking Tips */}
+        <div id="cooking-tips" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-10">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Cooking Tips</h2>
+          <ul className="space-y-3">
+            {[
+              'Brown ground beef in batches if your pan is full — crowding causes steaming rather than browning, and browning creates flavor.',
+              'Always drain excess fat after browning. Leave just a thin coat to sauté the aromatics, then drain the rest.',
+              'Reserve ½ cup pasta water before draining. The starchy water helps bind the sauce to the pasta and adds body without thinning the sauce.',
+              'Cook pasta 1–2 minutes less than the package says (al dente) — it finishes cooking in the hot sauce for 1–2 minutes before serving.',
+              'A pinch of sugar (½ tsp) balances the acidity of canned tomatoes and rounds out the flavor.',
+            ].map((tip, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-orange-400 flex-shrink-0" />
+                {tip}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Substitutions */}
+        <div id="substitutions" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Substitutions</h2>
+          <ul className="space-y-3">
+            {[
+              'Ground beef ↔ ground turkey: A direct 1:1 substitution for a leaner dish. Season more aggressively as turkey has less natural fat and flavor.',
+              'Crushed tomatoes ↔ whole canned tomatoes: Crush whole tomatoes by hand before adding for a chunkier, more rustic sauce.',
+              'Italian seasoning ↔ individual herbs: Use ½ tsp each of dried oregano, dried basil, and dried thyme as a substitute.',
+              'Spaghetti ↔ any shape pasta: Penne, rigatoni, fusilli, or ziti all work. Use whatever you have.',
+              'Olive oil ↔ avocado oil: Both work for sautéing. Avocado oil has a more neutral flavor.',
+            ].map((sub, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-orange-400 flex-shrink-0" />
+                {sub}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Storage */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Storage</h2>
+          <ul className="space-y-3">
+            {[
+              'Sauce: Freezes well for up to 3 months in an airtight container.',
+              'Cooked pasta: Does not freeze as well — store separately in the fridge for 3–4 days.',
+              'Reheat: Warm sauce in a saucepan with a splash of water or broth over medium heat; cook fresh pasta when ready to serve.',
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-orange-400 flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* FAQ */}
+        <div id="faq" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {[
+              { q: 'Should I drain ground beef for pasta sauce?', a: 'Yes — always drain the excess fat after browning ground beef for pasta sauce. Leaving too much fat makes the sauce greasy. For 80/20 beef, drain most of the fat but leave a small amount for flavor. For 90/10 beef, very little drainage is needed.' },
+              { q: 'What pasta shape is best for meat sauce?', a: 'Chunky shapes like rigatoni, penne, or fusilli are ideal for meat sauce — the ridges and tubes trap the sauce. Spaghetti and linguine are classic and work well too. Avoid thin, delicate pasta like angel hair which can get lost in a thick beef sauce.' },
+              { q: 'Can I freeze ground beef pasta?', a: 'Freeze the meat sauce separately from the cooked pasta for best results. Pasta becomes mushy when frozen and reheated. The meat sauce freezes beautifully for up to 3 months. Reheat the sauce and cook fresh pasta when ready to serve.' },
+              { q: 'How do I make ground beef pasta sauce thicker?', a: 'Simmer the sauce uncovered for longer — evaporation thickens it naturally. You can also stir in 1–2 tbsp tomato paste for more body, or add a splash of pasta cooking water (the starch helps emulsify and thicken the sauce).' },
+            ].map((item, i) => (
+              <div key={i} className="bg-slate-50 rounded-2xl p-5">
+                <h3 className="font-bold text-slate-900 mb-2">{item.q}</h3>
+                <p className="text-slate-600 leading-relaxed">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* More Recipes */}
         <div className="mt-16">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-6">More Recipes</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <Link to="/recipes/ground-turkey" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🦃</span> Ground Turkey
             </Link>
             <Link to="/recipes/chicken-and-rice" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍚</span> Chicken and Rice
             </Link>
-            <Link to="/recipes/salmon" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
-              <span className="text-2xl">🐟</span> Salmon Recipes
+            <Link to="/recipes/beef-stew" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🥩</span> Beef Stew
+            </Link>
+            <Link to="/recipes/ground-turkey-sweet-potato" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍠</span> Turkey Sweet Potato
+            </Link>
+            <Link to="/recipes/instant-pot-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">⚡</span> Instant Pot Chicken
+            </Link>
+            <Link to="/recipes/crockpot-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍲</span> Crockpot Chicken
             </Link>
           </div>
         </div>

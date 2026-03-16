@@ -156,7 +156,7 @@ const Shakshuka: React.FC = () => {
   const recipe = recipes[activeTab];
 
   useEffect(() => {
-    const PAGE_TITLE = 'Shakshuka Recipes | PantryPivot';
+    const PAGE_TITLE = 'Shakshuka Recipes (Easy 30-Minute Pareve Meal) | PantryPivot';
     const PAGE_DESC = 'Easy shakshuka recipes — classic, spicy, green, and with chickpeas. All pareve, no meat, no dairy. Ready in 30 minutes.';
     const PAGE_URL = 'https://pantrypivot.com/recipes/shakshuka';
     document.title = PAGE_TITLE;
@@ -234,6 +234,27 @@ const Shakshuka: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Is shakshuka kosher?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — shakshuka is a pareve dish (eggs and vegetables, no meat or dairy). It can be served at both meat and dairy meals. If you add cheese on top, it becomes dairy. All the standard versions on this page are strictly pareve." } },
+        { "@type": "Question", "name": "Can I make shakshuka ahead of time?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — make the tomato sauce ahead (up to 3 days in advance) and refrigerate it. When ready to serve, reheat the sauce, make the wells, and add fresh eggs. The sauce improves overnight as the flavors meld." } },
+        { "@type": "Question", "name": "What do you serve with shakshuka?", "acceptedAnswer": { "@type": "Answer", "text": "Shakshuka is traditionally served with bread for dipping — pita, challah, or crusty sourdough. For a Passover-friendly option, serve with matzo. It also pairs well with Israeli salad, hummus, or roasted vegetables." } },
+        { "@type": "Question", "name": "Can shakshuka be frozen?", "acceptedAnswer": { "@type": "Answer", "text": "Freeze the tomato sauce only — not with eggs cooked in. The sauce freezes well for up to 3 months. Thaw overnight in the fridge, reheat, and add fresh eggs when serving." } }
+      ]
+    });
+    document.head.appendChild(script);
+    return () => {
+      const el = document.getElementById('faq-schema');
+      if (el) el.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
@@ -256,7 +277,21 @@ const Shakshuka: React.FC = () => {
             <li className="text-slate-600 font-medium">Shakshuka</li>
           </ol>
         </nav>
+
+        {/* Table of Contents */}
+        <nav className="mb-8 overflow-x-auto">
+          <div className="flex gap-2 text-sm font-semibold text-slate-500 whitespace-nowrap pb-1">
+            <span className="text-slate-400 text-xs uppercase tracking-wider self-center">Jump to:</span>
+            <a href="#recipe-ideas" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Recipes</a>
+            <a href="#cooking-tips" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Cooking Tips</a>
+            <a href="#substitutions" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Substitutions</a>
+            <a href="#faq" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">FAQ</a>
+            <a href="https://pantrypivot.com" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">✨ Custom Recipe</a>
+          </div>
+        </nav>
+
         <div className="text-center mb-10">
+          <span className="inline-block bg-green-100 text-green-700 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">✅ Pareve</span>
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Shakshuka Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
             Eggs poached in spiced tomato sauce — easy, pareve one-pan meals ready in 30 minutes.
@@ -264,7 +299,7 @@ const Shakshuka: React.FC = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 flex-wrap justify-center mb-8">
+        <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (
             <button
               key={tab.key}
@@ -353,18 +388,112 @@ const Shakshuka: React.FC = () => {
           </div>
         </div>
 
+        {/* Cooking Tips */}
+        <div id="cooking-tips" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-10">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Cooking Tips</h2>
+          <ul className="space-y-3">
+            {[
+              "Simmer the tomato sauce until it's thick and reduced before adding eggs. A thin, watery sauce means the egg whites won't set properly — they'll float rather than poach.",
+              "Cover the pan after adding eggs. The trapped steam is what sets the egg whites from the top while the yolks stay runny below.",
+              "Use a lid that fits tightly. If your lid doesn't fit, cover tightly with foil.",
+              "Timing for the eggs: 6 minutes covered = runny yolks; 8 minutes = jammy yolks; 10 minutes = fully set. Check at 6 minutes and decide.",
+              "Serve shakshuka directly from the pan — it looks dramatic and stays warm longer. Take it straight to the table.",
+            ].map((tip, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-400 flex-shrink-0" />
+                {tip}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Substitutions */}
+        <div id="substitutions" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Substitutions</h2>
+          <ul className="space-y-3">
+            {[
+              "Crushed tomatoes ↔ whole canned tomatoes: Crush whole tomatoes by hand directly into the pan for a more rustic, chunky texture.",
+              "Cumin ↔ ras el hanout: This North African spice blend is traditional in some shakshuka recipes and adds complex warmth.",
+              "Harissa ↔ sriracha + ½ tsp cumin: A reasonable substitute for harissa's smoky heat, though not identical.",
+              "Red bell pepper ↔ roasted red peppers (from a jar): Drain well and add with the garlic. Saves sautéing time.",
+              "Fresh herbs (parsley/cilantro) ↔ dried: Use dried sparingly — fresh herbs added at the end are far more impactful here.",
+            ].map((sub, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-400 flex-shrink-0" />
+                {sub}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Storage */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Storage</h2>
+          <ul className="space-y-3">
+            {[
+              "Fridge: The tomato sauce keeps 4–5 days — don't store with cooked eggs inside.",
+              "Freezer: Freeze the sauce only (without eggs) for up to 3 months.",
+              "Reheat: Reheat the sauce and add fresh eggs when serving.",
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-400 flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* FAQ */}
+        <div id="faq" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {[
+              {
+                q: "Is shakshuka kosher?",
+                a: "Yes — shakshuka is a pareve dish (eggs and vegetables, no meat or dairy). It can be served at both meat and dairy meals. If you add cheese on top, it becomes dairy. All the standard versions on this page are strictly pareve.",
+              },
+              {
+                q: "Can I make shakshuka ahead of time?",
+                a: "Yes — make the tomato sauce ahead (up to 3 days in advance) and refrigerate it. When ready to serve, reheat the sauce, make the wells, and add fresh eggs. The sauce improves overnight as the flavors meld.",
+              },
+              {
+                q: "What do you serve with shakshuka?",
+                a: "Shakshuka is traditionally served with bread for dipping — pita, challah, or crusty sourdough. For a Passover-friendly option, serve with matzo. It also pairs well with Israeli salad, hummus, or roasted vegetables.",
+              },
+              {
+                q: "Can shakshuka be frozen?",
+                a: "Freeze the tomato sauce only — not with eggs cooked in. The sauce freezes well for up to 3 months. Thaw overnight in the fridge, reheat, and add fresh eggs when serving.",
+              },
+            ].map((item, i) => (
+              <div key={i} className="bg-slate-50 rounded-2xl p-5">
+                <p className="font-bold text-slate-900 mb-2">{item.q}</p>
+                <p className="text-slate-600 text-sm leading-relaxed">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* More Recipes */}
         <div className="mt-16">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-6">More Recipes</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <Link to="/recipes/salmon" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🐟</span> Salmon Recipes
+            </Link>
+            <Link to="/recipes/easter" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🐣</span> Easter Dinner
+            </Link>
+            <Link to="/recipes/passover" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍷</span> Passover Recipes
             </Link>
             <Link to="/recipes/ground-turkey" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🦃</span> Ground Turkey
             </Link>
-            <Link to="/recipes/chicken-and-rice" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
-              <span className="text-2xl">🍚</span> Chicken and Rice
+            <Link to="/recipes/ground-turkey-sweet-potato" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍠</span> Turkey & Sweet Potato
+            </Link>
+            <Link to="/recipes/dairy-free-marry-me-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍗</span> Dairy-Free Marry Me Chicken
             </Link>
           </div>
         </div>

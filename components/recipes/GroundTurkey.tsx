@@ -151,7 +151,7 @@ const GroundTurkey: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const recipe = recipes[activeTab];
   useEffect(() => {
-    const PAGE_TITLE = 'Ground Turkey Recipes | PantryPivot';
+    const PAGE_TITLE = 'Ground Turkey Recipes (Lean and Flavorful Dinners) | PantryPivot';
     const PAGE_DESC = 'Easy ground turkey recipes — classic, bowls, sweet potato, and healthy dinner ideas. Quick meat-only meals under 30 minutes.';
     const PAGE_URL = 'https://pantrypivot.com/recipes/ground-turkey';
     document.title = PAGE_TITLE;
@@ -229,6 +229,27 @@ const GroundTurkey: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Is ground turkey healthier than ground beef?", "acceptedAnswer": { "@type": "Answer", "text": "Ground turkey (93% lean) has less fat and fewer calories than most ground beef. However, ground beef has more iron, zinc, and B12. For a kosher meal prep perspective, ground turkey is a leaner protein that works well in almost any ground beef recipe." } },
+        { "@type": "Question", "name": "Why is my ground turkey so dry?", "acceptedAnswer": { "@type": "Answer", "text": "Ground turkey dries out faster than beef because it has less fat. Don't overcook it — remove from heat as soon as it reaches 165°F. Adding 2–3 tbsp of chicken broth or water while cooking keeps it moist. Thighs-based ground turkey stays juicier than breast-based." } },
+        { "@type": "Question", "name": "Can I substitute ground turkey for ground beef?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — in most recipes like tacos, pasta sauce, or rice bowls, ground turkey is a direct substitute. Season it more aggressively since it has less natural fat and flavor. It's leaner, so you may need to add a little extra olive oil." } },
+        { "@type": "Question", "name": "How do I add more flavor to ground turkey?", "acceptedAnswer": { "@type": "Answer", "text": "Season generously — ground turkey needs more seasoning than beef. Use cumin, smoked paprika, garlic, and onion for savory depth. Adding a tablespoon of chicken broth while cooking keeps it moist and adds flavor. Fresh garlic is more impactful than garlic powder here." } }
+      ]
+    });
+    document.head.appendChild(script);
+    return () => {
+      const el = document.getElementById('faq-schema');
+      if (el) el.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">
@@ -250,7 +271,18 @@ const GroundTurkey: React.FC = () => {
             <li className="text-slate-600 font-medium">Ground Turkey</li>
           </ol>
         </nav>
+        <nav className="mb-8 overflow-x-auto">
+          <div className="flex gap-2 text-sm font-semibold text-slate-500 whitespace-nowrap pb-1">
+            <span className="text-slate-400 text-xs uppercase tracking-wider self-center">Jump to:</span>
+            <a href="#recipe-ideas" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Recipes</a>
+            <a href="#cooking-tips" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Cooking Tips</a>
+            <a href="#substitutions" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Substitutions</a>
+            <a href="#faq" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">FAQ</a>
+            <a href="https://pantrypivot.com" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">✨ Custom Recipe</a>
+          </div>
+        </nav>
         <div className="text-center mb-10">
+          <span className="inline-block bg-red-100 text-red-700 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">🥩 Meat</span>
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Ground Turkey Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
             Lean, flavorful, and endlessly versatile — ground turkey recipes the whole family will love.
@@ -269,7 +301,7 @@ const GroundTurkey: React.FC = () => {
           </a>
         </div>
 
-        <div className="flex gap-2 flex-wrap justify-center mb-8">
+        <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (
             <button
               key={tab.key}
@@ -353,18 +385,100 @@ const GroundTurkey: React.FC = () => {
           </div>
         </div>
 
+        {/* Cooking Tips */}
+        <div id="cooking-tips" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-10">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Cooking Tips</h2>
+          <ul className="space-y-3">
+            {[
+              "Don't overcook ground turkey. Remove it from the heat as soon as it reaches 165°F — overcooked turkey is dry and crumbly.",
+              'Drain excess liquid after browning. Turkey releases more moisture than beef and can steam itself if the liquid builds up.',
+              'Season generously. Ground turkey has less natural fat than beef, so you need more spices and aromatics to build flavor.',
+              "Use high heat for browning. A hot pan gets better color and caramelization — don't stir constantly, let it sit and brown.",
+              "Don't press down on the turkey while cooking. Pressing squeezes out the moisture that keeps it tender.",
+            ].map((tip, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-orange-400 flex-shrink-0" />
+                {tip}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Substitutions */}
+        <div id="substitutions" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Substitutions</h2>
+          <ul className="space-y-3">
+            {[
+              'Ground turkey ↔ ground chicken: A direct 1:1 substitution with virtually identical cooking behavior and flavor.',
+              '93% lean ↔ 85% lean ground turkey: The fattier 85% lean turkey is juicier and more forgiving — great for beginners.',
+              'Cumin ↔ curry powder: For an entirely different flavor profile, substitute the cumin with ½ tsp curry powder.',
+              'Chicken broth ↔ water: Plain water works fine for keeping turkey moist while cooking — the seasoning provides all the flavor.',
+              'Fresh garlic (3 cloves) ↔ garlic powder (¾ tsp): A useful pantry swap when fresh garlic is not available.',
+            ].map((sub, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-orange-400 flex-shrink-0" />
+                {sub}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Storage */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Storage</h2>
+          <ul className="space-y-3">
+            {[
+              'Fridge: 3–4 days in a sealed container.',
+              'Freezer: Freeze cooked turkey for 3–4 months.',
+              'Reheat: In a skillet with a splash of broth over medium-low heat to keep it moist.',
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-orange-400 flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* FAQ */}
+        <div id="faq" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {[
+              { q: 'Is ground turkey healthier than ground beef?', a: 'Ground turkey (93% lean) has less fat and fewer calories than most ground beef. However, ground beef has more iron, zinc, and B12. For a kosher meal prep perspective, ground turkey is a leaner protein that works well in almost any ground beef recipe.' },
+              { q: 'Why is my ground turkey so dry?', a: "Ground turkey dries out faster than beef because it has less fat. Don't overcook it — remove from heat as soon as it reaches 165°F. Adding 2–3 tbsp of chicken broth or water while cooking keeps it moist. Thighs-based ground turkey stays juicier than breast-based." },
+              { q: 'Can I substitute ground turkey for ground beef?', a: "Yes — in most recipes like tacos, pasta sauce, or rice bowls, ground turkey is a direct substitute. Season it more aggressively since it has less natural fat and flavor. It's leaner, so you may need to add a little extra olive oil." },
+              { q: 'How do I add more flavor to ground turkey?', a: 'Season generously — ground turkey needs more seasoning than beef. Use cumin, smoked paprika, garlic, and onion for savory depth. Adding a tablespoon of chicken broth while cooking keeps it moist and adds flavor. Fresh garlic is more impactful than garlic powder here.' },
+            ].map((item, i) => (
+              <div key={i} className="bg-slate-50 rounded-2xl p-5">
+                <h3 className="font-bold text-slate-900 mb-2">{item.q}</h3>
+                <p className="text-slate-600 leading-relaxed">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* More Recipes */}
         <div className="mt-16">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-6">More Recipes</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <Link to="/recipes/salmon" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
-              <span className="text-2xl">🐟</span> Salmon Recipes
-            </Link>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <Link to="/recipes/ground-beef-pasta" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍝</span> Ground Beef Pasta
             </Link>
             <Link to="/recipes/chicken-and-rice" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍚</span> Chicken and Rice
+            </Link>
+            <Link to="/recipes/ground-turkey-sweet-potato" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍠</span> Turkey Sweet Potato
+            </Link>
+            <Link to="/recipes/air-fryer-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍗</span> Air Fryer Chicken
+            </Link>
+            <Link to="/recipes/shakshuka" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍳</span> Shakshuka
+            </Link>
+            <Link to="/recipes/salmon" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🐟</span> Salmon Recipes
             </Link>
           </div>
         </div>

@@ -166,7 +166,7 @@ const BeefStew: React.FC = () => {
   const recipe = recipes[activeTab];
 
   useEffect(() => {
-    const PAGE_TITLE = 'Beef Stew Recipes | PantryPivot';
+    const PAGE_TITLE = 'Beef Stew Recipes (Rich and Tender Every Time) | PantryPivot';
     const PAGE_DESC = 'Hearty beef stew recipes — classic stovetop, crockpot, Instant Pot, and beef vegetable stew. Meat-only, no dairy, rich and comforting.';
     const PAGE_URL = 'https://pantrypivot.com/recipes/beef-stew';
     document.title = PAGE_TITLE;
@@ -244,6 +244,27 @@ const BeefStew: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "What cut of beef is best for stew?", "acceptedAnswer": { "@type": "Answer", "text": "Beef chuck is the best cut for stew. It has significant marbling and connective tissue that breaks down into rich, tender meat after long, slow cooking. Avoid lean cuts like sirloin — they toughen when braised. Chuck roast, chuck shoulder, or 'stew beef' (usually chuck) are all ideal." } },
+        { "@type": "Question", "name": "Why is my beef stew tough?", "acceptedAnswer": { "@type": "Answer", "text": "Tough beef stew is almost always caused by not cooking it long enough. Beef chuck needs 1.5–2 hours on the stovetop, 7–8 hours in a slow cooker, or 35 minutes in an Instant Pot to fully break down the collagen into gelatin. If it's tough, just keep cooking — it will get tender." } },
+        { "@type": "Question", "name": "Can I cook beef stew on high in a slow cooker?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — beef stew can be cooked on HIGH for 4–5 hours instead of LOW for 7–8 hours. The results are similar, though LOW produces slightly more tender beef and a richer broth. Either setting will safely cook the beef through." } },
+        { "@type": "Question", "name": "Does beef stew taste better the next day?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — beef stew is one of the best make-ahead dishes. The flavors deepen overnight as the beef absorbs the braising liquid. Make it a day ahead, refrigerate, and reheat gently. Skim the solidified fat off the top before reheating for a cleaner flavor." } }
+      ]
+    });
+    document.head.appendChild(script);
+    return () => {
+      const el = document.getElementById('faq-schema');
+      if (el) el.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
@@ -266,7 +287,18 @@ const BeefStew: React.FC = () => {
             <li className="text-slate-600 font-medium">Beef Stew</li>
           </ol>
         </nav>
+        <nav className="mb-8 overflow-x-auto">
+          <div className="flex gap-2 text-sm font-semibold text-slate-500 whitespace-nowrap pb-1">
+            <span className="text-slate-400 text-xs uppercase tracking-wider self-center">Jump to:</span>
+            <a href="#recipe-ideas" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Recipes</a>
+            <a href="#cooking-tips" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Cooking Tips</a>
+            <a href="#substitutions" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Substitutions</a>
+            <a href="#faq" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">FAQ</a>
+            <a href="https://pantrypivot.com" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">✨ Custom Recipe</a>
+          </div>
+        </nav>
         <div className="text-center mb-10">
+          <span className="inline-block bg-red-100 text-red-700 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">🥩 Meat</span>
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Beef Stew Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
             Rich, hearty beef stew for every cooking method — stovetop, slow cooker, Instant Pot, and loaded with vegetables.
@@ -286,7 +318,7 @@ const BeefStew: React.FC = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 flex-wrap justify-center mb-8">
+        <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (
             <button
               key={tab.key}
@@ -375,10 +407,83 @@ const BeefStew: React.FC = () => {
           </div>
         </div>
 
+        {/* Cooking Tips */}
+        <div id="cooking-tips" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-10">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Cooking Tips</h2>
+          <ul className="space-y-3">
+            {[
+              'Brown beef in batches without crowding the pan. Crowding causes steaming instead of browning — and that deep brown crust is where most of the flavor comes from.',
+              'Deglaze the pot with broth after browning and scrape up all the browned bits (the fond). This adds tremendous depth to the final stew.',
+              'Add potatoes to slow cooker stew in the last 2 hours on LOW (or 1 hour on HIGH). Added too early, they turn to mush.',
+              'Simmer low and slow on the stovetop. A hard boil toughens beef chuck — you want tiny bubbles, not a rolling boil.',
+              'To thicken a thin stew, mix 1 tbsp cornstarch with 1 tbsp cold water and stir it in during the last 10 minutes of cooking.',
+            ].map((tip, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-orange-400 flex-shrink-0" />
+                {tip}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Substitutions */}
+        <div id="substitutions" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Substitutions</h2>
+          <ul className="space-y-3">
+            {[
+              "Beef chuck ↔ beef short ribs (boneless): Short ribs give an even richer, more unctuous stew — use the same quantities.",
+              "Yukon Gold potatoes ↔ sweet potatoes: Sweet potatoes add color and natural sweetness; reduce cook time slightly as they soften faster.",
+              "Beef broth ↔ extra tomatoes + water: If you don't have broth, use water with 1 extra tbsp tomato paste for body.",
+              "All-purpose flour (for coating beef) ↔ potato starch: An equal substitution — makes the stew Passover-friendly and gluten-free.",
+              "Fresh thyme/rosemary ↔ dried: Use ⅓ the amount of dried herbs compared to fresh.",
+            ].map((sub, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-orange-400 flex-shrink-0" />
+                {sub}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Storage */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Storage</h2>
+          <ul className="space-y-3">
+            {[
+              'Fridge: Keeps 4–5 days — tastes even better the next day as the flavors deepen.',
+              'Freezer: Freezes very well for up to 3 months in an airtight container.',
+              'Reheat: Warm on the stovetop over medium-low heat, stirring occasionally. Add a splash of broth if needed to loosen.',
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-orange-400 flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* FAQ */}
+        <div id="faq" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {[
+              { q: 'What cut of beef is best for stew?', a: "Beef chuck is the best cut for stew. It has significant marbling and connective tissue that breaks down into rich, tender meat after long, slow cooking. Avoid lean cuts like sirloin — they toughen when braised. Chuck roast, chuck shoulder, or 'stew beef' (usually chuck) are all ideal." },
+              { q: 'Why is my beef stew tough?', a: "Tough beef stew is almost always caused by not cooking it long enough. Beef chuck needs 1.5–2 hours on the stovetop, 7–8 hours in a slow cooker, or 35 minutes in an Instant Pot to fully break down the collagen into gelatin. If it's tough, just keep cooking — it will get tender." },
+              { q: 'Can I cook beef stew on high in a slow cooker?', a: 'Yes — beef stew can be cooked on HIGH for 4–5 hours instead of LOW for 7–8 hours. The results are similar, though LOW produces slightly more tender beef and a richer broth. Either setting will safely cook the beef through.' },
+              { q: 'Does beef stew taste better the next day?', a: 'Yes — beef stew is one of the best make-ahead dishes. The flavors deepen overnight as the beef absorbs the braising liquid. Make it a day ahead, refrigerate, and reheat gently. Skim the solidified fat off the top before reheating for a cleaner flavor.' },
+            ].map((item, i) => (
+              <div key={i} className="bg-slate-50 rounded-2xl p-5">
+                <h3 className="font-bold text-slate-900 mb-2">{item.q}</h3>
+                <p className="text-slate-600 leading-relaxed">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* More Recipes */}
         <div className="mt-16">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-6">More Recipes</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <Link to="/recipes/crockpot-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍲</span> Crockpot Chicken
             </Link>
@@ -390,6 +495,12 @@ const BeefStew: React.FC = () => {
             </Link>
             <Link to="/recipes/passover" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍷</span> Passover Recipes
+            </Link>
+            <Link to="/recipes/chicken-soup" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍜</span> Chicken Soup
+            </Link>
+            <Link to="/recipes/roast-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍗</span> Roast Chicken
             </Link>
           </div>
         </div>

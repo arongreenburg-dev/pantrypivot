@@ -137,7 +137,7 @@ const SalmonRecipes: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const recipe = recipes[activeTab];
   useEffect(() => {
-    const PAGE_TITLE = 'Salmon Recipes | PantryPivot';
+    const PAGE_TITLE = 'Salmon Recipes (Easy Pareve Weeknight Dinners) | PantryPivot';
     const PAGE_DESC = 'Easy pareve salmon recipes — baked, sheet pan, air fryer, and salmon with sweet potato. Kosher-friendly weeknight dinners.';
     const PAGE_URL = 'https://pantrypivot.com/recipes/salmon';
     document.title = PAGE_TITLE;
@@ -168,6 +168,27 @@ const SalmonRecipes: React.FC = () => {
       update('meta[property="og:url"]', 'content', prevOgUrl);
       if (prevCanonical !== null) canonRef.href = prevCanonical;
       else canonRef.remove();
+    };
+  }, []);
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "How do I know when salmon is cooked through?", "acceptedAnswer": { "@type": "Answer", "text": "Salmon is done when it flakes easily with a fork and the flesh has turned from translucent to opaque. For medium salmon (recommended), the internal temperature should reach 125–130°F. For well-done, cook to 145°F. Overcooked salmon becomes dry and chalky." } },
+        { "@type": "Question", "name": "Should I cook salmon skin-side up or down?", "acceptedAnswer": { "@type": "Answer", "text": "For baked and air fryer salmon, place skin-side down. The skin acts as a natural barrier, protecting the delicate flesh from direct heat and keeping the fillet moist. In a skillet, start skin-side down to crisp the skin, then flip for the last 1–2 minutes." } },
+        { "@type": "Question", "name": "Is salmon pareve in kosher law?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — fish is pareve under kosher law. Salmon has both fins and scales, making it kosher. As a pareve food, it can be eaten with both meat and dairy meals, though it is traditionally not served on the same plate as meat." } },
+        { "@type": "Question", "name": "Can I use frozen salmon for these recipes?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — frozen salmon works well. Thaw it overnight in the refrigerator, then pat it completely dry before cooking. Properly thawed and dried frozen salmon cooks identically to fresh and is often just as good in quality." } }
+      ]
+    });
+    document.head.appendChild(script);
+    return () => {
+      const el = document.getElementById('faq-schema');
+      if (el) el.remove();
     };
   }, []);
 
@@ -235,9 +256,22 @@ const SalmonRecipes: React.FC = () => {
             <li className="text-slate-600 font-medium">Salmon Recipes</li>
           </ol>
         </nav>
+
+        {/* Table of Contents */}
+        <nav className="mb-8 overflow-x-auto">
+          <div className="flex gap-2 text-sm font-semibold text-slate-500 whitespace-nowrap pb-1">
+            <span className="text-slate-400 text-xs uppercase tracking-wider self-center">Jump to:</span>
+            <a href="#recipe-ideas" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-blue-300 hover:text-blue-600 transition-colors">Recipes</a>
+            <a href="#cooking-tips" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-blue-300 hover:text-blue-600 transition-colors">Cooking Tips</a>
+            <a href="#substitutions" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-blue-300 hover:text-blue-600 transition-colors">Substitutions</a>
+            <a href="#faq" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-blue-300 hover:text-blue-600 transition-colors">FAQ</a>
+            <a href="https://pantrypivot.com" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-blue-300 hover:text-blue-600 transition-colors">✨ Custom Recipe</a>
+          </div>
+        </nav>
+
         <div className="text-center mb-10">
           <span className="inline-block bg-blue-100 text-blue-700 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
-            Pareve
+            ✅ Pareve
           </span>
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Salmon Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
@@ -246,7 +280,7 @@ const SalmonRecipes: React.FC = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 flex-wrap justify-center mb-8">
+        <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (
             <button
               key={tab.key}
@@ -331,21 +365,112 @@ const SalmonRecipes: React.FC = () => {
           </div>
         </div>
 
+        {/* Cooking Tips */}
+        <div id="cooking-tips" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-10">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Cooking Tips</h2>
+          <ul className="space-y-3">
+            {[
+              "Don't overcook salmon. The target internal temperature is 125–130°F for medium (flaky and moist). At 145°F it's well-done but can be dry. The flesh should be opaque but slightly translucent in the very center.",
+              "Keep the skin on during cooking. Skin-on salmon holds together better, cooks more evenly, and the skin acts as a moisture barrier. You can always remove it after cooking.",
+              "Pat salmon completely dry before cooking. Moisture prevents browning and creates steam in the air fryer or oven.",
+              "Let salmon rest at room temperature for 10 minutes before cooking. Cold salmon placed directly in a hot oven cooks unevenly.",
+              "Use parchment paper for baked salmon. It prevents sticking and makes cleanup effortless.",
+            ].map((tip, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-blue-400 flex-shrink-0" />
+                {tip}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Substitutions */}
+        <div id="substitutions" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Substitutions</h2>
+          <ul className="space-y-3">
+            {[
+              "Fresh salmon ↔ frozen salmon: Thaw frozen salmon overnight in the fridge, then pat completely dry before cooking. The results are virtually identical.",
+              "Lemon juice ↔ lime juice: Lime gives a slightly different citrus note that pairs especially well with cumin-spiced salmon.",
+              "Dill ↔ fresh parsley or cilantro: All three herbs work beautifully with salmon. Cilantro gives a more vibrant, fresh flavor; parsley is more neutral.",
+              "Olive oil ↔ avocado oil: Avocado oil has a higher smoke point and a more neutral flavor — ideal for air fryer salmon at 400°F.",
+              "Smoked paprika ↔ sweet paprika + pinch of cumin: This replicates the smoky, complex flavor if you don't have smoked paprika.",
+            ].map((sub, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-blue-400 flex-shrink-0" />
+                {sub}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Storage */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Storage</h2>
+          <ul className="space-y-3">
+            {[
+              "Fridge: Cooked salmon keeps for 2–3 days. It has a shorter shelf life than chicken or beef — don't push it to 4 days.",
+              "Freezer: Raw salmon freezes well for up to 3 months. Cooked salmon can be frozen but the texture suffers — it becomes drier after thawing.",
+              "Reheat: Reheat gently in a 275°F oven, covered loosely with foil, for 10–15 minutes. Avoid the microwave — it overcooks salmon very quickly. Cold leftover salmon is also excellent flaked over a salad.",
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-blue-400 flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* FAQ */}
+        <div id="faq" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {[
+              {
+                q: "How do I know when salmon is cooked through?",
+                a: "Salmon is done when it flakes easily with a fork and the flesh has turned from translucent to opaque. For medium salmon (recommended), the internal temperature should reach 125–130°F. For well-done, cook to 145°F. Overcooked salmon becomes dry and chalky.",
+              },
+              {
+                q: "Should I cook salmon skin-side up or down?",
+                a: "For baked and air fryer salmon, place skin-side down. The skin acts as a natural barrier, protecting the delicate flesh from direct heat and keeping the fillet moist. In a skillet, start skin-side down to crisp the skin, then flip for the last 1–2 minutes.",
+              },
+              {
+                q: "Is salmon pareve in kosher law?",
+                a: "Yes — fish is pareve under kosher law. Salmon has both fins and scales, making it kosher. As a pareve food, it can be eaten with both meat and dairy meals, though it is traditionally not served on the same plate as meat.",
+              },
+              {
+                q: "Can I use frozen salmon for these recipes?",
+                a: "Yes — frozen salmon works well. Thaw it overnight in the refrigerator, then pat it completely dry before cooking. Properly thawed and dried frozen salmon cooks identically to fresh and is often just as good in quality.",
+              },
+            ].map((item, i) => (
+              <div key={i} className="bg-slate-50 rounded-2xl p-5">
+                <p className="font-bold text-slate-900 mb-2">{item.q}</p>
+                <p className="text-slate-600 text-sm leading-relaxed">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* More Recipes */}
         <div className="mt-16">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-6">More Recipes</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <Link to="/recipes/shakshuka" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍳</span> Shakshuka
+            </Link>
+            <Link to="/recipes/easter" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🐣</span> Easter Dinner
+            </Link>
             <Link to="/recipes/air-fryer-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍗</span> Air Fryer Chicken
             </Link>
             <Link to="/recipes/ground-turkey" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🦃</span> Ground Turkey
             </Link>
-            <Link to="/recipes/ground-beef-pasta" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
-              <span className="text-2xl">🍝</span> Ground Beef Pasta
+            <Link to="/recipes/passover" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍷</span> Passover Recipes
             </Link>
-            <Link to="/recipes/easter" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
-              <span className="text-2xl">🐣</span> Easter Dinner
+            <Link to="/recipes/ground-turkey-sweet-potato" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍠</span> Turkey & Sweet Potato
             </Link>
           </div>
         </div>

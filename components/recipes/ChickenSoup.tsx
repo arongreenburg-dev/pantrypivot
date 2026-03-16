@@ -147,7 +147,7 @@ const ChickenSoup: React.FC = () => {
   const recipe = recipes[activeTab];
 
   useEffect(() => {
-    const PAGE_TITLE = 'Chicken Soup Recipes | PantryPivot';
+    const PAGE_TITLE = 'Chicken Soup Recipes (Rich Homemade Broth) | PantryPivot';
     const PAGE_DESC = 'Comforting chicken soup recipes — classic, chicken noodle, chicken rice, and lemon chicken soup. Meat-only, no dairy.';
     const PAGE_URL = 'https://pantrypivot.com/recipes/chicken-soup';
     document.title = PAGE_TITLE;
@@ -225,6 +225,27 @@ const ChickenSoup: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "How do I make chicken soup taste richer?", "acceptedAnswer": { "@type": "Answer", "text": "Start with a whole chicken or bone-in pieces — the bones release collagen that gives the broth body and richness. Start in cold water (not hot), skim the foam in the first 10 minutes, and simmer low and slow for at least 1.5 hours. Add parsnips for natural sweetness." } },
+        { "@type": "Question", "name": "Can I freeze chicken noodle soup?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, but freeze the broth and chicken separately from the noodles or rice. Noodles and rice become mushy after freezing. Make the broth base, freeze it, and cook fresh noodles when you reheat. Chicken soup base freezes well for up to 3 months." } },
+        { "@type": "Question", "name": "How long does chicken soup keep in the fridge?", "acceptedAnswer": { "@type": "Answer", "text": "Homemade chicken soup keeps in the fridge for 4–5 days in a sealed container. The fat will solidify on top when cold — you can skim it off or stir it back in when reheating. Always reheat to a full simmer before serving." } },
+        { "@type": "Question", "name": "Can I use rotisserie chicken for soup?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — rotisserie chicken is a great shortcut. Use the carcass and any leftover meat. Simmer the carcass with vegetables for 1–1.5 hours to make broth, then add the shredded chicken back in at the end. Note: rotisserie chicken is often already seasoned." } }
+      ]
+    });
+    document.head.appendChild(script);
+    return () => {
+      const el = document.getElementById('faq-schema');
+      if (el) el.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
@@ -247,7 +268,18 @@ const ChickenSoup: React.FC = () => {
             <li className="text-slate-600 font-medium">Chicken Soup</li>
           </ol>
         </nav>
+        <nav className="mb-8 overflow-x-auto">
+          <div className="flex gap-2 text-sm font-semibold text-slate-500 whitespace-nowrap pb-1">
+            <span className="text-slate-400 text-xs uppercase tracking-wider self-center">Jump to:</span>
+            <a href="#recipe-ideas" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Recipes</a>
+            <a href="#cooking-tips" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Cooking Tips</a>
+            <a href="#substitutions" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Substitutions</a>
+            <a href="#faq" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">FAQ</a>
+            <a href="https://pantrypivot.com" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">✨ Custom Recipe</a>
+          </div>
+        </nav>
         <div className="text-center mb-10">
+          <span className="inline-block bg-red-100 text-red-700 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">🥩 Meat</span>
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Chicken Soup Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
             Soul-warming chicken soup recipes for every craving — classic broth, noodles, rice, and bright lemon.
@@ -267,7 +299,7 @@ const ChickenSoup: React.FC = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 flex-wrap justify-center mb-8">
+        <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (
             <button
               key={tab.key}
@@ -356,10 +388,83 @@ const ChickenSoup: React.FC = () => {
           </div>
         </div>
 
+        {/* Cooking Tips */}
+        <div id="cooking-tips" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-10">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Cooking Tips</h2>
+          <ul className="space-y-3">
+            {[
+              'Start with cold water, not hot. Starting cold draws out collagen and flavor from the bones gradually, creating a clearer, richer broth.',
+              'Skim foam during the first 10 minutes of boiling. This removes impurities and keeps the broth clear and clean-tasting.',
+              'Simmer low and slow — never a rolling boil. A hard boil makes the broth cloudy and can toughen the chicken.',
+              'Add noodles or rice in the last 15–20 minutes only. Adding them too early causes them to over-expand and absorb all the broth.',
+              'Season the soup with salt at the end of cooking, not the beginning. The broth concentrates as it cooks, so early salting can make it too salty.',
+            ].map((tip, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-orange-400 flex-shrink-0" />
+                {tip}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Substitutions */}
+        <div id="substitutions" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Substitutions</h2>
+          <ul className="space-y-3">
+            {[
+              'Whole chicken ↔ bone-in pieces: 3 lbs of bone-in chicken thighs or drumsticks work just as well and are often cheaper.',
+              'Egg noodles ↔ rice or orzo: All three are pareve-friendly. Rice makes the soup more filling; orzo adds a silky texture.',
+              'Fresh dill ↔ dried dill: Use ½ tsp dried dill per 1 tbsp fresh. Add at the very end for best flavor.',
+              'Chicken broth ↔ water: When making from scratch, water is fine — the chicken and vegetables create all the flavor you need.',
+              'Parsnip ↔ extra carrots: Parsnips add a slightly sweet, earthy flavor. Skip them or substitute additional carrots if unavailable.',
+            ].map((sub, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-orange-400 flex-shrink-0" />
+                {sub}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Storage */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Storage</h2>
+          <ul className="space-y-3">
+            {[
+              'Fridge: Keep in a sealed container for 4–5 days.',
+              'Freezer: Freeze the broth and chicken (without noodles or rice) for up to 3 months. Noodles and rice become mushy when frozen.',
+              'Reheat: Warm gently on the stovetop over medium heat to a full simmer before serving.',
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-orange-400 flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* FAQ */}
+        <div id="faq" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {[
+              { q: 'How do I make chicken soup taste richer?', a: 'Start with a whole chicken or bone-in pieces — the bones release collagen that gives the broth body and richness. Start in cold water (not hot), skim the foam in the first 10 minutes, and simmer low and slow for at least 1.5 hours. Add parsnips for natural sweetness.' },
+              { q: 'Can I freeze chicken noodle soup?', a: 'Yes, but freeze the broth and chicken separately from the noodles or rice. Noodles and rice become mushy after freezing. Make the broth base, freeze it, and cook fresh noodles when you reheat. Chicken soup base freezes well for up to 3 months.' },
+              { q: 'How long does chicken soup keep in the fridge?', a: 'Homemade chicken soup keeps in the fridge for 4–5 days in a sealed container. The fat will solidify on top when cold — you can skim it off or stir it back in when reheating. Always reheat to a full simmer before serving.' },
+              { q: 'Can I use rotisserie chicken for soup?', a: 'Yes — rotisserie chicken is a great shortcut. Use the carcass and any leftover meat. Simmer the carcass with vegetables for 1–1.5 hours to make broth, then add the shredded chicken back in at the end. Note: rotisserie chicken is often already seasoned.' },
+            ].map((item, i) => (
+              <div key={i} className="bg-slate-50 rounded-2xl p-5">
+                <h3 className="font-bold text-slate-900 mb-2">{item.q}</h3>
+                <p className="text-slate-600 leading-relaxed">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* More Recipes */}
         <div className="mt-16">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-6">More Recipes</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <Link to="/recipes/chicken-and-rice" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍚</span> Chicken and Rice
             </Link>
@@ -369,8 +474,14 @@ const ChickenSoup: React.FC = () => {
             <Link to="/recipes/instant-pot-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">⚡</span> Instant Pot Chicken
             </Link>
+            <Link to="/recipes/roast-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍗</span> Roast Chicken
+            </Link>
             <Link to="/recipes/passover" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍷</span> Passover Recipes
+            </Link>
+            <Link to="/recipes/dairy-free-marry-me-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍋</span> Marry Me Chicken
             </Link>
           </div>
         </div>

@@ -155,7 +155,7 @@ const ChickenAndRice: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const recipe = recipes[activeTab];
   useEffect(() => {
-    const PAGE_TITLE = 'Chicken and Rice Recipes | PantryPivot';
+    const PAGE_TITLE = 'Chicken and Rice Recipes (One-Pan Family Dinners) | PantryPivot';
     const PAGE_DESC = 'Easy chicken and rice recipes — classic, soup, creamy casserole, and rice bowls. Simple meat-only dinners the whole family loves.';
     const PAGE_URL = 'https://pantrypivot.com/recipes/chicken-and-rice';
     document.title = PAGE_TITLE;
@@ -234,6 +234,27 @@ const ChickenAndRice: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Can I use uncooked rice directly in chicken and rice?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — the rice cooks in the chicken broth during the recipe, absorbing all the flavor. Use raw long-grain white rice. Do not use pre-cooked or instant rice as it will become mushy." } },
+        { "@type": "Question", "name": "How do I keep chicken and rice from getting mushy?", "acceptedAnswer": { "@type": "Answer", "text": "Cover the pot tightly and don't lift the lid while the rice is cooking. Use the exact ratio of liquid to rice (usually 1.5:1 broth to rice), and let it rest 5 minutes off heat before serving." } },
+        { "@type": "Question", "name": "Can I substitute brown rice in chicken and rice?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, but add 10–15 extra minutes of cook time and increase liquid by ¼ cup. Brown rice takes longer to cook than white rice and needs more liquid." } },
+        { "@type": "Question", "name": "Can chicken and rice be frozen?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, but rice texture changes slightly when frozen and reheated — it softens. For best results, freeze the chicken separately from the rice, or accept slightly softer rice after reheating with a splash of broth." } }
+      ]
+    });
+    document.head.appendChild(script);
+    return () => {
+      const el = document.getElementById('faq-schema');
+      if (el) el.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">
@@ -255,14 +276,28 @@ const ChickenAndRice: React.FC = () => {
             <li className="text-slate-600 font-medium">Chicken and Rice</li>
           </ol>
         </nav>
+
+        {/* Table of Contents */}
+        <nav className="mb-8 overflow-x-auto">
+          <div className="flex gap-2 text-sm font-semibold text-slate-500 whitespace-nowrap pb-1">
+            <span className="text-slate-400 text-xs uppercase tracking-wider self-center">Jump to:</span>
+            <a href="#recipe-ideas" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Recipes</a>
+            <a href="#cooking-tips" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Cooking Tips</a>
+            <a href="#substitutions" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Substitutions</a>
+            <a href="#faq" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">FAQ</a>
+            <a href="https://pantrypivot.com" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">✨ Custom Recipe</a>
+          </div>
+        </nav>
+
         <div className="text-center mb-10">
+          <span className="inline-block bg-red-100 text-red-700 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">🥩 Meat</span>
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Chicken and Rice Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
             Classic comfort food made easy — juicy chicken and perfectly cooked rice in four delicious ways.
           </p>
         </div>
 
-        <div className="flex gap-2 flex-wrap justify-center mb-8">
+        <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (
             <button
               key={tab.key}
@@ -346,10 +381,83 @@ const ChickenAndRice: React.FC = () => {
           </div>
         </div>
 
+        {/* Cooking Tips */}
+        <div id="cooking-tips" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-10">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Chicken and Rice Tips</h2>
+          <ul className="space-y-3">
+            {[
+              "Toast the rice in the chicken drippings for 1 minute before adding broth — this adds a nutty depth of flavor that plain boiled rice lacks.",
+              "Cover the pot tightly while the rice cooks. Every steam release means less water for the rice to absorb, leading to crunchy undercooked spots.",
+              "Use bone-in chicken thighs for the most flavorful rice — the fat and collagen enrich the whole dish.",
+              "Don't check on the rice while it's cooking. Trust the timing and let it steam undisturbed for the full 25 minutes.",
+              "Let the dish rest 5 minutes off heat before serving — the rice continues to steam and the chicken juices redistribute."
+            ].map((tip, i) => (
+              <li key={i} className="flex items-start gap-3 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-400 flex-shrink-0" />
+                <span>{tip}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Substitutions */}
+        <div id="substitutions" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Ingredient Substitutions</h2>
+          <ul className="space-y-3">
+            {[
+              "White rice ↔ brown rice: Use brown rice with 10–15 extra minutes of cook time and ¼ cup more liquid.",
+              "Chicken thighs ↔ chicken breasts: Breasts work but are less forgiving — reduce cook time by 5 minutes to avoid drying out.",
+              "Chicken broth ↔ vegetable broth: Makes the dish pareve — a great option for pareve meals.",
+              "Dried thyme ↔ dried rosemary or oregano: Any dried herb works; rosemary gives a more Mediterranean flavor.",
+              "Fresh garlic ↔ garlic powder: Use ¼ tsp garlic powder per clove when fresh isn't available."
+            ].map((sub, i) => (
+              <li key={i} className="flex items-start gap-3 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-400 flex-shrink-0" />
+                <span>{sub}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Storage */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Storage &amp; Reheating</h2>
+          <ul className="space-y-3">
+            {[
+              "Fridge: 3–4 days in an airtight container.",
+              "Freezer: Freezes up to 3 months. Note that rice texture softens when frozen and reheated.",
+              "Reheat: Reheat on the stovetop or in the microwave with a splash of broth to restore moisture."
+            ].map((tip, i) => (
+              <li key={i} className="flex items-start gap-3 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-400 flex-shrink-0" />
+                <span>{tip}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* FAQ */}
+        <div id="faq" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {[
+              { q: "Can I use uncooked rice directly in chicken and rice?", a: "Yes — the rice cooks in the chicken broth during the recipe, absorbing all the flavor. Use raw long-grain white rice. Do not use pre-cooked or instant rice as it will become mushy." },
+              { q: "How do I keep chicken and rice from getting mushy?", a: "Cover the pot tightly and don't lift the lid while the rice is cooking. Use the exact ratio of liquid to rice (usually 1.5:1 broth to rice), and let it rest 5 minutes off heat before serving." },
+              { q: "Can I substitute brown rice in chicken and rice?", a: "Yes, but add 10–15 extra minutes of cook time and increase liquid by ¼ cup. Brown rice takes longer to cook than white rice and needs more liquid." },
+              { q: "Can chicken and rice be frozen?", a: "Yes, but rice texture changes slightly when frozen and reheated — it softens. For best results, freeze the chicken separately from the rice, or accept slightly softer rice after reheating with a splash of broth." }
+            ].map(({ q, a }, i) => (
+              <div key={i} className="bg-slate-50 rounded-2xl p-5">
+                <p className="font-bold text-slate-900 mb-2">{q}</p>
+                <p className="text-slate-600 text-sm leading-relaxed">{a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* More Recipes */}
-        <div className="mt-16">
+        <div className="mt-10">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-6">More Recipes</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <Link to="/recipes/air-fryer-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍗</span> Air Fryer Chicken
             </Link>
@@ -359,8 +467,14 @@ const ChickenAndRice: React.FC = () => {
             <Link to="/recipes/instant-pot-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">⚡</span> Instant Pot Chicken
             </Link>
-            <Link to="/recipes/easter" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
-              <span className="text-2xl">🐣</span> Easter Dinner
+            <Link to="/recipes/roast-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍗</span> Roast Chicken
+            </Link>
+            <Link to="/recipes/chicken-soup" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍜</span> Chicken Soup
+            </Link>
+            <Link to="/recipes/ground-turkey" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🦃</span> Ground Turkey
             </Link>
           </div>
         </div>

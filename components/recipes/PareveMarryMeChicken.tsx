@@ -155,7 +155,7 @@ const PareveMarryMeChicken: React.FC = () => {
   const recipe = recipes[activeTab];
 
   useEffect(() => {
-    const PAGE_TITLE = 'Dairy-Free Marry Me Chicken | PantryPivot';
+    const PAGE_TITLE = 'Dairy-Free Marry Me Chicken (Coconut Cream Sauce) | PantryPivot';
     const PAGE_DESC = 'Dairy-free Marry Me Chicken made with coconut cream — classic, soup, Instant Pot, and Crockpot versions. Kosher-friendly and delicious.';
     const PAGE_URL = 'https://pantrypivot.com/recipes/dairy-free-marry-me-chicken';
     document.title = PAGE_TITLE;
@@ -234,6 +234,27 @@ const PareveMarryMeChicken: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "What makes this recipe dairy-free?", "acceptedAnswer": { "@type": "Answer", "text": "This recipe replaces the heavy cream used in traditional Marry Me Chicken with full-fat coconut cream. Coconut cream creates an equally rich, thick, and silky sauce without any dairy. The result is fully kosher-compliant — you can serve it at a meat meal without any dairy concerns." } },
+        { "@type": "Question", "name": "Can I use coconut milk instead of coconut cream?", "acceptedAnswer": { "@type": "Answer", "text": "You can, but the sauce will be thinner and less rich. If using coconut milk (the canned, full-fat variety), simmer the sauce longer — 8–10 minutes instead of 3–4 — to reduce and thicken it. Light coconut milk will not thicken adequately." } },
+        { "@type": "Question", "name": "Is this recipe kosher?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — this recipe is fully kosher. It uses chicken (meat) with coconut cream (pareve, not dairy), making it suitable for a meat meal. All ingredients are pareve or meat. It can be made Kosher for Passover by ensuring all spices and coconut cream are certified Kosher for Passover." } },
+        { "@type": "Question", "name": "Can this be made pareve?", "acceptedAnswer": { "@type": "Answer", "text": "The recipe is already pareve-friendly in terms of the cream — coconut cream is a pareve ingredient. Since the recipe uses chicken, the complete dish is classified as 'meat' under kosher law. To make a fully pareve version, substitute the chicken with chickpeas or tofu, though this significantly changes the dish." } }
+      ]
+    });
+    document.head.appendChild(script);
+    return () => {
+      const el = document.getElementById('faq-schema');
+      if (el) el.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
@@ -257,9 +278,21 @@ const PareveMarryMeChicken: React.FC = () => {
           </ol>
         </nav>
 
+        {/* Table of Contents */}
+        <nav className="mb-8 overflow-x-auto">
+          <div className="flex gap-2 text-sm font-semibold text-slate-500 whitespace-nowrap pb-1">
+            <span className="text-slate-400 text-xs uppercase tracking-wider self-center">Jump to:</span>
+            <a href="#recipe-ideas" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Recipes</a>
+            <a href="#cooking-tips" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Cooking Tips</a>
+            <a href="#substitutions" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Substitutions</a>
+            <a href="#faq" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">FAQ</a>
+            <a href="https://pantrypivot.com" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">✨ Custom Recipe</a>
+          </div>
+        </nav>
+
         <div className="text-center mb-10">
           <span className="inline-block bg-green-100 text-green-700 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">
-            Dairy-Free
+            🌿 Dairy-Free
           </span>
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Dairy-Free Marry Me Chicken</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
@@ -288,7 +321,7 @@ const PareveMarryMeChicken: React.FC = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 flex-wrap justify-center mb-8">
+        <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (
             <button
               key={tab.key}
@@ -382,18 +415,112 @@ const PareveMarryMeChicken: React.FC = () => {
           </div>
         </div>
 
+        {/* Cooking Tips */}
+        <div id="cooking-tips" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-10">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Cooking Tips</h2>
+          <ul className="space-y-3">
+            {[
+              "Use full-fat canned coconut cream (not coconut milk) for a thick, rich sauce that coats the chicken properly.",
+              "Sun-dried tomatoes packed in oil give significantly more flavor than dry-packed. Drain the oil before using.",
+              "Sear the chicken well before adding the sauce — a golden-brown crust adds flavor and prevents the chicken from looking grey in the creamy sauce.",
+              "Simmer the coconut cream sauce over medium-low heat. High heat can cause it to separate and become grainy.",
+              "In the Instant Pot version: add the coconut cream AFTER pressure cooking is complete, during the Sauté phase. Adding it under pressure changes its texture.",
+            ].map((tip, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-400 flex-shrink-0" />
+                {tip}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Substitutions */}
+        <div id="substitutions" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Substitutions</h2>
+          <ul className="space-y-3">
+            {[
+              "Coconut cream ↔ cashew cream: Soak 1 cup raw cashews in water for 4 hours, drain, and blend with ½ cup water until smooth. A pareve, nut-based alternative.",
+              "Sun-dried tomatoes ↔ roasted red peppers: Drain well and chop. Less tangy than sun-dried tomatoes but still excellent.",
+              "Italian seasoning ↔ fresh basil + fresh oregano: Use 2 tbsp fresh basil + 1 tsp fresh oregano for a brighter, more vivid flavor.",
+              "Red pepper flakes ↔ cayenne pepper: Use ¼ the amount — cayenne is significantly hotter than red pepper flakes.",
+              "Chicken broth ↔ vegetable broth: Makes the sauce lighter and keeps the kosher classification meat (not pareve, since you're using chicken).",
+            ].map((sub, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-400 flex-shrink-0" />
+                {sub}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Storage */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Storage</h2>
+          <ul className="space-y-3">
+            {[
+              "Fridge: 3–4 days.",
+              "Freezer: Freeze sauce and chicken together for up to 2 months. Coconut cream sauces can separate when frozen but stir smooth on reheating.",
+              "Reheat on stovetop over low heat, stirring gently.",
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-400 flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* FAQ */}
+        <div id="faq" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {[
+              {
+                q: "What makes this recipe dairy-free?",
+                a: "This recipe replaces the heavy cream used in traditional Marry Me Chicken with full-fat coconut cream. Coconut cream creates an equally rich, thick, and silky sauce without any dairy. The result is fully kosher-compliant — you can serve it at a meat meal without any dairy concerns.",
+              },
+              {
+                q: "Can I use coconut milk instead of coconut cream?",
+                a: "You can, but the sauce will be thinner and less rich. If using coconut milk (the canned, full-fat variety), simmer the sauce longer — 8–10 minutes instead of 3–4 — to reduce and thicken it. Light coconut milk will not thicken adequately.",
+              },
+              {
+                q: "Is this recipe kosher?",
+                a: "Yes — this recipe is fully kosher. It uses chicken (meat) with coconut cream (pareve, not dairy), making it suitable for a meat meal. All ingredients are pareve or meat. It can be made Kosher for Passover by ensuring all spices and coconut cream are certified Kosher for Passover.",
+              },
+              {
+                q: "Can this be made pareve?",
+                a: "The recipe is already pareve-friendly in terms of the cream — coconut cream is a pareve ingredient. Since the recipe uses chicken, the complete dish is classified as 'meat' under kosher law. To make a fully pareve version, substitute the chicken with chickpeas or tofu, though this significantly changes the dish.",
+              },
+            ].map((item, i) => (
+              <div key={i} className="bg-slate-50 rounded-2xl p-5">
+                <p className="font-bold text-slate-900 mb-2">{item.q}</p>
+                <p className="text-slate-600 text-sm leading-relaxed">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* More Recipes */}
         <div className="mt-16">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-6">More Recipes</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <Link to="/recipes/chicken-and-rice" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
-              <span className="text-2xl">🍚</span> Chicken and Rice
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            <Link to="/recipes/air-fryer-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍗</span> Air Fryer Chicken
             </Link>
             <Link to="/recipes/crockpot-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍲</span> Crockpot Chicken
             </Link>
             <Link to="/recipes/instant-pot-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">⚡</span> Instant Pot Chicken
+            </Link>
+            <Link to="/recipes/roast-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍗</span> Roast Chicken
+            </Link>
+            <Link to="/recipes/chicken-and-rice" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍚</span> Chicken and Rice
+            </Link>
+            <Link to="/recipes/passover" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍷</span> Passover Recipes
             </Link>
           </div>
         </div>

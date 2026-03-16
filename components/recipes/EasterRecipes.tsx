@@ -145,7 +145,7 @@ const EasterRecipes: React.FC = () => {
   const recipe = recipes[activeTab];
 
   useEffect(() => {
-    const PAGE_TITLE = 'Easter Dinner Recipes | PantryPivot';
+    const PAGE_TITLE = 'Easter Dinner Recipes (Easy Family Feast Ideas) | PantryPivot';
     const PAGE_DESC = 'Easy Easter dinner recipes — roast lamb, glazed chicken, spring frittata, and roasted vegetables. Simple meals for the whole family.';
     const PAGE_URL = 'https://pantrypivot.com/recipes/easter';
     document.title = PAGE_TITLE;
@@ -221,6 +221,27 @@ const EasterRecipes: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "What is the traditional Easter main dish?", "acceptedAnswer": { "@type": "Answer", "text": "The most traditional Easter centerpiece is roast lamb — a symbol of spring and renewal in many cultures. Honey-glazed chicken is a popular, family-friendly alternative. For those who prefer pareve options, a spring vegetable frittata with eggs makes a beautiful and meaningful Easter main." } },
+        { "@type": "Question", "name": "How do I know when roast lamb is done?", "acceptedAnswer": { "@type": "Answer", "text": "Use an instant-read thermometer: 145°F for medium (pink and juicy), 160°F for medium-well, and 170°F for well done. For a 4–5 lb leg of lamb, expect approximately 1 hour 15–30 minutes at 350°F (after an initial 20-minute sear at 425°F). Rest 20 minutes before carving." } },
+        { "@type": "Question", "name": "Can Easter dinner be made ahead?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — the herb-crusted lamb can be rubbed with the herb paste the night before and refrigerated uncovered (this actually improves the crust). The honey-roasted root vegetables can be prepped and par-roasted, then finished 30 minutes before serving. The spring frittata is best made fresh." } },
+        { "@type": "Question", "name": "What side dishes go with roast lamb?", "acceptedAnswer": { "@type": "Answer", "text": "Classic pairings include roasted root vegetables, mint jelly, roasted asparagus, or a spring salad. All the side dishes on this page (honey-roasted root vegetables) are pareve and pair with any of the main dishes. Matzo or bread for the table completes the meal." } }
+      ]
+    });
+    document.head.appendChild(script);
+    return () => {
+      const el = document.getElementById('faq-schema');
+      if (el) el.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
@@ -244,7 +265,20 @@ const EasterRecipes: React.FC = () => {
           </ol>
         </nav>
 
+        {/* Table of Contents */}
+        <nav className="mb-8 overflow-x-auto">
+          <div className="flex gap-2 text-sm font-semibold text-slate-500 whitespace-nowrap pb-1">
+            <span className="text-slate-400 text-xs uppercase tracking-wider self-center">Jump to:</span>
+            <a href="#recipe-ideas" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-emerald-300 hover:text-emerald-600 transition-colors">Recipes</a>
+            <a href="#cooking-tips" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-emerald-300 hover:text-emerald-600 transition-colors">Cooking Tips</a>
+            <a href="#substitutions" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-emerald-300 hover:text-emerald-600 transition-colors">Substitutions</a>
+            <a href="#faq" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-emerald-300 hover:text-emerald-600 transition-colors">FAQ</a>
+            <a href="https://pantrypivot.com" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-emerald-300 hover:text-emerald-600 transition-colors">✨ Custom Recipe</a>
+          </div>
+        </nav>
+
         <div className="text-center mb-10">
+          <span className="inline-block bg-emerald-100 text-emerald-700 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">🐣 Easter</span>
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Easter Dinner Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
             Simple, crowd-pleasing Easter meals — roast lamb, honey glazed chicken, a fresh spring frittata, and honey-roasted root vegetables.
@@ -264,7 +298,7 @@ const EasterRecipes: React.FC = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 flex-wrap justify-center mb-8">
+        <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (
             <button
               key={tab.key}
@@ -353,10 +387,96 @@ const EasterRecipes: React.FC = () => {
           </div>
         </div>
 
+        {/* Cooking Tips */}
+        <div id="cooking-tips" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-10">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Cooking Tips</h2>
+          <ul className="space-y-3">
+            {[
+              "Bring lamb to room temperature 45 minutes before roasting. Cold lamb placed in a hot oven cooks unevenly — the outside overcooks before the center reaches temperature.",
+              "Score the lamb deeply and press herbs and garlic into the slits. This gets seasoning into the deepest parts of the meat, not just the surface.",
+              "Baste the honey-glazed chicken halfway through roasting. The honey caramelizes quickly — basting prevents burning and builds layers of glaze.",
+              "For the spring frittata, make sure the edges are set on the stovetop before transferring to the oven. If the eggs are still liquid at the edges, they'll slosh when you move the pan.",
+              "Roast root vegetables on two pans if needed — don't crowd them. Overcrowded vegetables steam instead of caramelize.",
+            ].map((tip, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-emerald-400 flex-shrink-0" />
+                {tip}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Substitutions */}
+        <div id="substitutions" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Substitutions</h2>
+          <ul className="space-y-3">
+            {[
+              "Bone-in leg of lamb ↔ boneless: Boneless is easier to carve. Reduce cook time by 20–30 minutes and use the same herb paste.",
+              "Dijon mustard ↔ whole grain mustard: Both work in the lamb crust. Whole grain mustard adds texture and a slightly milder flavor.",
+              "Honey ↔ maple syrup: An equal substitute for the chicken glaze or root vegetables — gives a slightly different but equally delicious flavor.",
+              "Asparagus (frittata) ↔ green beans or snap peas: Any spring vegetable works — use what's in season.",
+              "Beets (root vegetables) ↔ red potatoes: Skip the bleeding concern entirely. Red potatoes roast beautifully alongside carrots and parsnips.",
+            ].map((sub, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-emerald-400 flex-shrink-0" />
+                {sub}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Storage */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Storage</h2>
+          <ul className="space-y-3">
+            {[
+              "Roast lamb and glazed chicken: fridge 4–5 days, freeze well for 3 months.",
+              "Spring frittata: fridge 3–4 days, does not freeze well.",
+              "Root vegetables: fridge 4–5 days, freeze reasonably well for 2 months.",
+              "Reheat lamb covered in oven at 325°F with a splash of broth.",
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-emerald-400 flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* FAQ */}
+        <div id="faq" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {[
+              {
+                q: "What is the traditional Easter main dish?",
+                a: "The most traditional Easter centerpiece is roast lamb — a symbol of spring and renewal in many cultures. Honey-glazed chicken is a popular, family-friendly alternative. For those who prefer pareve options, a spring vegetable frittata with eggs makes a beautiful and meaningful Easter main.",
+              },
+              {
+                q: "How do I know when roast lamb is done?",
+                a: "Use an instant-read thermometer: 145°F for medium (pink and juicy), 160°F for medium-well, and 170°F for well done. For a 4–5 lb leg of lamb, expect approximately 1 hour 15–30 minutes at 350°F (after an initial 20-minute sear at 425°F). Rest 20 minutes before carving.",
+              },
+              {
+                q: "Can Easter dinner be made ahead?",
+                a: "Yes — the herb-crusted lamb can be rubbed with the herb paste the night before and refrigerated uncovered (this actually improves the crust). The honey-roasted root vegetables can be prepped and par-roasted, then finished 30 minutes before serving. The spring frittata is best made fresh.",
+              },
+              {
+                q: "What side dishes go with roast lamb?",
+                a: "Classic pairings include roasted root vegetables, mint jelly, roasted asparagus, or a spring salad. All the side dishes on this page (honey-roasted root vegetables) are pareve and pair with any of the main dishes. Matzo or bread for the table completes the meal.",
+              },
+            ].map((item, i) => (
+              <div key={i} className="bg-slate-50 rounded-2xl p-5">
+                <p className="font-bold text-slate-900 mb-2">{item.q}</p>
+                <p className="text-slate-600 text-sm leading-relaxed">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* More Recipes */}
         <div className="mt-16">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-6">More Recipes</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <Link to="/recipes/passover" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍷</span> Passover Recipes
             </Link>
@@ -365,6 +485,15 @@ const EasterRecipes: React.FC = () => {
             </Link>
             <Link to="/recipes/shakshuka" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍳</span> Shakshuka
+            </Link>
+            <Link to="/recipes/salmon" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🐟</span> Salmon Recipes
+            </Link>
+            <Link to="/recipes/beef-stew" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🥩</span> Beef Stew
+            </Link>
+            <Link to="/recipes/ground-turkey-sweet-potato" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍠</span> Turkey & Sweet Potato
             </Link>
           </div>
         </div>

@@ -142,7 +142,7 @@ const InstantPotChicken: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const recipe = recipes[activeTab];
   useEffect(() => {
-    const PAGE_TITLE = 'Instant Pot Chicken Recipes | PantryPivot';
+    const PAGE_TITLE = 'Instant Pot Chicken Recipes (Juicy in Under 30 Minutes) | PantryPivot';
     const PAGE_DESC = 'Fast Instant Pot chicken recipes — classic breast, drumsticks, dump and go, and thighs. Pressure cooker meals in under 30 minutes.';
     const PAGE_URL = 'https://pantrypivot.com/recipes/instant-pot-chicken';
     document.title = PAGE_TITLE;
@@ -220,6 +220,27 @@ const InstantPotChicken: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "How long to cook chicken breast in Instant Pot?", "acceptedAnswer": { "@type": "Answer", "text": "For average-sized boneless chicken breasts (6–8 oz), cook on Manual High Pressure for 8 minutes, then natural release 5 minutes. Extra-large breasts need 10 minutes. Always verify with a thermometer — it must read 165°F." } },
+        { "@type": "Question", "name": "Why did I get a burn notice on my Instant Pot?", "acceptedAnswer": { "@type": "Answer", "text": "The BURN notice means liquid has cooked off the bottom. Always scrape up browned bits after sautéing before sealing, use at least 1 cup of liquid, and make sure thick sauces are added after pressure cooking is complete." } },
+        { "@type": "Question", "name": "Do I need to add liquid to Instant Pot for chicken?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — a minimum of 1 cup of liquid is required for the Instant Pot to reach pressure. Use chicken broth, water, or a combination. The liquid creates the steam that cooks the chicken." } },
+        { "@type": "Question", "name": "Can I stack chicken in an Instant Pot?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, you can stack chicken pieces — they will still cook through. However, searing chicken before stacking improves flavor. Stacked pieces may take 1–2 extra minutes compared to a single layer." } }
+      ]
+    });
+    document.head.appendChild(script);
+    return () => {
+      const el = document.getElementById('faq-schema');
+      if (el) el.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">
@@ -241,7 +262,21 @@ const InstantPotChicken: React.FC = () => {
             <li className="text-slate-600 font-medium">Instant Pot Chicken</li>
           </ol>
         </nav>
+
+        {/* Table of Contents */}
+        <nav className="mb-8 overflow-x-auto">
+          <div className="flex gap-2 text-sm font-semibold text-slate-500 whitespace-nowrap pb-1">
+            <span className="text-slate-400 text-xs uppercase tracking-wider self-center">Jump to:</span>
+            <a href="#recipe-ideas" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Recipes</a>
+            <a href="#cooking-tips" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Cooking Tips</a>
+            <a href="#substitutions" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Substitutions</a>
+            <a href="#faq" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">FAQ</a>
+            <a href="https://pantrypivot.com" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">✨ Custom Recipe</a>
+          </div>
+        </nav>
+
         <div className="text-center mb-10">
+          <span className="inline-block bg-red-100 text-red-700 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">🥩 Meat</span>
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Instant Pot Chicken Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
             Pressure-cooked chicken that's juicy every time — quick weeknight dinners with almost no effort.
@@ -274,7 +309,7 @@ const InstantPotChicken: React.FC = () => {
           </a>
         )}
 
-        <div className="flex gap-2 flex-wrap justify-center mb-8">
+        <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (
             <button
               key={tab.key}
@@ -358,10 +393,83 @@ const InstantPotChicken: React.FC = () => {
           </div>
         </div>
 
+        {/* Cooking Tips */}
+        <div id="cooking-tips" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-10">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Instant Pot Chicken Tips</h2>
+          <ul className="space-y-3">
+            {[
+              "Always deglaze the pot after sautéing by adding broth and scraping up all browned bits. This prevents the BURN error.",
+              "The minimum liquid requirement is 1 cup. Without enough liquid, the pot cannot build pressure.",
+              "Use a trivet to keep chicken above the liquid — this gives drier, more roasted chicken rather than boiled.",
+              "Natural pressure release (5 minutes) vs. immediate quick release: Natural release gives juicier chicken. Quick release is fine for smaller pieces.",
+              "Cooking time is based on thickness, not weight. A 1-inch thick breast needs 8 minutes; a 1.5-inch thick breast needs 10 minutes."
+            ].map((tip, i) => (
+              <li key={i} className="flex items-start gap-3 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-400 flex-shrink-0" />
+                <span>{tip}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Substitutions */}
+        <div id="substitutions" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Ingredient Substitutions</h2>
+          <ul className="space-y-3">
+            {[
+              "Bone-in chicken ↔ boneless: Reduce cook time by 2–3 minutes for boneless pieces.",
+              "Chicken broth ↔ water + garlic + herbs: Use plain water with a bouillon cube or just extra spices for a lighter flavor.",
+              "Dried herbs ↔ fresh: Add fresh herbs after cooking — pressure cooking destroys delicate fresh herb flavors.",
+              "Olive oil ↔ avocado oil for sautéing: Both work well. Avocado oil has a higher smoke point.",
+              "Lemon juice ↔ apple cider vinegar: A small amount of acid brightens the sauce similarly."
+            ].map((sub, i) => (
+              <li key={i} className="flex items-start gap-3 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-400 flex-shrink-0" />
+                <span>{sub}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Storage */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Storage &amp; Reheating</h2>
+          <ul className="space-y-3">
+            {[
+              "Fridge: Store cooked Instant Pot chicken in an airtight container for up to 3–4 days.",
+              "Freezer: Freezes well for up to 3 months. Freeze with some cooking liquid to keep moisture.",
+              "Reheat: Reheat on the stovetop over medium-low heat with a splash of broth, or in the microwave covered with a damp paper towel."
+            ].map((tip, i) => (
+              <li key={i} className="flex items-start gap-3 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-400 flex-shrink-0" />
+                <span>{tip}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* FAQ */}
+        <div id="faq" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {[
+              { q: "How long to cook chicken breast in Instant Pot?", a: "For average-sized boneless chicken breasts (6–8 oz), cook on Manual High Pressure for 8 minutes, then natural release 5 minutes. Extra-large breasts need 10 minutes. Always verify with a thermometer — it must read 165°F." },
+              { q: "Why did I get a burn notice on my Instant Pot?", a: "The BURN notice means liquid has cooked off the bottom. Always scrape up browned bits after sautéing before sealing, use at least 1 cup of liquid, and make sure thick sauces are added after pressure cooking is complete." },
+              { q: "Do I need to add liquid to Instant Pot for chicken?", a: "Yes — a minimum of 1 cup of liquid is required for the Instant Pot to reach pressure. Use chicken broth, water, or a combination. The liquid creates the steam that cooks the chicken." },
+              { q: "Can I stack chicken in an Instant Pot?", a: "Yes, you can stack chicken pieces — they will still cook through. However, searing chicken before stacking improves flavor. Stacked pieces may take 1–2 extra minutes compared to a single layer." }
+            ].map(({ q, a }, i) => (
+              <div key={i} className="bg-slate-50 rounded-2xl p-5">
+                <p className="font-bold text-slate-900 mb-2">{q}</p>
+                <p className="text-slate-600 text-sm leading-relaxed">{a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* More Recipes */}
-        <div className="mt-16">
+        <div className="mt-10">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-6">More Recipes</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <Link to="/recipes/air-fryer-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍗</span> Air Fryer Chicken
             </Link>
@@ -370,6 +478,15 @@ const InstantPotChicken: React.FC = () => {
             </Link>
             <Link to="/recipes/chicken-and-rice" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍚</span> Chicken and Rice
+            </Link>
+            <Link to="/recipes/roast-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍗</span> Roast Chicken
+            </Link>
+            <Link to="/recipes/chicken-soup" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍜</span> Chicken Soup
+            </Link>
+            <Link to="/recipes/dairy-free-marry-me-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🌿</span> Dairy-Free Marry Me Chicken
             </Link>
           </div>
         </div>

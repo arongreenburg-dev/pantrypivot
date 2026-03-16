@@ -156,7 +156,7 @@ const GroundTurkeySweetPotato: React.FC = () => {
   const recipe = recipes[activeTab];
 
   useEffect(() => {
-    const PAGE_TITLE = 'Ground Turkey Sweet Potato Recipes | PantryPivot';
+    const PAGE_TITLE = 'Ground Turkey Sweet Potato Recipes (Healthy One-Pan Dinners) | PantryPivot';
     const PAGE_DESC = 'Easy ground turkey and sweet potato recipes — bowls, skillet, stuffed sweet potato, and soup. Healthy meat-only meals ready in 30 minutes.';
     const PAGE_URL = 'https://pantrypivot.com/recipes/ground-turkey-sweet-potato';
     document.title = PAGE_TITLE;
@@ -234,6 +234,27 @@ const GroundTurkeySweetPotato: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Can I use regular potatoes instead of sweet potato?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — regular Yukon Gold or russet potatoes work as a direct substitute. They have a more neutral flavor compared to sweet potato's natural sweetness. Adjust the spices slightly — reduce the cinnamon if using regular potatoes as it pairs less naturally." } },
+        { "@type": "Question", "name": "How do I stop sweet potatoes from getting mushy?", "acceptedAnswer": { "@type": "Answer", "text": "Cut sweet potatoes into uniform pieces (½-inch cubes for skillets, 1-inch for roasting). Don't overcrowd the pan — too many pieces steam instead of roast. For the skillet method, add sweet potatoes first and cook until nearly tender before adding turkey." } },
+        { "@type": "Question", "name": "Is ground turkey sweet potato good for meal prep?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — this is an excellent meal prep dish. It reheats well, and the flavors actually improve overnight as the spices develop. Portion into containers with rice or quinoa for easy weekday lunches. Keeps in the fridge for up to 4 days." } },
+        { "@type": "Question", "name": "What goes well with ground turkey and sweet potato?", "acceptedAnswer": { "@type": "Answer", "text": "Great pairings include cilantro lime rice, quinoa, roasted vegetables, or a simple green salad. A squeeze of fresh lime juice over the finished dish brightens all the flavors. Sliced avocado or a fresh tomato salsa makes a great topping." } }
+      ]
+    });
+    document.head.appendChild(script);
+    return () => {
+      const el = document.getElementById('faq-schema');
+      if (el) el.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
@@ -256,7 +277,18 @@ const GroundTurkeySweetPotato: React.FC = () => {
             <li className="text-slate-600 font-medium">Ground Turkey Sweet Potato</li>
           </ol>
         </nav>
+        <nav className="mb-8 overflow-x-auto">
+          <div className="flex gap-2 text-sm font-semibold text-slate-500 whitespace-nowrap pb-1">
+            <span className="text-slate-400 text-xs uppercase tracking-wider self-center">Jump to:</span>
+            <a href="#recipe-ideas" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Recipes</a>
+            <a href="#cooking-tips" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Cooking Tips</a>
+            <a href="#substitutions" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Substitutions</a>
+            <a href="#faq" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">FAQ</a>
+            <a href="https://pantrypivot.com" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">✨ Custom Recipe</a>
+          </div>
+        </nav>
         <div className="text-center mb-10">
+          <span className="inline-block bg-red-100 text-red-700 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">🥩 Meat</span>
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Ground Turkey Sweet Potato Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
             Healthy, hearty, and ready in 30 minutes — ground turkey and sweet potato recipes your whole family will love.
@@ -272,7 +304,7 @@ const GroundTurkeySweetPotato: React.FC = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 flex-wrap justify-center mb-8">
+        <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (
             <button
               key={tab.key}
@@ -365,10 +397,83 @@ const GroundTurkeySweetPotato: React.FC = () => {
           </div>
         </div>
 
+        {/* Cooking Tips */}
+        <div id="cooking-tips" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-10">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Cooking Tips</h2>
+          <ul className="space-y-3">
+            {[
+              'Cut sweet potatoes uniformly — ½-inch cubes for skillets, 1-inch cubes for roasting. Uniform size means everything cooks at the same rate.',
+              'Roast sweet potatoes separately from the turkey for the best caramelization. When cooked together, the moisture from the turkey steams the potatoes instead of roasting them.',
+              'Drain turkey well before adding spices — ground turkey releases moisture and the spices need to coat the meat, not dissolve in liquid.',
+              'The cumin-cinnamon-paprika combination is the key spice combo for this dish. Do not skip the cinnamon — it is subtle but essential.',
+              'Build complete bowls: a grain base (rice, quinoa) + seasoned turkey + sweet potato = a balanced, satisfying meal.',
+            ].map((tip, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-orange-400 flex-shrink-0" />
+                {tip}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Substitutions */}
+        <div id="substitutions" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Substitutions</h2>
+          <ul className="space-y-3">
+            {[
+              'Sweet potato ↔ butternut squash: A direct substitute with a similar flavor profile and cooking behavior.',
+              'Ground turkey ↔ ground chicken: 1:1 substitution with very similar results.',
+              'White rice ↔ brown rice or quinoa: Brown rice adds fiber; quinoa is pareve and adds complete protein.',
+              'Chicken broth ↔ vegetable broth: Makes the dish pareve — ideal when serving alongside dairy dishes.',
+              'Fresh lime ↔ lemon juice: Lemon works if lime is not available — add just before serving for brightness.',
+            ].map((sub, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-orange-400 flex-shrink-0" />
+                {sub}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Storage */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Storage</h2>
+          <ul className="space-y-3">
+            {[
+              'Fridge: 3–4 days in a sealed container.',
+              'Freezer: Freeze (without toppings or cilantro) for up to 3 months.',
+              'Reheat: In a skillet with a splash of chicken broth over medium heat.',
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-orange-400 flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* FAQ */}
+        <div id="faq" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {[
+              { q: 'Can I use regular potatoes instead of sweet potato?', a: "Yes — regular Yukon Gold or russet potatoes work as a direct substitute. They have a more neutral flavor compared to sweet potato's natural sweetness. Adjust the spices slightly — reduce the cinnamon if using regular potatoes as it pairs less naturally." },
+              { q: 'How do I stop sweet potatoes from getting mushy?', a: 'Cut sweet potatoes into uniform pieces (½-inch cubes for skillets, 1-inch for roasting). Do not overcrowd the pan — too many pieces steam instead of roast. For the skillet method, add sweet potatoes first and cook until nearly tender before adding turkey.' },
+              { q: 'Is ground turkey sweet potato good for meal prep?', a: 'Yes — this is an excellent meal prep dish. It reheats well, and the flavors actually improve overnight as the spices develop. Portion into containers with rice or quinoa for easy weekday lunches. Keeps in the fridge for up to 4 days.' },
+              { q: 'What goes well with ground turkey and sweet potato?', a: 'Great pairings include cilantro lime rice, quinoa, roasted vegetables, or a simple green salad. A squeeze of fresh lime juice over the finished dish brightens all the flavors. Sliced avocado or a fresh tomato salsa makes a great topping.' },
+            ].map((item, i) => (
+              <div key={i} className="bg-slate-50 rounded-2xl p-5">
+                <h3 className="font-bold text-slate-900 mb-2">{item.q}</h3>
+                <p className="text-slate-600 leading-relaxed">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* More Recipes */}
         <div className="mt-16">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-6">More Recipes</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <Link to="/recipes/ground-turkey" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🦃</span> Ground Turkey
             </Link>
@@ -377,6 +482,15 @@ const GroundTurkeySweetPotato: React.FC = () => {
             </Link>
             <Link to="/recipes/salmon" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🐟</span> Salmon Recipes
+            </Link>
+            <Link to="/recipes/air-fryer-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍗</span> Air Fryer Chicken
+            </Link>
+            <Link to="/recipes/beef-stew" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🥩</span> Beef Stew
+            </Link>
+            <Link to="/recipes/shakshuka" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍳</span> Shakshuka
             </Link>
           </div>
         </div>

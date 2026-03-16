@@ -153,7 +153,7 @@ const PassoverRecipes: React.FC = () => {
   const recipe = recipes[activeTab];
 
   useEffect(() => {
-    const PAGE_TITLE = 'Kosher for Passover Recipes | PantryPivot';
+    const PAGE_TITLE = 'Kosher for Passover Recipes (Chametz-Free) | PantryPivot';
     const PAGE_DESC = 'Easy Kosher for Passover recipes — brisket, matzo ball soup, roast chicken, and flourless chocolate cake. Chametz-free and kitniyot-free.';
     const PAGE_URL = 'https://pantrypivot.com/recipes/passover';
     document.title = PAGE_TITLE;
@@ -230,6 +230,27 @@ const PassoverRecipes: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "What makes a recipe Kosher for Passover?", "acceptedAnswer": { "@type": "Answer", "text": "A Kosher for Passover recipe contains no chametz — leavened grains including wheat, barley, rye, oats, and spelt that have come into contact with water for more than 18 minutes. All ingredients must be certified Kosher for Passover. These recipes also avoid kitniyot (legumes, rice, corn) which Ashkenazi Jews traditionally don't eat on Passover." } },
+        { "@type": "Question", "name": "Can I make Passover brisket the day before?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — brisket actually tastes better when made the day before. Make it a day ahead, let it cool, and refrigerate it in its braising liquid. The next day, skim the solidified fat from the surface, slice the cold brisket against the grain, and reheat it covered in a 325°F oven with the braising liquid for 30–40 minutes." } },
+        { "@type": "Question", "name": "Is this recipe kitniyot-free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — all recipes on this page are kitniyot-free (no rice, corn, legumes, or beans). This makes them suitable for both Ashkenazi and Sephardic Passover traditions. The flourless chocolate cake uses potato starch rather than any kitniyot-based thickener." } },
+        { "@type": "Question", "name": "How do I reheat Passover brisket?", "acceptedAnswer": { "@type": "Answer", "text": "Slice the cold brisket against the grain first — it slices much more cleanly when cold. Place in a baking dish, spoon the braising liquid over the slices, cover tightly with foil, and reheat at 325°F for 30–40 minutes until warmed through. The liquid keeps the slices moist." } }
+      ]
+    });
+    document.head.appendChild(script);
+    return () => {
+      const el = document.getElementById('faq-schema');
+      if (el) el.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
@@ -251,6 +272,18 @@ const PassoverRecipes: React.FC = () => {
             <li className="text-slate-300">›</li>
             <li className="text-slate-600 font-medium">Kosher for Passover</li>
           </ol>
+        </nav>
+
+        {/* Table of Contents */}
+        <nav className="mb-8 overflow-x-auto">
+          <div className="flex gap-2 text-sm font-semibold text-slate-500 whitespace-nowrap pb-1">
+            <span className="text-slate-400 text-xs uppercase tracking-wider self-center">Jump to:</span>
+            <a href="#recipe-ideas" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-indigo-300 hover:text-indigo-700 transition-colors">Recipes</a>
+            <a href="#cooking-tips" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-indigo-300 hover:text-indigo-700 transition-colors">Cooking Tips</a>
+            <a href="#substitutions" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-indigo-300 hover:text-indigo-700 transition-colors">Substitutions</a>
+            <a href="#faq" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-indigo-300 hover:text-indigo-700 transition-colors">FAQ</a>
+            <a href="https://pantrypivot.com" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-indigo-300 hover:text-indigo-700 transition-colors">✨ Custom Recipe</a>
+          </div>
         </nav>
 
         {/* Passover badge */}
@@ -280,7 +313,7 @@ const PassoverRecipes: React.FC = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 flex-wrap justify-center mb-8">
+        <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (
             <button
               key={tab.key}
@@ -369,10 +402,97 @@ const PassoverRecipes: React.FC = () => {
           </div>
         </div>
 
+        {/* Cooking Tips */}
+        <div id="cooking-tips" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-10">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Cooking Tips</h2>
+          <ul className="space-y-3">
+            {[
+              "Make the brisket the day before the Seder — it slices much more cleanly when cold, and the flavors deepen overnight.",
+              "The matzo ball mixture must be refrigerated for at least 30 minutes before shaping. This lets the matzo meal hydrate and firm up, which is what creates fluffy, light matzo balls.",
+              "Do not lift the lid while matzo balls are cooking. The steam is what makes them light and fluffy. Lifting the lid lets the steam escape and causes them to deflate.",
+              "Use potato starch to thicken sauces and gravies instead of flour or cornstarch — it's 100% chametz-free and kitniyot-free.",
+              "Check all chocolate for a Kosher for Passover certification on the label. Many standard chocolates contain chametz or kitniyot as additives.",
+            ].map((tip, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-indigo-400 flex-shrink-0" />
+                {tip}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Substitutions */}
+        <div id="substitutions" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Substitutions</h2>
+          <ul className="space-y-3">
+            {[
+              "Potato starch ↔ tapioca starch: Equal substitution for thickening — both are Kosher for Passover and kitniyot-free.",
+              "Vegetable oil ↔ schmaltz (rendered chicken fat) for matzo balls: Schmaltz makes more flavorful matzo balls. Equal substitution.",
+              "Dry red wine ↔ extra beef broth: If you don't have kosher wine, use an additional cup of beef broth plus 1 tbsp apple cider vinegar for acidity.",
+              "Bittersweet chocolate ↔ dark chocolate: Use any dark chocolate (60–70% cacao) that is certified Kosher for Passover.",
+              "Fresh dill ↔ dried dill: Use ½ tsp dried dill per 1 tbsp fresh. Add dried dill at the end of cooking for best flavor.",
+            ].map((sub, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-indigo-400 flex-shrink-0" />
+                {sub}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Storage */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Storage</h2>
+          <ul className="space-y-3">
+            {[
+              "Brisket: fridge 4–5 days (tastes better on day 2), freezes excellently for 3 months.",
+              "Matzo ball soup: fridge 3 days — keep matzo balls and broth together.",
+              "Flourless chocolate cake: fridge 5 days covered.",
+              "Roasted chicken: fridge 3–4 days.",
+              "Reheat brisket covered at 325°F with braising liquid.",
+            ].map((item, i) => (
+              <li key={i} className="flex items-start gap-2 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-indigo-400 flex-shrink-0" />
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* FAQ */}
+        <div id="faq" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {[
+              {
+                q: "What makes a recipe Kosher for Passover?",
+                a: "A Kosher for Passover recipe contains no chametz — leavened grains including wheat, barley, rye, oats, and spelt that have come into contact with water for more than 18 minutes. All ingredients must be certified Kosher for Passover. These recipes also avoid kitniyot (legumes, rice, corn) which Ashkenazi Jews traditionally don't eat on Passover.",
+              },
+              {
+                q: "Can I make Passover brisket the day before?",
+                a: "Yes — brisket actually tastes better when made the day before. Make it a day ahead, let it cool, and refrigerate it in its braising liquid. The next day, skim the solidified fat from the surface, slice the cold brisket against the grain, and reheat it covered in a 325°F oven with the braising liquid for 30–40 minutes.",
+              },
+              {
+                q: "Is this recipe kitniyot-free?",
+                a: "Yes — all recipes on this page are kitniyot-free (no rice, corn, legumes, or beans). This makes them suitable for both Ashkenazi and Sephardic Passover traditions. The flourless chocolate cake uses potato starch rather than any kitniyot-based thickener.",
+              },
+              {
+                q: "How do I reheat Passover brisket?",
+                a: "Slice the cold brisket against the grain first — it slices much more cleanly when cold. Place in a baking dish, spoon the braising liquid over the slices, cover tightly with foil, and reheat at 325°F for 30–40 minutes until warmed through. The liquid keeps the slices moist.",
+              },
+            ].map((item, i) => (
+              <div key={i} className="bg-slate-50 rounded-2xl p-5">
+                <p className="font-bold text-slate-900 mb-2">{item.q}</p>
+                <p className="text-slate-600 text-sm leading-relaxed">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* More Recipes */}
         <div className="mt-16">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-6">More Recipes</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <Link to="/recipes/roast-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍗</span> Roast Chicken
             </Link>
@@ -381,6 +501,15 @@ const PassoverRecipes: React.FC = () => {
             </Link>
             <Link to="/recipes/beef-stew" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🥩</span> Beef Stew
+            </Link>
+            <Link to="/recipes/shakshuka" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍳</span> Shakshuka
+            </Link>
+            <Link to="/recipes/dairy-free-marry-me-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍗</span> Dairy-Free Marry Me Chicken
+            </Link>
+            <Link to="/recipes/easter" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🐣</span> Easter Dinner
             </Link>
           </div>
         </div>

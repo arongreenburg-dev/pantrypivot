@@ -143,7 +143,7 @@ const RoastChicken: React.FC = () => {
   const recipe = recipes[activeTab];
 
   useEffect(() => {
-    const PAGE_TITLE = 'Roast Chicken Recipes | PantryPivot';
+    const PAGE_TITLE = 'Roast Chicken Recipes (Perfectly Golden Every Time) | PantryPivot';
     const PAGE_DESC = 'Perfect roast chicken recipes — classic, lemon herb, garlic, and easy roast chicken thighs. Meat-only, no dairy.';
     const PAGE_URL = 'https://pantrypivot.com/recipes/roast-chicken';
     document.title = PAGE_TITLE;
@@ -221,6 +221,27 @@ const RoastChicken: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "What temperature should I roast a whole chicken?", "acceptedAnswer": { "@type": "Answer", "text": "Roast at 425°F (220°C) for the entire time. High heat produces crispy, golden skin. Some recipes start hot then reduce — but 425°F throughout works well for chickens under 5 lbs." } },
+        { "@type": "Question", "name": "How long does a 4lb chicken take to roast?", "acceptedAnswer": { "@type": "Answer", "text": "A 4 lb chicken at 425°F takes approximately 1 hour 15 minutes. The rule of thumb is 15–20 minutes per pound, but always verify with an instant-read thermometer inserted into the thigh — it must read 165°F." } },
+        { "@type": "Question", "name": "Should I cover a chicken while roasting?", "acceptedAnswer": { "@type": "Answer", "text": "No — roasting uncovered is what creates the golden, crispy skin. Covering traps steam and makes the skin soft. If the skin is browning too fast, tent loosely with foil only during the last 15–20 minutes." } },
+        { "@type": "Question", "name": "How do I know when roast chicken is done?", "acceptedAnswer": { "@type": "Answer", "text": "Insert an instant-read thermometer into the thickest part of the thigh, away from the bone. It should read 165°F. The juices should run clear when you pierce the thigh, and the leg should wiggle freely." } }
+      ]
+    });
+    document.head.appendChild(script);
+    return () => {
+      const el = document.getElementById('faq-schema');
+      if (el) el.remove();
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
@@ -243,7 +264,21 @@ const RoastChicken: React.FC = () => {
             <li className="text-slate-600 font-medium">Roast Chicken</li>
           </ol>
         </nav>
+
+        {/* Table of Contents */}
+        <nav className="mb-8 overflow-x-auto">
+          <div className="flex gap-2 text-sm font-semibold text-slate-500 whitespace-nowrap pb-1">
+            <span className="text-slate-400 text-xs uppercase tracking-wider self-center">Jump to:</span>
+            <a href="#recipe-ideas" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Recipes</a>
+            <a href="#cooking-tips" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Cooking Tips</a>
+            <a href="#substitutions" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Substitutions</a>
+            <a href="#faq" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">FAQ</a>
+            <a href="https://pantrypivot.com" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">✨ Custom Recipe</a>
+          </div>
+        </nav>
+
         <div className="text-center mb-10">
+          <span className="inline-block bg-red-100 text-red-700 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">🥩 Meat</span>
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Roast Chicken Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
             Golden-skinned, juicy roast chicken for every occasion — whole bird or thighs, simple or herb-packed.
@@ -263,7 +298,7 @@ const RoastChicken: React.FC = () => {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 flex-wrap justify-center mb-8">
+        <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (
             <button
               key={tab.key}
@@ -352,8 +387,81 @@ const RoastChicken: React.FC = () => {
           </div>
         </div>
 
+        {/* Cooking Tips */}
+        <div id="cooking-tips" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-10">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Roast Chicken Tips</h2>
+          <ul className="space-y-3">
+            {[
+              "Pat the chicken completely dry inside and out with paper towels — moisture is the number one enemy of crispy skin.",
+              "Bring the chicken to room temperature for 30–45 minutes before roasting for more even cooking throughout.",
+              "Rub oil and seasoning under the breast skin as well as on top for maximum flavor penetration.",
+              "Roast at 425°F throughout — the high heat is what creates that golden, crackling skin.",
+              "Resting is non-negotiable: let the chicken rest 10–15 minutes before carving so the juices redistribute."
+            ].map((tip, i) => (
+              <li key={i} className="flex items-start gap-3 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-400 flex-shrink-0" />
+                <span>{tip}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Substitutions */}
+        <div id="substitutions" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Ingredient Substitutions</h2>
+          <ul className="space-y-3">
+            {[
+              "Whole chicken ↔ bone-in chicken pieces: Reduce cook time to 40–50 minutes for pieces.",
+              "Fresh herbs ↔ dried: Use ⅓ the amount of dried herbs compared to fresh.",
+              "Olive oil ↔ schmaltz (rendered chicken fat): Schmaltz adds incredible richness and depth of flavor — a traditional Jewish cooking fat.",
+              "Lemon ↔ orange: Use an orange for a slightly sweeter, more aromatic variation.",
+              "Garlic powder ↔ fresh minced garlic: Both work; fresh garlic may burn at high heat so tuck it under the skin rather than on top."
+            ].map((sub, i) => (
+              <li key={i} className="flex items-start gap-3 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-400 flex-shrink-0" />
+                <span>{sub}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Storage */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Storage &amp; Reheating</h2>
+          <ul className="space-y-3">
+            {[
+              "Fridge: 3–4 days. Use the leftover carcass to make chicken stock.",
+              "Freezer: Carved chicken freezes well for up to 3 months. Freeze with a bit of pan drippings.",
+              "Reheat: Reheat covered in a 350°F oven with a splash of chicken broth for 15–20 minutes. Reheat thighs/legs separately from breast meat for best results."
+            ].map((tip, i) => (
+              <li key={i} className="flex items-start gap-3 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-400 flex-shrink-0" />
+                <span>{tip}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* FAQ */}
+        <div id="faq" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {[
+              { q: "What temperature should I roast a whole chicken?", a: "Roast at 425°F (220°C) for the entire time. High heat produces crispy, golden skin. Some recipes start hot then reduce — but 425°F throughout works well for chickens under 5 lbs." },
+              { q: "How long does a 4lb chicken take to roast?", a: "A 4 lb chicken at 425°F takes approximately 1 hour 15 minutes. The rule of thumb is 15–20 minutes per pound, but always verify with an instant-read thermometer inserted into the thigh — it must read 165°F." },
+              { q: "Should I cover a chicken while roasting?", a: "No — roasting uncovered is what creates the golden, crispy skin. Covering traps steam and makes the skin soft. If the skin is browning too fast, tent loosely with foil only during the last 15–20 minutes." },
+              { q: "How do I know when roast chicken is done?", a: "Insert an instant-read thermometer into the thickest part of the thigh, away from the bone. It should read 165°F. The juices should run clear when you pierce the thigh, and the leg should wiggle freely." }
+            ].map(({ q, a }, i) => (
+              <div key={i} className="bg-slate-50 rounded-2xl p-5">
+                <p className="font-bold text-slate-900 mb-2">{q}</p>
+                <p className="text-slate-600 text-sm leading-relaxed">{a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* More Recipes */}
-        <div className="mt-16">
+        <div className="mt-10">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-6">More Recipes</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <Link to="/recipes/air-fryer-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
@@ -362,8 +470,11 @@ const RoastChicken: React.FC = () => {
             <Link to="/recipes/crockpot-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍲</span> Crockpot Chicken
             </Link>
-            <Link to="/recipes/chicken-and-rice" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
-              <span className="text-2xl">🍚</span> Chicken and Rice
+            <Link to="/recipes/instant-pot-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">⚡</span> Instant Pot Chicken
+            </Link>
+            <Link to="/recipes/chicken-soup" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍜</span> Chicken Soup
             </Link>
             <Link to="/recipes/passover" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍷</span> Passover Recipes

@@ -188,7 +188,7 @@ const CrockpotChicken: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const recipe = recipes[activeTab];
   useEffect(() => {
-    const PAGE_TITLE = 'Crockpot Chicken Recipes | PantryPivot';
+    const PAGE_TITLE = 'Crockpot Chicken Recipes (Set It and Forget It) | PantryPivot';
     const PAGE_DESC = 'Set-it-and-forget-it crockpot chicken recipes. Classic, few ingredients, chicken legs, and thighs. Includes Thanksgiving turkey section.';
     const PAGE_URL = 'https://pantrypivot.com/recipes/crockpot-chicken';
     document.title = PAGE_TITLE;
@@ -264,6 +264,27 @@ const CrockpotChicken: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'faq-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "Is it safe to cook chicken on low in a slow cooker?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. Chicken cooked on LOW in a slow cooker for 6–8 hours or HIGH for 3–4 hours safely reaches 165°F internal temperature. The slow cooker maintains a safe cooking temperature throughout. Just make sure the chicken is fully thawed before cooking on LOW." } },
+        { "@type": "Question", "name": "How long can crockpot chicken stay on warm?", "acceptedAnswer": { "@type": "Answer", "text": "Crockpot chicken can stay on the WARM setting safely for up to 2 hours after cooking. Beyond that, food safety guidelines recommend refrigerating it. The WARM setting keeps food above 140°F, which prevents bacterial growth." } },
+        { "@type": "Question", "name": "Can I put frozen chicken in a crockpot?", "acceptedAnswer": { "@type": "Answer", "text": "It's recommended to thaw chicken before slow cooking on LOW. Frozen chicken in a slow cooker on LOW can spend too long in the temperature danger zone (40–140°F) before reaching a safe temperature. It is safe to cook frozen chicken on HIGH." } },
+        { "@type": "Question", "name": "Why is my crockpot chicken rubbery?", "acceptedAnswer": { "@type": "Answer", "text": "Rubbery crockpot chicken is usually caused by cooking on HIGH for too long, which causes the proteins to seize up and toughen. Use the LOW setting for the best results, or if using HIGH, check it earlier. Chicken thighs are much more forgiving than breasts." } }
+      ]
+    });
+    document.head.appendChild(script);
+    return () => {
+      const el = document.getElementById('faq-schema');
+      if (el) el.remove();
+    };
+  }, []);
+
   const currentMonth = new Date().getMonth(); // 0-indexed: Oct=9, Nov=10
   const showThanksgiving = currentMonth === 9 || currentMonth === 10;
 
@@ -289,7 +310,21 @@ const CrockpotChicken: React.FC = () => {
             <li className="text-slate-600 font-medium">Crockpot Chicken</li>
           </ol>
         </nav>
+
+        {/* Table of Contents */}
+        <nav className="mb-8 overflow-x-auto">
+          <div className="flex gap-2 text-sm font-semibold text-slate-500 whitespace-nowrap pb-1">
+            <span className="text-slate-400 text-xs uppercase tracking-wider self-center">Jump to:</span>
+            <a href="#recipe-ideas" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Recipes</a>
+            <a href="#cooking-tips" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Cooking Tips</a>
+            <a href="#substitutions" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">Substitutions</a>
+            <a href="#faq" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">FAQ</a>
+            <a href="https://pantrypivot.com" className="px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:border-orange-300 hover:text-orange-600 transition-colors">✨ Custom Recipe</a>
+          </div>
+        </nav>
+
         <div className="text-center mb-10">
+          <span className="inline-block bg-red-100 text-red-700 font-black text-xs uppercase tracking-widest px-4 py-1.5 rounded-full mb-3">🥩 Meat</span>
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">Crockpot Chicken Recipes</h1>
           <p className="text-lg text-slate-500 max-w-xl mx-auto">
             Set it and forget it — these slow cooker chicken recipes are tender, flavorful, and hands-off.
@@ -323,7 +358,7 @@ const CrockpotChicken: React.FC = () => {
         )}
 
         {/* Tabs */}
-        <div className="flex gap-2 flex-wrap justify-center mb-8">
+        <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (
             <button
               key={tab.key}
@@ -485,10 +520,83 @@ const CrockpotChicken: React.FC = () => {
           </div>
         )}
 
+        {/* Cooking Tips */}
+        <div id="cooking-tips" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-10">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Crockpot Chicken Tips</h2>
+          <ul className="space-y-3">
+            {[
+              "The LOW setting (6–8 hours) is best for tender, juicy chicken. It safely reaches 165°F and gives connective tissue time to break down.",
+              "Resist lifting the lid during cooking. Every peek adds 20–30 minutes of cook time as heat and steam escape.",
+              "Don't overfill the crockpot past ⅔ full — too much food traps steam and prevents even cooking.",
+              "To thicken the cooking liquid after the chicken is done, mix 1 tbsp cornstarch with 1 tbsp cold water, stir into the hot liquid, and cook on HIGH uncovered for 15 minutes.",
+              "Chicken thighs are far superior to chicken breasts in the slow cooker — the extra fat keeps them moist over long cook times."
+            ].map((tip, i) => (
+              <li key={i} className="flex items-start gap-3 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-400 flex-shrink-0" />
+                <span>{tip}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Substitutions */}
+        <div id="substitutions" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Ingredient Substitutions</h2>
+          <ul className="space-y-3">
+            {[
+              "Chicken breast ↔ thighs: Thighs are highly recommended for slow cooking — they stay moist for hours. Breasts can dry out if cooked longer than needed.",
+              "Chicken broth ↔ water + bouillon: Use 1 tsp kosher bouillon dissolved in 1 cup water as a direct substitute.",
+              "Dried herbs ↔ fresh: Use ⅓ the amount of dried compared to fresh. Fresh herbs added at the end brighten the dish.",
+              "Onion soup mix ↔ homemade: Mix 1 tbsp dried onion flakes, ½ tsp garlic powder, ½ tsp onion powder, ½ tsp salt, ¼ tsp black pepper.",
+              "Olive oil ↔ avocado oil: Both work for searing before slow cooking. Avocado oil has a slightly higher smoke point."
+            ].map((sub, i) => (
+              <li key={i} className="flex items-start gap-3 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-400 flex-shrink-0" />
+                <span>{sub}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Storage */}
+        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Storage &amp; Reheating</h2>
+          <ul className="space-y-3">
+            {[
+              "Fridge: 3–4 days in an airtight container. Store chicken with the cooking liquid to keep it moist.",
+              "Freezer: Freezes very well for up to 3 months. Freeze shredded chicken with some cooking liquid in portions.",
+              "Reheat: On the stovetop over medium-low heat with a splash of broth, or in the microwave covered with a damp paper towel."
+            ].map((tip, i) => (
+              <li key={i} className="flex items-start gap-3 text-slate-700">
+                <span className="mt-1.5 h-2 w-2 rounded-full bg-orange-400 flex-shrink-0" />
+                <span>{tip}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* FAQ */}
+        <div id="faq" className="bg-white rounded-3xl shadow-sm border border-slate-100 p-8 mt-6">
+          <h2 className="text-xl font-extrabold text-slate-900 mb-5">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {[
+              { q: "Is it safe to cook chicken on low in a slow cooker?", a: "Yes. Chicken cooked on LOW in a slow cooker for 6–8 hours or HIGH for 3–4 hours safely reaches 165°F internal temperature. The slow cooker maintains a safe cooking temperature throughout. Just make sure the chicken is fully thawed before cooking on LOW." },
+              { q: "How long can crockpot chicken stay on warm?", a: "Crockpot chicken can stay on the WARM setting safely for up to 2 hours after cooking. Beyond that, food safety guidelines recommend refrigerating it. The WARM setting keeps food above 140°F, which prevents bacterial growth." },
+              { q: "Can I put frozen chicken in a crockpot?", a: "It's recommended to thaw chicken before slow cooking on LOW. Frozen chicken in a slow cooker on LOW can spend too long in the temperature danger zone (40–140°F) before reaching a safe temperature. It is safe to cook frozen chicken on HIGH." },
+              { q: "Why is my crockpot chicken rubbery?", a: "Rubbery crockpot chicken is usually caused by cooking on HIGH for too long, which causes the proteins to seize up and toughen. Use the LOW setting for the best results, or if using HIGH, check it earlier. Chicken thighs are much more forgiving than breasts." }
+            ].map(({ q, a }, i) => (
+              <div key={i} className="bg-slate-50 rounded-2xl p-5">
+                <p className="font-bold text-slate-900 mb-2">{q}</p>
+                <p className="text-slate-600 text-sm leading-relaxed">{a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* More Recipes */}
-        <div className="mt-16">
+        <div className="mt-10">
           <h2 className="text-2xl font-extrabold text-slate-900 mb-6">More Recipes</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             <Link to="/recipes/air-fryer-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍗</span> Air Fryer Chicken
             </Link>
@@ -497,6 +605,15 @@ const CrockpotChicken: React.FC = () => {
             </Link>
             <Link to="/recipes/chicken-and-rice" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
               <span className="text-2xl">🍚</span> Chicken and Rice
+            </Link>
+            <Link to="/recipes/roast-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍗</span> Roast Chicken
+            </Link>
+            <Link to="/recipes/chicken-soup" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🍜</span> Chicken Soup
+            </Link>
+            <Link to="/recipes/dairy-free-marry-me-chicken" className="flex items-center gap-3 p-4 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-sm transition-all font-semibold text-slate-700 hover:text-orange-600">
+              <span className="text-2xl">🌿</span> Dairy-Free Marry Me Chicken
             </Link>
           </div>
         </div>
