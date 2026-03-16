@@ -185,7 +185,7 @@ const InstantPotChicken: React.FC = () => {
       "@type": "Recipe",
       "name": "Instant Pot Chicken",
       "description": "Fast Instant Pot chicken recipes — classic breast, drumsticks, dump and go, and thighs. Pressure cooker meals in under 30 minutes.",
-      "image": "https://images.pexels.com/photos/35041655/pexels-photo-35041655.jpeg?auto=compresshttps://images.pexels.com/photos/35041655/pexels-photo-35041655.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "image": "https://images.pexels.com/photos/3764537/pexels-photo-3764537.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -244,7 +244,7 @@ const InstantPotChicken: React.FC = () => {
         {/* Hero Image */}
         <div className="mb-8 rounded-2xl overflow-hidden">
           <img
-            src="https://images.pexels.com/photos/35041655/pexels-photo-35041655.jpeg?auto=compresshttps://images.pexels.com/photos/35041655/pexels-photo-35041655.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            src="https://images.pexels.com/photos/3764537/pexels-photo-3764537.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
             alt="Instant Pot pressure cooker with chicken"
             width={800}
             height={500}

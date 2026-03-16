@@ -198,7 +198,7 @@ const PareveMarryMeChicken: React.FC = () => {
       "@type": "Recipe",
       "name": "Dairy-Free Marry Me Chicken",
       "description": "Dairy-free Marry Me Chicken made with coconut cream — classic, soup, Instant Pot, and Crockpot versions. Kosher-friendly and delicious.",
-      "image": "https://images.pexels.com/photos/35175191/pexels-photo-35175191.jpeg?auto=compresshttps://images.pexels.com/photos/35175191/pexels-photo-35175191.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "image": "https://images.pexels.com/photos/2673353/pexels-photo-2673353.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
       "author": { "@type": "Organization", "name": "PantryPivot" },
       "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
       "prepTime": "PT10M",
@@ -260,7 +260,7 @@ const PareveMarryMeChicken: React.FC = () => {
         {/* Hero Image */}
         <div className="mb-8 rounded-2xl overflow-hidden">
           <img
-            src="https://images.pexels.com/photos/35175191/pexels-photo-35175191.jpeg?auto=compresshttps://images.pexels.com/photos/35175191/pexels-photo-35175191.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+            src="https://images.pexels.com/photos/2673353/pexels-photo-2673353.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
             alt="Creamy dairy-free marry me chicken skillet with sun-dried tomatoes"
             width={800}
             height={500}
