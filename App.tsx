@@ -25,6 +25,26 @@ const GroundTurkeySweetPotato = lazy(() => import('./components/recipes/GroundTu
 const PareveMarryMeChicken = lazy(() => import('./components/recipes/PareveMarryMeChicken'));
 const PassoverRecipes = lazy(() => import('./components/recipes/PassoverRecipes'));
 const EasterRecipes = lazy(() => import('./components/recipes/EasterRecipes'));
+const ChickenAndBroccoli = lazy(() => import('./components/recipes/ChickenAndBroccoli'));
+const ChickenAndPotatoes = lazy(() => import('./components/recipes/ChickenAndPotatoes'));
+const GroundBeefAndPotatoes = lazy(() => import('./components/recipes/GroundBeefAndPotatoes'));
+const ChickenAndVegetables = lazy(() => import('./components/recipes/ChickenAndVegetables'));
+const SalmonAndRice = lazy(() => import('./components/recipes/SalmonAndRice'));
+const TurkeyAndVegetables = lazy(() => import('./components/recipes/TurkeyAndVegetables'));
+const ChickenAndMushrooms = lazy(() => import('./components/recipes/ChickenAndMushrooms'));
+const BeefAndVegetables = lazy(() => import('./components/recipes/BeefAndVegetables'));
+const ChickenAndSweetPotato = lazy(() => import('./components/recipes/ChickenAndSweetPotato'));
+const EggsAndVegetables = lazy(() => import('./components/recipes/EggsAndVegetables'));
+const LentilSoup = lazy(() => import('./components/recipes/LentilSoup'));
+const ChickenStirFry = lazy(() => import('./components/recipes/ChickenStirFry'));
+const GroundBeefAndRice = lazy(() => import('./components/recipes/GroundBeefAndRice'));
+const BakedChickenThighs = lazy(() => import('./components/recipes/BakedChickenThighs'));
+const OnePanChicken = lazy(() => import('./components/recipes/OnePanChicken'));
+const ChickenAndPasta = lazy(() => import('./components/recipes/ChickenAndPasta'));
+const SalmonAndVegetables = lazy(() => import('./components/recipes/SalmonAndVegetables'));
+const GroundTurkeyAndRice = lazy(() => import('./components/recipes/GroundTurkeyAndRice'));
+const BeefAndPotatoes = lazy(() => import('./components/recipes/BeefAndPotatoes'));
+const ChickenAndSpinach = lazy(() => import('./components/recipes/ChickenAndSpinach'));
 import ReactGA from 'react-ga4';
 
 type View = 'home' | 'results' | 'detail' | 'settings' | 'saved';
@@ -290,6 +310,26 @@ const App: React.FC = () => {
         <Route path="/recipes/dairy-free-marry-me-chicken" element={<PareveMarryMeChicken />} />
         <Route path="/recipes/passover" element={<PassoverRecipes />} />
         <Route path="/recipes/easter" element={<EasterRecipes />} />
+        <Route path="/recipes/chicken-and-broccoli" element={<ChickenAndBroccoli />} />
+        <Route path="/recipes/chicken-and-potatoes" element={<ChickenAndPotatoes />} />
+        <Route path="/recipes/ground-beef-and-potatoes" element={<GroundBeefAndPotatoes />} />
+        <Route path="/recipes/chicken-and-vegetables" element={<ChickenAndVegetables />} />
+        <Route path="/recipes/salmon-and-rice" element={<SalmonAndRice />} />
+        <Route path="/recipes/turkey-and-vegetables" element={<TurkeyAndVegetables />} />
+        <Route path="/recipes/chicken-and-mushrooms" element={<ChickenAndMushrooms />} />
+        <Route path="/recipes/beef-and-vegetables" element={<BeefAndVegetables />} />
+        <Route path="/recipes/chicken-and-sweet-potato" element={<ChickenAndSweetPotato />} />
+        <Route path="/recipes/eggs-and-vegetables" element={<EggsAndVegetables />} />
+        <Route path="/recipes/lentil-soup" element={<LentilSoup />} />
+        <Route path="/recipes/chicken-stir-fry" element={<ChickenStirFry />} />
+        <Route path="/recipes/ground-beef-and-rice" element={<GroundBeefAndRice />} />
+        <Route path="/recipes/baked-chicken-thighs" element={<BakedChickenThighs />} />
+        <Route path="/recipes/one-pan-chicken" element={<OnePanChicken />} />
+        <Route path="/recipes/chicken-and-pasta" element={<ChickenAndPasta />} />
+        <Route path="/recipes/salmon-and-vegetables" element={<SalmonAndVegetables />} />
+        <Route path="/recipes/ground-turkey-and-rice" element={<GroundTurkeyAndRice />} />
+        <Route path="/recipes/beef-and-potatoes" element={<BeefAndPotatoes />} />
+        <Route path="/recipes/chicken-and-spinach" element={<ChickenAndSpinach />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
