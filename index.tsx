@@ -1,3 +1,4 @@
+import './index.css';
 import ReactGA from 'react-ga4';
 ReactGA.initialize('G-JYSK7NFJ1Q');
 import React from 'react';

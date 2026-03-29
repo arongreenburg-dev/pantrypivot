@@ -366,7 +366,7 @@ const AirFryerChicken: React.FC = () => {
           {/* CTAs */}
           <div className="px-8 pb-8 flex flex-col sm:flex-row gap-3">
             <a
-              href={AMAZON_LINK}
+              href={AMAZON_LINK} onClick={() => window.gtag('event', 'affiliate_click', { link_url: 'https://amzn.to/40ZcXPs', link_text: 'amazon_fresh' })}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-2xl text-center transition-all shadow-md"
