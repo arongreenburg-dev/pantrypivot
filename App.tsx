@@ -45,6 +45,9 @@ const SalmonAndVegetables = lazy(() => import('./components/recipes/SalmonAndVeg
 const GroundTurkeyAndRice = lazy(() => import('./components/recipes/GroundTurkeyAndRice'));
 const BeefAndPotatoes = lazy(() => import('./components/recipes/BeefAndPotatoes'));
 const ChickenAndSpinach = lazy(() => import('./components/recipes/ChickenAndSpinach'));
+const KosherHub = lazy(() => import('./components/KosherHub'));
+const IngredientsIndex = lazy(() => import('./components/IngredientsIndex'));
+const About = lazy(() => import('./components/About'));
 import ReactGA from 'react-ga4';
 
 type View = 'home' | 'results' | 'detail' | 'settings' | 'saved';
@@ -330,6 +333,9 @@ const App: React.FC = () => {
         <Route path="/recipes/ground-turkey-and-rice" element={<GroundTurkeyAndRice />} />
         <Route path="/recipes/beef-and-potatoes" element={<BeefAndPotatoes />} />
         <Route path="/recipes/chicken-and-spinach" element={<ChickenAndSpinach />} />
+        <Route path="/kosher-recipes" element={<KosherHub />} />
+        <Route path="/ingredients" element={<IngredientsIndex />} />
+        <Route path="/about" element={<About />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
