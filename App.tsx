@@ -24,6 +24,7 @@ const Shakshuka = lazy(() => import('./components/recipes/Shakshuka'));
 const GroundTurkeySweetPotato = lazy(() => import('./components/recipes/GroundTurkeySweetPotato'));
 const PareveMarryMeChicken = lazy(() => import('./components/recipes/PareveMarryMeChicken'));
 const PassoverRecipes = lazy(() => import('./components/recipes/PassoverRecipes'));
+const PassoverSederPlanner = lazy(() => import('./components/recipes/PassoverSederPlanner'));
 const EasterRecipes = lazy(() => import('./components/recipes/EasterRecipes'));
 const ChickenAndBroccoli = lazy(() => import('./components/recipes/ChickenAndBroccoli'));
 const ChickenAndPotatoes = lazy(() => import('./components/recipes/ChickenAndPotatoes'));
@@ -215,6 +216,7 @@ const App: React.FC = () => {
                   { label: 'Turkey & Sweet Potato', href: '/recipes/ground-turkey-sweet-potato', emoji: '🍠' },
                   { label: 'Dairy-Free Marry Me Chicken', href: '/recipes/dairy-free-marry-me-chicken', emoji: '🍋' },
                   { label: 'Passover Recipes', href: '/recipes/passover', emoji: '🍷' },
+                  { label: 'Passover Seder Planner', href: '/recipes/passover-seder-planner', emoji: '📋' },
                   ...(showEasterGrid ? [{ label: 'Easter Dinner', href: '/recipes/easter', emoji: '🐣' }] : []),
                 ].map(({ label, href, emoji }) => (
                   <Link
@@ -312,6 +314,7 @@ const App: React.FC = () => {
         <Route path="/recipes/ground-turkey-sweet-potato" element={<GroundTurkeySweetPotato />} />
         <Route path="/recipes/dairy-free-marry-me-chicken" element={<PareveMarryMeChicken />} />
         <Route path="/recipes/passover" element={<PassoverRecipes />} />
+        <Route path="/recipes/passover-seder-planner" element={<PassoverSederPlanner />} />
         <Route path="/recipes/easter" element={<EasterRecipes />} />
         <Route path="/recipes/chicken-and-broccoli" element={<ChickenAndBroccoli />} />
         <Route path="/recipes/chicken-and-potatoes" element={<ChickenAndPotatoes />} />
