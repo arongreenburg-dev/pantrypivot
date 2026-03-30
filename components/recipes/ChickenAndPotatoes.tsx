@@ -242,6 +242,43 @@ const ChickenAndPotatoes: React.FC = () => {
     return () => { const el = document.getElementById('faq-schema'); if (el) el.remove(); };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Chicken and Potatoes Recipes",
+      "description": "Four kosher meat chicken and potato recipes — sheet pan, roasted, skillet, and crispy potato variations.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "chicken and potatoes, kosher chicken dinner, dairy-free chicken, sheet pan chicken potatoes, one-pan dinner",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1.5 lbs bone-in chicken thighs or drumsticks",
+        "1.5 lbs baby potatoes, halved",
+        "4 cloves garlic, minced",
+        "3 tbsp olive oil",
+        "1 tsp smoked paprika",
+        "1 tsp dried rosemary",
+        "salt and black pepper"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Toss chicken and potatoes separately with olive oil, garlic, paprika, rosemary, salt, and pepper." },
+        { "@type": "HowToStep", "text": "Arrange on a large sheet pan — chicken on one side, potatoes on the other. Do not overcrowd." },
+        { "@type": "HowToStep", "text": "Roast at 425°F for 40–45 minutes, flipping potatoes halfway, until chicken skin is crispy and reaches 165°F and potatoes are golden." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT45M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

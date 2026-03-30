@@ -244,6 +244,42 @@ const ChickenAndVegetables: React.FC = () => {
     return () => { const el = document.getElementById('faq-schema'); if (el) el.remove(); };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Chicken and Vegetables Recipes",
+      "description": "Four kosher meat chicken and vegetable recipes — sheet pan, stir-fry, roasted, and hearty soup.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "chicken and vegetables, kosher chicken dinner, dairy-free chicken, sheet pan chicken, easy weeknight dinner",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1.5 lbs boneless chicken thighs or breasts",
+        "2 cups mixed vegetables (broccoli, carrots, zucchini)",
+        "3 cloves garlic, minced",
+        "3 tbsp olive oil",
+        "1 tsp Italian seasoning",
+        "salt and black pepper"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Toss chicken and vegetables with olive oil, garlic, Italian seasoning, salt, and pepper." },
+        { "@type": "HowToStep", "text": "Spread in a single layer on a large sheet pan. Roast at 425°F for 25–30 minutes, flipping halfway, until chicken reaches 165°F and vegetables are tender." },
+        { "@type": "HowToStep", "text": "Serve immediately. Finish with a squeeze of lemon or fresh herbs if desired." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT35M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

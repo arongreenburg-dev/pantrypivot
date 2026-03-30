@@ -255,6 +255,43 @@ const PareveMarryMeChicken: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Dairy-Free Marry Me Chicken",
+      "description": "Four kosher dairy-free marry me chicken recipes made with coconut cream — classic skillet, soup, Instant Pot, and crockpot.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "marry me chicken, dairy-free marry me chicken, kosher chicken, coconut cream chicken, pareve chicken dinner",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1.5 lbs boneless skinless chicken breasts",
+        "1 can (13.5 oz) full-fat coconut cream",
+        "½ cup sun-dried tomatoes, chopped",
+        "4 cloves garlic, minced",
+        "1 cup chicken broth",
+        "1 tsp Italian seasoning",
+        "2 tbsp olive oil"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Season chicken with salt, pepper, and Italian seasoning. Sear in olive oil over medium-high heat, 4 minutes per side until golden. Remove from pan." },
+        { "@type": "HowToStep", "text": "In the same pan, sauté garlic 30 seconds. Add sun-dried tomatoes, coconut cream, and chicken broth. Stir and bring to a simmer." },
+        { "@type": "HowToStep", "text": "Return chicken to pan. Simmer 10–12 minutes until chicken is cooked through and sauce has thickened. Serve with pasta or rice." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT30M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}

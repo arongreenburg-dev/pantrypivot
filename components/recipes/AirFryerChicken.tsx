@@ -231,6 +231,42 @@ const AirFryerChicken: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Air Fryer Chicken Recipes",
+      "description": "Four kosher meat air fryer chicken recipes — classic seasoned breasts, crispy thighs, tenderloins, and spiced variations.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "air fryer chicken, kosher chicken, dairy-free chicken, crispy air fryer chicken, easy weeknight dinner",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1.5 lbs chicken breast or thighs",
+        "2 tbsp olive oil",
+        "1 tsp garlic powder",
+        "1 tsp smoked paprika",
+        "½ tsp onion powder",
+        "salt and black pepper"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Pat chicken dry. Coat with olive oil and season with garlic powder, paprika, onion powder, salt, and pepper." },
+        { "@type": "HowToStep", "text": "Preheat air fryer to 400°F. Place chicken in a single layer in the basket, not overlapping." },
+        { "@type": "HowToStep", "text": "Air fry 18–20 minutes for breasts or 16–18 minutes for thighs, flipping halfway, until internal temperature reaches 165°F. Rest 3 minutes before serving." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT20M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}

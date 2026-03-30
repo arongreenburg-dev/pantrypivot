@@ -243,6 +243,43 @@ const GroundBeefAndPotatoes: React.FC = () => {
     return () => { const el = document.getElementById('faq-schema'); if (el) el.remove(); };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Ground Beef and Potatoes Recipes",
+      "description": "Four kosher meat ground beef and potato recipes — skillet, hash, hearty soup, and stuffed potatoes.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "ground beef potatoes, kosher beef dinner, dairy-free ground beef, skillet dinner, stuffed baked potato",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1 lb ground beef",
+        "1.5 lbs potatoes, diced or whole",
+        "1 medium onion, diced",
+        "3 cloves garlic, minced",
+        "2 tbsp olive oil",
+        "1 tsp smoked paprika",
+        "salt and black pepper"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Dice potatoes and parboil 8 minutes until just tender. Drain well." },
+        { "@type": "HowToStep", "text": "Brown ground beef in olive oil, breaking apart, until cooked through. Drain excess fat. Add onion and garlic, cook 3 minutes." },
+        { "@type": "HowToStep", "text": "Add parboiled potatoes to the skillet. Cook undisturbed 3–4 minutes until potatoes develop a crust. Season and serve." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT35M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

@@ -255,6 +255,44 @@ const Shakshuka: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Shakshuka Recipes",
+      "description": "Four kosher pareve shakshuka recipes — classic, spicy, green, and with chickpeas — eggs poached in spiced tomato sauce.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "Jewish",
+      "keywords": "shakshuka, kosher shakshuka, pareve eggs, eggs in tomato sauce, Israeli food, Middle Eastern eggs",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "6 large eggs",
+        "1 can (28 oz) crushed tomatoes",
+        "1 medium onion, diced",
+        "1 red bell pepper, diced",
+        "4 cloves garlic, minced",
+        "2 tbsp olive oil",
+        "1 tsp cumin",
+        "1 tsp smoked paprika"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Sauté onion and bell pepper in olive oil 5–6 minutes. Add garlic and spices, cook 1 minute." },
+        { "@type": "HowToStep", "text": "Pour in crushed tomatoes and simmer 8–10 minutes until sauce thickens." },
+        { "@type": "HowToStep", "text": "Make wells in the sauce, crack in eggs, cover, and cook 6–8 minutes until whites are set. Serve from the pan with fresh herbs." }
+      ],
+      "prepTime": "PT10M",
+      "cookTime": "PT30M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}

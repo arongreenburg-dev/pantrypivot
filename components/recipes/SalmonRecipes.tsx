@@ -234,6 +234,43 @@ const SalmonRecipes: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Salmon Recipes",
+      "description": "Four kosher pareve salmon recipes — baked, sheet pan, air fryer, and salmon with sweet potato.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "salmon recipes, kosher salmon, pareve fish, baked salmon, easy salmon dinner, air fryer salmon",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "4 salmon fillets (6 oz each)",
+        "2 tbsp olive oil",
+        "3 cloves garlic, minced",
+        "1 lemon, sliced",
+        "1 tsp smoked paprika",
+        "fresh dill or parsley",
+        "salt and black pepper"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Pat salmon fillets dry. Rub with olive oil, garlic, paprika, salt, and pepper. Top with lemon slices." },
+        { "@type": "HowToStep", "text": "Bake at 400°F for 12–15 minutes, or until salmon flakes easily with a fork and reaches 145°F internal temperature." },
+        { "@type": "HowToStep", "text": "Garnish with fresh dill or parsley. Serve with roasted vegetables, rice, or a simple salad." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT25M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}

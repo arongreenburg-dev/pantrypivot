@@ -241,6 +241,43 @@ const ChickenAndSweetPotato: React.FC = () => {
     return () => { const el = document.getElementById('faq-schema'); if (el) el.remove(); };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Chicken and Sweet Potato Recipes",
+      "description": "Four kosher meat chicken and sweet potato recipes — sheet pan, stuffed sweet potatoes, soup, and grain bowl.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "chicken and sweet potato, kosher chicken dinner, dairy-free chicken, sheet pan chicken sweet potato, healthy dinner",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1.5 lbs boneless chicken thighs",
+        "2 large sweet potatoes, cubed",
+        "3 cloves garlic, minced",
+        "3 tbsp olive oil",
+        "1 tsp smoked paprika",
+        "½ tsp cinnamon",
+        "salt and black pepper"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Toss chicken and sweet potato cubes with olive oil, garlic, paprika, cinnamon, salt, and pepper." },
+        { "@type": "HowToStep", "text": "Spread on a large sheet pan in a single layer. Roast at 425°F for 30–35 minutes, flipping halfway, until chicken reaches 165°F and sweet potatoes are caramelized." },
+        { "@type": "HowToStep", "text": "Serve immediately over greens or grains. Finish with fresh herbs or a squeeze of lime." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT40M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

@@ -246,6 +246,43 @@ const ChickenSoup: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Chicken Soup Recipes",
+      "description": "Four kosher meat chicken soup recipes — classic, noodle, rice, and lemon — slow-simmered for maximum flavor.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Soup",
+      "recipeCuisine": "Jewish",
+      "keywords": "chicken soup, kosher chicken soup, Jewish penicillin, homemade chicken soup, dairy-free soup",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1 whole chicken or 3 lbs chicken pieces",
+        "3 large carrots, sliced",
+        "3 stalks celery, sliced",
+        "1 large onion, quartered",
+        "4 cloves garlic",
+        "8 cups water or chicken broth",
+        "fresh dill and parsley"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Place chicken in a large pot with carrots, celery, onion, and garlic. Cover with water or broth." },
+        { "@type": "HowToStep", "text": "Bring to a boil, skimming foam from the surface. Reduce heat to low, cover, and simmer 1.5 hours." },
+        { "@type": "HowToStep", "text": "Remove chicken, shred meat, and return to pot. Season with salt and pepper. Add noodles or rice if desired and simmer 10 minutes more." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT1H30M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}

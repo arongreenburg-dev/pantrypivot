@@ -250,6 +250,44 @@ const LentilSoup: React.FC = () => {
     return () => { const el = document.getElementById('faq-schema'); if (el) el.remove(); };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Lentil Soup Recipes",
+      "description": "Four kosher vegan lentil soup recipes — classic, red lentil, Moroccan spiced, and hearty vegetable lentil.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Soup",
+      "recipeCuisine": "Jewish",
+      "keywords": "lentil soup, kosher lentil soup, vegan soup, pareve soup, red lentil soup, Moroccan lentil",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1.5 cups green or brown lentils, rinsed",
+        "2 large carrots, diced",
+        "3 stalks celery, sliced",
+        "1 medium onion, diced",
+        "4 cloves garlic, minced",
+        "6 cups vegetable broth",
+        "2 tsp cumin",
+        "2 tbsp olive oil"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Sauté onion, carrots, and celery in olive oil 6 minutes. Add garlic and spices, cook 1 minute to bloom." },
+        { "@type": "HowToStep", "text": "Add rinsed lentils and vegetable broth. Bring to a boil, then reduce heat and simmer 35 minutes until lentils are very tender." },
+        { "@type": "HowToStep", "text": "Stir in lemon juice, season with salt and pepper. Optionally blend a portion for a thicker consistency. Garnish with parsley and serve." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT50M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

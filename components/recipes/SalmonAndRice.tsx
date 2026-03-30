@@ -241,6 +241,43 @@ const SalmonAndRice: React.FC = () => {
     return () => { const el = document.getElementById('faq-schema'); if (el) el.remove(); };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Salmon and Rice Recipes",
+      "description": "Four kosher pareve salmon and rice recipes — teriyaki, baked lemon herb, fried rice, and salmon grain bowl.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "salmon and rice, kosher salmon dinner, pareve fish, teriyaki salmon, salmon rice bowl",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "4 salmon fillets (6 oz each)",
+        "1.5 cups long-grain white rice",
+        "3 cups water or vegetable broth",
+        "2 tbsp soy sauce",
+        "1 tbsp sesame oil",
+        "2 cloves garlic, minced",
+        "1 tsp ginger"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Cook rice in broth until tender. Fluff with a fork and keep warm." },
+        { "@type": "HowToStep", "text": "Marinate salmon in soy sauce, sesame oil, garlic, and ginger for 10 minutes. Sear in a hot pan 4 minutes per side, or bake at 400°F for 12–15 minutes." },
+        { "@type": "HowToStep", "text": "Serve salmon over rice. Garnish with sesame seeds, sliced scallions, or a drizzle of extra soy sauce." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT30M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

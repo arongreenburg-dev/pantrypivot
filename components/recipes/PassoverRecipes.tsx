@@ -251,6 +251,44 @@ const PassoverRecipes: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Passover Recipes",
+      "description": "Four kosher-for-Passover recipes — braised beef brisket, matzo ball soup, roasted chicken, and flourless chocolate cake.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "Jewish",
+      "keywords": "Passover recipes, kosher for Passover, Seder dinner, matzo ball soup, Passover brisket, Passover chicken",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "3–4 lb beef brisket",
+        "matzo meal",
+        "eggs",
+        "whole chicken",
+        "onions",
+        "1 cup kosher red wine",
+        "root vegetables",
+        "fresh herbs"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "For brisket: sear in a Dutch oven, then braise with onions, wine, and vegetables at 325°F for 3–3.5 hours until fork-tender." },
+        { "@type": "HowToStep", "text": "For matzo ball soup: make matzo balls from matzo meal, eggs, and fat; refrigerate 30 minutes, then simmer in seasoned chicken broth 20 minutes." },
+        { "@type": "HowToStep", "text": "For roasted chicken: season with olive oil, garlic, and herbs; roast at 425°F until internal temperature reaches 165°F. Rest before carving." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT3H",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}

@@ -241,6 +241,43 @@ const TurkeyAndVegetables: React.FC = () => {
     return () => { const el = document.getElementById('faq-schema'); if (el) el.remove(); };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Ground Turkey and Vegetables Recipes",
+      "description": "Four kosher meat ground turkey and vegetable recipes — skillet, sheet pan, stir-fry, and hearty soup.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "ground turkey vegetables, kosher turkey dinner, dairy-free turkey, healthy turkey dinner, turkey skillet",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1 lb ground turkey",
+        "2 cups mixed vegetables (zucchini, bell pepper, carrots)",
+        "1 medium onion, diced",
+        "3 cloves garlic, minced",
+        "2 tbsp olive oil",
+        "1 tsp Italian seasoning",
+        "salt and black pepper"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Heat olive oil in a large skillet. Brown ground turkey, breaking it apart, 8–10 minutes until cooked through. Remove and set aside." },
+        { "@type": "HowToStep", "text": "In the same pan, cook onion 3 minutes. Add garlic and vegetables; cook 5–6 minutes until tender." },
+        { "@type": "HowToStep", "text": "Return turkey to pan. Season with Italian seasoning, salt, and pepper. Toss together and serve over rice or with crusty bread." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT30M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

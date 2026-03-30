@@ -241,6 +241,42 @@ const EggsAndVegetables: React.FC = () => {
     return () => { const el = document.getElementById('faq-schema'); if (el) el.remove(); };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Eggs and Vegetables Recipes",
+      "description": "Four kosher pareve egg and vegetable recipes — frittata, scramble, shakshuka-style, and vegetable fried rice.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "eggs and vegetables, kosher eggs, pareve eggs, vegetable frittata, healthy egg dinner",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "6 large eggs",
+        "2 cups mixed vegetables (spinach, bell pepper, zucchini)",
+        "1 medium onion, diced",
+        "3 cloves garlic, minced",
+        "2 tbsp olive oil",
+        "salt and black pepper"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Sauté onion and vegetables in olive oil 5–6 minutes until softened. Add garlic and cook 30 seconds." },
+        { "@type": "HowToStep", "text": "Whisk eggs with salt and pepper. Pour over the vegetables in an oven-safe skillet." },
+        { "@type": "HowToStep", "text": "Cook on stovetop 2–3 minutes until edges set, then transfer to a 375°F oven for 8–10 minutes until fully set and lightly golden on top." }
+      ],
+      "prepTime": "PT10M",
+      "cookTime": "PT20M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

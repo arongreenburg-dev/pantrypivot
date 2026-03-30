@@ -246,6 +246,43 @@ const OnePanChicken: React.FC = () => {
     return () => { const el = document.getElementById('faq-schema'); if (el) el.remove(); };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "One-Pan Chicken Recipes",
+      "description": "Four kosher meat one-pan chicken recipes — lemon herb, garlic, Mediterranean, and harvest — minimal cleanup, maximum flavor.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "one-pan chicken, kosher chicken, dairy-free chicken, easy chicken dinner, skillet chicken, sheet pan chicken",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1.5 lbs bone-in chicken thighs",
+        "1 lemon, sliced",
+        "4 cloves garlic, minced",
+        "2 tbsp olive oil",
+        "1 tsp dried thyme",
+        "1 tsp smoked paprika",
+        "salt and black pepper"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Season chicken thighs with paprika, thyme, salt, and pepper. Sear skin-side down in olive oil in an oven-safe skillet 5 minutes until golden." },
+        { "@type": "HowToStep", "text": "Flip chicken. Add garlic and lemon slices around the chicken. Transfer skillet to a 425°F oven." },
+        { "@type": "HowToStep", "text": "Roast 20–25 minutes until chicken reaches 165°F. Spoon pan juices over the top and serve directly from the skillet." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT35M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

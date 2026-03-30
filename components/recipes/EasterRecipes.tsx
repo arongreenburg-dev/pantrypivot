@@ -242,6 +242,42 @@ const EasterRecipes: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Easter Dinner Recipes",
+      "description": "Four Easter dinner recipes — slow-roasted lamb, glazed chicken, vegetable frittata, and roasted root vegetables.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "Easter dinner, Easter recipes, roast lamb, Easter chicken, spring dinner, Easter menu",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "leg of lamb or whole chicken",
+        "root vegetables (carrots, parsnips, potatoes)",
+        "6 large eggs",
+        "fresh herbs (rosemary, thyme, mint)",
+        "4 cloves garlic",
+        "3 tbsp olive oil"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "For roast lamb: rub with garlic, herbs, and olive oil. Roast at 325°F for 20 minutes per pound until internal temperature reaches 145°F. Rest before carving." },
+        { "@type": "HowToStep", "text": "For glazed chicken: brush with a honey-herb glaze and roast at 425°F until skin is golden and internal temperature reaches 165°F." },
+        { "@type": "HowToStep", "text": "For roasted root vegetables: toss with olive oil, herbs, salt, and pepper. Roast at 425°F for 30–35 minutes until caramelized and tender." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT2H",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}

@@ -250,6 +250,43 @@ const GroundTurkey: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Ground Turkey Recipes",
+      "description": "Four kosher meat ground turkey recipes — classic skillet, grain bowls, with sweet potato, and healthy weeknight variations.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "ground turkey recipes, kosher ground turkey, dairy-free turkey dinner, healthy ground turkey, easy weeknight dinner",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1 lb ground turkey",
+        "1 medium onion, diced",
+        "3 cloves garlic, minced",
+        "2 tbsp olive oil",
+        "1 tsp cumin",
+        "1 tsp smoked paprika",
+        "salt and black pepper"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Heat olive oil in a large skillet over medium-high heat. Add onion and cook 3–4 minutes until softened." },
+        { "@type": "HowToStep", "text": "Add garlic and cook 30 seconds. Add ground turkey and cook, breaking apart, 8–10 minutes until fully cooked through." },
+        { "@type": "HowToStep", "text": "Season with cumin, paprika, salt, and pepper. Serve over rice, in bowls, or with roasted vegetables." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT30M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

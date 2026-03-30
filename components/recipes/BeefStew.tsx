@@ -265,6 +265,44 @@ const BeefStew: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Beef Stew Recipes",
+      "description": "Four kosher meat beef stew recipes — classic stovetop, crockpot, Instant Pot, and a hearty vegetable variation.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "beef stew, kosher beef stew, dairy-free stew, slow cooker beef, Instant Pot beef stew",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "2 lbs beef chuck, cubed",
+        "3 large carrots, sliced",
+        "3 medium potatoes, cubed",
+        "1 large onion, diced",
+        "3 cloves garlic, minced",
+        "2 cups beef broth",
+        "2 tbsp olive oil",
+        "2 tbsp tomato paste"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Pat beef dry and season with salt and pepper. Brown in batches in olive oil over high heat, 3–4 minutes per side. Remove and set aside." },
+        { "@type": "HowToStep", "text": "Sauté onion and garlic in the same pot. Add tomato paste, broth, carrots, and potatoes. Return beef to pot." },
+        { "@type": "HowToStep", "text": "Simmer covered over low heat for 1.5–2 hours until beef is tender and vegetables are cooked through. Season to taste and serve." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT2H",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}

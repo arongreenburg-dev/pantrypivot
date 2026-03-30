@@ -242,6 +242,43 @@ const ChickenAndPasta: React.FC = () => {
     return () => { const el = document.getElementById('faq-schema'); if (el) el.remove(); };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Chicken Pasta Recipes",
+      "description": "Four kosher meat chicken pasta recipes — garlic oil, tomato sauce, pesto-style, and chicken noodle soup.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "chicken pasta, kosher pasta, dairy-free chicken pasta, garlic chicken pasta, easy pasta dinner",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1.5 lbs boneless skinless chicken breast",
+        "12 oz pasta (spaghetti, penne, or rigatoni)",
+        "4 cloves garlic, minced",
+        "3 tbsp olive oil",
+        "1 cup cherry tomatoes",
+        "1 cup chicken broth",
+        "fresh basil or parsley"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Cook pasta in well-salted boiling water until al dente. Reserve 1 cup pasta water, then drain." },
+        { "@type": "HowToStep", "text": "Season chicken and sear in olive oil 5–6 minutes per side until golden and cooked through. Slice and set aside." },
+        { "@type": "HowToStep", "text": "Sauté garlic in olive oil, add tomatoes and broth, and simmer 5 minutes. Toss with pasta, sliced chicken, and pasta water as needed. Finish with fresh herbs." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT30M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

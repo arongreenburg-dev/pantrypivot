@@ -241,6 +241,43 @@ const GroundBeefAndRice: React.FC = () => {
     return () => { const el = document.getElementById('faq-schema'); if (el) el.remove(); };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Ground Beef and Rice Recipes",
+      "description": "Four kosher meat ground beef and rice recipes — one-skillet, rice bowl, stuffed peppers, and beef fried rice.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "ground beef and rice, kosher beef dinner, dairy-free ground beef, stuffed peppers with beef, beef rice bowl",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1 lb ground beef",
+        "1.5 cups long-grain white rice",
+        "1 medium onion, diced",
+        "3 cloves garlic, minced",
+        "2 tbsp olive oil",
+        "2 cups beef broth or water",
+        "1 tsp smoked paprika"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Brown ground beef in olive oil, breaking apart, until cooked through. Drain excess fat. Add onion and garlic, cook 3 minutes." },
+        { "@type": "HowToStep", "text": "Add rice and stir to coat in the beef fat. Pour in broth and bring to a boil." },
+        { "@type": "HowToStep", "text": "Reduce heat to low, cover, and simmer 18–20 minutes until rice is tender and liquid is absorbed. Fluff and season to taste." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT35M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

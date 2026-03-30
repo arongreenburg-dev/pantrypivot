@@ -288,6 +288,42 @@ const CrockpotChicken: React.FC = () => {
   const currentMonth = new Date().getMonth(); // 0-indexed: Oct=9, Nov=10
   const showThanksgiving = currentMonth === 9 || currentMonth === 10;
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Crockpot Chicken Recipes",
+      "description": "Four kosher meat slow cooker chicken recipes — classic seasoned, minimal-ingredient, legs, and thighs — that fall apart with a fork.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "crockpot chicken, slow cooker chicken, kosher chicken, dairy-free chicken, easy slow cooker dinner",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "2 lbs chicken pieces",
+        "1 medium onion, sliced",
+        "3 cloves garlic, minced",
+        "1 cup chicken broth",
+        "1 tsp smoked paprika",
+        "salt and black pepper"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Season chicken with paprika, salt, and pepper. Layer onion and garlic on the bottom of the slow cooker." },
+        { "@type": "HowToStep", "text": "Place seasoned chicken on top. Pour broth around the chicken. Do not submerge." },
+        { "@type": "HowToStep", "text": "Cook on LOW for 6–7 hours or HIGH for 3–4 hours until chicken is cooked through and tender. Shred or serve whole." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT6H",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}

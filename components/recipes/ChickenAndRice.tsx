@@ -255,6 +255,42 @@ const ChickenAndRice: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Chicken and Rice Recipes",
+      "description": "Four kosher meat chicken and rice recipes — baked one-pan, soup, casserole, and rice bowl.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "chicken and rice, kosher chicken and rice, dairy-free chicken dinner, one-pan chicken rice, easy chicken dinner",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1.5 lbs boneless skinless chicken thighs or breasts",
+        "1.5 cups long-grain white rice",
+        "3 cups chicken broth",
+        "1 medium onion, diced",
+        "3 cloves garlic, minced",
+        "2 tbsp olive oil"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Season chicken with salt, pepper, and paprika. Sear in olive oil in an oven-safe skillet, 3 minutes per side." },
+        { "@type": "HowToStep", "text": "Add onion and garlic; cook 2 minutes. Stir in rice, then pour in broth. Bring to a simmer." },
+        { "@type": "HowToStep", "text": "Cover and bake at 375°F for 25–30 minutes until rice is tender and chicken reaches 165°F. Rest 5 minutes before serving." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT40M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

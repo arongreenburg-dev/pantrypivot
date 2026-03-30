@@ -255,6 +255,43 @@ const GroundTurkeySweetPotato: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Ground Turkey and Sweet Potato Recipes",
+      "description": "Four kosher meat ground turkey and sweet potato recipes — bowls, skillet, stuffed sweet potatoes, and hearty soup.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "ground turkey sweet potato, kosher ground turkey, dairy-free dinner, healthy turkey dinner, stuffed sweet potato",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1 lb ground turkey",
+        "2 large sweet potatoes",
+        "1 medium onion, diced",
+        "3 cloves garlic, minced",
+        "2 tbsp olive oil",
+        "1 tsp cumin",
+        "1 tsp smoked paprika"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Pierce sweet potatoes and microwave 5 minutes per side, or roast at 400°F for 45 minutes until tender." },
+        { "@type": "HowToStep", "text": "Brown ground turkey in olive oil with onion and garlic. Season with cumin, paprika, salt, and pepper. Cook until turkey is cooked through." },
+        { "@type": "HowToStep", "text": "Split sweet potatoes and stuff with turkey mixture, or serve turkey over cubed roasted sweet potato in a bowl." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT35M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}

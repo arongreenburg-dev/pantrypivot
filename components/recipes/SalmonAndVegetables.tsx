@@ -279,6 +279,43 @@ const SalmonAndVegetables: React.FC = () => {
     });
   };
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Salmon and Vegetables Recipes",
+      "description": "Four kosher pareve salmon and vegetable recipes — sheet pan, stir-fry, Mediterranean baked, and hearty soup.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "salmon and vegetables, kosher salmon, pareve fish dinner, healthy salmon, sheet pan salmon",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "4 salmon fillets (6 oz each)",
+        "2 cups mixed vegetables (asparagus, zucchini, cherry tomatoes)",
+        "3 cloves garlic, minced",
+        "2 tbsp olive oil",
+        "1 lemon, sliced",
+        "fresh dill or parsley",
+        "salt and black pepper"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Toss vegetables with olive oil, garlic, salt, and pepper. Spread on a sheet pan." },
+        { "@type": "HowToStep", "text": "Place salmon fillets on top of the vegetables. Drizzle with olive oil and top with lemon slices." },
+        { "@type": "HowToStep", "text": "Roast at 400°F for 15–18 minutes until salmon flakes easily and vegetables are tender. Garnish with fresh herbs." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT25M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}

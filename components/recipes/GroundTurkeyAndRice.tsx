@@ -272,6 +272,43 @@ const GroundTurkeyAndRice: React.FC = () => {
     });
   };
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Ground Turkey and Rice Recipes",
+      "description": "Four kosher meat ground turkey and rice recipes — one-skillet, rice bowl, stuffed peppers, and turkey fried rice.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "ground turkey and rice, kosher turkey dinner, dairy-free turkey, healthy turkey rice bowl, stuffed peppers turkey",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1 lb ground turkey",
+        "1.5 cups long-grain white rice",
+        "1 medium onion, diced",
+        "3 cloves garlic, minced",
+        "2 tbsp olive oil",
+        "2 cups chicken or vegetable broth",
+        "1 tsp cumin"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Brown ground turkey in olive oil, breaking apart, 8–10 minutes until cooked through. Add onion and garlic, cook 3 minutes." },
+        { "@type": "HowToStep", "text": "Stir in rice and cumin. Add broth and bring to a boil." },
+        { "@type": "HowToStep", "text": "Reduce heat to low, cover, and simmer 18–20 minutes until rice is tender and liquid absorbed. Fluff and adjust seasoning." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT35M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}

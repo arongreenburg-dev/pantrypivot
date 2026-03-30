@@ -240,6 +240,42 @@ const ChickenAndBroccoli: React.FC = () => {
     return () => { const el = document.getElementById('faq-schema'); if (el) el.remove(); };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Chicken and Broccoli Recipes",
+      "description": "Four kosher meat recipes featuring chicken and broccoli — stir-fry, sheet pan, baked casserole, and rice bowl.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "Jewish",
+      "keywords": "chicken and broccoli, kosher chicken, dairy-free chicken dinner, chicken stir-fry, sheet pan chicken",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1.5 lbs boneless skinless chicken breast",
+        "4 cups broccoli florets",
+        "3 cloves garlic, minced",
+        "3 tbsp soy sauce",
+        "2 tbsp vegetable oil",
+        "1 tsp sesame oil"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Slice chicken thin and toss with cornstarch and seasoning." },
+        { "@type": "HowToStep", "text": "Heat oil in a wok or skillet over high heat. Cook chicken 5–6 minutes until cooked through. Remove and set aside." },
+        { "@type": "HowToStep", "text": "Add broccoli and stir-fry 3 minutes. Add garlic, return chicken, pour sauce, and toss until coated and thickened. Serve over rice." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT25M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

@@ -254,6 +254,43 @@ const GroundBeefPasta: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Ground Beef Pasta Recipes",
+      "description": "Four kosher meat ground beef pasta recipes — bolognese, penne with tomato sauce, casserole, and taco pasta.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "ground beef pasta, kosher pasta, dairy-free pasta, beef bolognese, easy pasta dinner",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1 lb ground beef",
+        "12 oz pasta (spaghetti or penne)",
+        "1 can (28 oz) crushed tomatoes",
+        "1 medium onion, diced",
+        "3 cloves garlic, minced",
+        "2 tbsp olive oil",
+        "1 tsp Italian seasoning"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Cook pasta in salted boiling water until al dente. Drain and reserve 1 cup pasta water." },
+        { "@type": "HowToStep", "text": "Brown ground beef in olive oil, breaking apart, until cooked through. Drain fat. Add onion and garlic, cook 3 minutes." },
+        { "@type": "HowToStep", "text": "Add crushed tomatoes and Italian seasoning. Simmer 15 minutes. Toss with pasta, adding pasta water to loosen. Serve immediately." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT35M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

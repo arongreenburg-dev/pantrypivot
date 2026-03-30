@@ -241,6 +241,42 @@ const InstantPotChicken: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Instant Pot Chicken Recipes",
+      "description": "Four kosher meat Instant Pot chicken recipes — breasts, drumsticks, dump dinner, and thighs — pressure-cooked juicy every time.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "Instant Pot chicken, pressure cooker chicken, kosher chicken, dairy-free chicken, fast chicken dinner",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1.5 lbs chicken breasts or thighs",
+        "1 cup chicken broth",
+        "3 cloves garlic, minced",
+        "1 medium onion, sliced",
+        "1 tsp smoked paprika",
+        "salt and black pepper"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Season chicken with paprika, salt, and pepper. Place trivet in Instant Pot, add broth, garlic, and onion." },
+        { "@type": "HowToStep", "text": "Place chicken on trivet. Seal lid and cook on Manual/Pressure Cook HIGH for 10 minutes (breasts) or 12 minutes (thighs)." },
+        { "@type": "HowToStep", "text": "Quick release pressure. Check chicken reaches 165°F. Rest 3 minutes before slicing or shredding." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT25M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

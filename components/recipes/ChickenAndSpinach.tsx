@@ -276,6 +276,43 @@ const ChickenAndSpinach: React.FC = () => {
     });
   };
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Chicken and Spinach Recipes",
+      "description": "Four kosher meat chicken and spinach recipes — garlic skillet, stuffed chicken breast, nourishing soup, and pasta.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "chicken and spinach, kosher chicken dinner, dairy-free chicken, spinach stuffed chicken, chicken spinach skillet",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1.5 lbs boneless skinless chicken breasts",
+        "4 cups fresh spinach",
+        "4 cloves garlic, minced",
+        "2 tbsp olive oil",
+        "1 cup chicken broth",
+        "1 tsp Italian seasoning",
+        "salt and black pepper"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Season chicken and sear in olive oil 5–6 minutes per side until golden and cooked through. Slice and set aside." },
+        { "@type": "HowToStep", "text": "In the same pan, sauté garlic 30 seconds. Add spinach and cook 2 minutes until wilted." },
+        { "@type": "HowToStep", "text": "Add chicken broth and Italian seasoning. Return sliced chicken to the pan. Simmer 3 minutes until sauce is slightly reduced. Serve over pasta or rice." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT30M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}

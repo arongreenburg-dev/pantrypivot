@@ -241,6 +241,42 @@ const BeefAndVegetables: React.FC = () => {
     return () => { const el = document.getElementById('faq-schema'); if (el) el.remove(); };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Beef and Vegetables Recipes",
+      "description": "Four kosher meat beef and vegetable recipes — stir-fry, sheet pan, soup, and hearty skillet.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "beef and vegetables, kosher beef dinner, dairy-free beef, beef stir-fry, easy beef dinner",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1.5 lbs beef strips (sirloin or flank steak)",
+        "2 cups mixed vegetables (broccoli, bell pepper, snap peas)",
+        "3 cloves garlic, minced",
+        "3 tbsp soy sauce",
+        "1 tbsp sesame oil",
+        "2 tbsp vegetable oil"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Slice beef thin against the grain. Toss with soy sauce and cornstarch. Let sit 10 minutes." },
+        { "@type": "HowToStep", "text": "Heat vegetable oil in a wok or skillet over high heat. Sear beef 2–3 minutes until browned. Remove." },
+        { "@type": "HowToStep", "text": "Stir-fry vegetables 3–4 minutes. Add garlic and return beef. Toss with sauce, drizzle sesame oil, and serve over rice." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT30M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

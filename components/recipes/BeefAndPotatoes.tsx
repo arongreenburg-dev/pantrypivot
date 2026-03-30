@@ -277,6 +277,43 @@ const BeefAndPotatoes: React.FC = () => {
     });
   };
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Beef and Potatoes Recipes",
+      "description": "Four kosher meat beef and potato recipes — classic stew, quick skillet, sheet pan roast, and crispy hash.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "beef and potatoes, kosher beef dinner, dairy-free beef, beef potato skillet, easy beef dinner",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1.5 lbs beef chuck or ground beef",
+        "1.5 lbs potatoes, diced or cubed",
+        "1 large onion, diced",
+        "3 cloves garlic, minced",
+        "2 cups beef broth",
+        "2 tbsp olive oil",
+        "1 tsp smoked paprika"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Brown beef in olive oil over high heat until seared on all sides. Remove and set aside." },
+        { "@type": "HowToStep", "text": "Cook onion and garlic in the same pan 3 minutes. Add potatoes, broth, and paprika. Return beef to the pan." },
+        { "@type": "HowToStep", "text": "Simmer covered 30–40 minutes until beef is tender and potatoes are cooked through. Season to taste and serve." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT45M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}

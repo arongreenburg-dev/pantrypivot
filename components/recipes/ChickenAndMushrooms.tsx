@@ -242,6 +242,43 @@ const ChickenAndMushrooms: React.FC = () => {
     return () => { const el = document.getElementById('faq-schema'); if (el) el.remove(); };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Chicken and Mushrooms Recipes",
+      "description": "Four kosher meat chicken and mushroom recipes — garlic skillet, baked, soup, and stir-fry.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "chicken and mushrooms, kosher chicken dinner, dairy-free chicken mushroom, mushroom chicken skillet",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1.5 lbs boneless chicken thighs or breasts",
+        "2 cups cremini or button mushrooms, sliced",
+        "3 cloves garlic, minced",
+        "1 medium onion, diced",
+        "1 cup chicken broth",
+        "2 tbsp olive oil",
+        "fresh thyme"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Season chicken and sear in olive oil 4–5 minutes per side until golden. Remove from pan." },
+        { "@type": "HowToStep", "text": "Cook mushrooms in the same pan over high heat 5 minutes until browned. Add garlic and onion, cook 2 minutes more." },
+        { "@type": "HowToStep", "text": "Return chicken to pan with broth and thyme. Simmer 10–12 minutes until chicken is cooked through and sauce has reduced." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT35M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

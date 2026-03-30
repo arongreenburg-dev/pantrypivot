@@ -240,6 +240,42 @@ const BakedChickenThighs: React.FC = () => {
     return () => { const el = document.getElementById('faq-schema'); if (el) el.remove(); };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Baked Chicken Thighs Recipes",
+      "description": "Four kosher meat baked chicken thigh recipes — garlic herb, lemon, honey mustard, and spiced variations with crispy skin.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "American",
+      "keywords": "baked chicken thighs, kosher chicken, dairy-free chicken, crispy chicken thighs, easy chicken dinner",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "2 lbs bone-in chicken thighs",
+        "3 cloves garlic, minced",
+        "2 tbsp olive oil",
+        "1 tsp smoked paprika",
+        "1 tsp dried herbs",
+        "salt and black pepper"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Pat chicken thighs dry and season generously with garlic, paprika, herbs, salt, and pepper. Drizzle with olive oil." },
+        { "@type": "HowToStep", "text": "Place skin-side up on a baking sheet. Bake at 425°F for 35–40 minutes until skin is crispy and internal temperature reaches 165°F." },
+        { "@type": "HowToStep", "text": "Rest 5 minutes before serving. Spoon pan juices over the top." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT40M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-40">

@@ -242,6 +242,43 @@ const RoastChicken: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'page-recipe-schema';
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Recipe",
+      "name": "Roast Chicken Recipes",
+      "description": "Four kosher meat roast chicken recipes — classic, lemon herb, garlic, and roasted thighs with golden crispy skin.",
+      "author": { "@type": "Organization", "name": "PantryPivot" },
+      "publisher": { "@type": "Organization", "name": "PantryPivot", "url": "https://pantrypivot.com" },
+      "recipeCategory": "Main Course",
+      "recipeCuisine": "Jewish",
+      "keywords": "roast chicken, kosher roast chicken, dairy-free chicken, whole roasted chicken, Shabbat chicken, garlic roast chicken",
+      "suitableForDiet": "https://schema.org/KosherDiet",
+      "recipeIngredient": [
+        "1 whole chicken (3–4 lbs)",
+        "4 cloves garlic, minced",
+        "2 tbsp olive oil",
+        "1 lemon, halved",
+        "1 tsp dried thyme",
+        "1 tsp smoked paprika",
+        "salt and black pepper"
+      ],
+      "recipeInstructions": [
+        { "@type": "HowToStep", "text": "Pat chicken completely dry inside and out. Rub all over with olive oil, garlic, paprika, thyme, salt, and pepper. Stuff cavity with lemon halves." },
+        { "@type": "HowToStep", "text": "Truss legs if desired. Place breast-side up on a roasting rack. Roast at 425°F for 60–75 minutes until skin is deep golden and thigh joint reads 165°F." },
+        { "@type": "HowToStep", "text": "Rest 15 minutes before carving. Spoon pan juices over the carved pieces to serve." }
+      ],
+      "prepTime": "PT15M",
+      "cookTime": "PT1H30M",
+      "recipeYield": "4 servings"
+    });
+    document.head.appendChild(script);
+    return () => { const el = document.getElementById('page-recipe-schema'); if (el) el.remove(); };
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
