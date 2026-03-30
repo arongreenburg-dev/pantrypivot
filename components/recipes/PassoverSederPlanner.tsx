@@ -137,7 +137,7 @@ const PassoverSederPlanner: React.FC = () => {
         { name: 'Roasted egg (beitzah)', note: 'Hard-boiled then briefly roasted or charred' },
         { name: 'Maror — bitter herbs', note: 'Commonly horseradish and/or romaine lettuce, depending on custom' },
         { name: 'Ashkenazi Charoset', note: 'Apple, walnut, cinnamon, kosher-for-Passover wine — recipe below; Sephardic versions vary' },
-        { name: 'Karpas', note: 'A vegetable dipped in salt water — parsley, celery, and boiled potato are all common choices' },
+        { name: 'Karpas', note: 'A vegetable such as parsley, celery, or potato dipped in salt water — customs vary by community' },
         { name: 'Chazeret — second bitter herb', note: 'Commonly romaine lettuce' },
       ],
     },
