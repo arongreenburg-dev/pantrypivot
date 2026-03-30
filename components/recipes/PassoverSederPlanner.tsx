@@ -100,7 +100,7 @@ const PassoverSederPlanner: React.FC = () => {
         {
           "@type": "Question",
           "name": "How many matzot are needed for a Seder?",
-          "acceptedAnswer": { "@type": "Answer", "text": "You need three whole matzot on the Seder table — these are used for the rituals of yachatz (breaking the middle matzo) and the afikomen. For eating during the meal, plan roughly 1 box of matzo (10 sheets) per 4–6 people." }
+          "acceptedAnswer": { "@type": "Answer", "text": "In many communities, three whole matzot are placed on the Seder table — the middle one is broken for yachatz and the afikomen. For eating during the meal, plan roughly 1 box of matzo per 4–6 people. Make sure your matzo is certified kosher for Passover." }
         }
       ]
     });
@@ -136,8 +136,8 @@ const PassoverSederPlanner: React.FC = () => {
         { name: 'Shank bone (zeroa)', note: 'Roasted lamb or chicken bone — symbolic; customs vary on whether it is eaten' },
         { name: 'Roasted egg (beitzah)', note: 'Hard-boiled then briefly roasted or charred' },
         { name: 'Maror — bitter herbs', note: 'Commonly horseradish and/or romaine lettuce, depending on custom' },
-        { name: 'Ashkenazi Charoset', note: 'Apple, walnut, cinnamon, kosher wine — recipe below; Sephardic versions vary' },
-        { name: 'Karpas', note: 'Parsley or celery, dipped in salt water' },
+        { name: 'Ashkenazi Charoset', note: 'Apple, walnut, cinnamon, kosher-for-Passover wine — recipe below; Sephardic versions vary' },
+        { name: 'Karpas', note: 'A vegetable dipped in salt water — parsley, celery, and boiled potato are all common choices' },
         { name: 'Chazeret — second bitter herb', note: 'Commonly romaine lettuce' },
       ],
     },
@@ -147,7 +147,7 @@ const PassoverSederPlanner: React.FC = () => {
       accent: 'text-amber-700',
       items: [
         { name: 'Matzo Ball Soup', note: 'Classic Seder first course', link: '/recipes/passover' },
-        { name: 'Matzo (3 whole matzot on table)', note: 'Required for Seder rituals plus eating throughout meal' },
+        { name: 'Matzo', note: 'Three matzot on the table is standard in most communities for Seder rituals; have additional matzo available for eating throughout the meal' },
       ],
     },
     {
@@ -166,7 +166,7 @@ const PassoverSederPlanner: React.FC = () => {
       color: 'bg-green-50 border-green-200',
       accent: 'text-green-700',
       items: [
-        { name: 'Israeli salad', note: 'Diced cucumber, tomato, red onion, lemon, olive oil — no chametz' },
+        { name: 'Israeli salad', note: 'Diced cucumber, tomato, red onion, lemon — use kosher-for-Passover certified olive oil where required by your custom' },
         { name: 'Roasted asparagus', note: 'Olive oil, salt, 400°F for 12 minutes' },
         { name: 'Roasted sweet potatoes', note: 'Cubed, olive oil, cinnamon — naturally Passover-friendly' },
         { name: 'Quinoa tabbouleh', note: 'Some communities use certified-for-Passover quinoa; others avoid it. Follow your family or rabbinic custom.' },
@@ -177,9 +177,9 @@ const PassoverSederPlanner: React.FC = () => {
       color: 'bg-purple-50 border-purple-200',
       accent: 'text-purple-700',
       items: [
-        { name: 'Flourless Chocolate Cake', note: 'Pareve, naturally gluten-free — make the day before', link: '/recipes/passover' },
+        { name: 'Flourless Chocolate Cake', note: 'Pareve and gluten-free — make the day before; use kosher-for-Passover certified chocolate and cocoa', link: '/recipes/passover' },
         { name: 'Macaroons', note: 'Coconut or almond — look for Kosher for Passover on the label' },
-        { name: 'Meringues', note: 'Egg whites and sugar only — naturally chametz-free' },
+        { name: 'Meringues', note: 'Egg whites and sugar — chametz-free; use kosher-for-Passover certified sugar' },
         { name: 'Fresh fruit platter', note: 'Always safe and always welcome' },
       ],
     },
@@ -240,7 +240,7 @@ const PassoverSederPlanner: React.FC = () => {
         '90 minutes before: Roast vegetables at 400°F until tender (35–40 min)',
         '1 hour before: Arrange the Seder plate — shank bone, egg, maror, charoset, karpas, chazeret',
         '30 minutes before: Warm the soup on low. Do not boil once matzo balls are in — they\'ll fall apart',
-        'At the Seder: Place 3 whole matzot under a cloth. Have extra matzo on the table for eating',
+        'At the Seder: Place three matzot under a cloth alongside the Seder plate (standard in most communities). Have additional matzo on the table for eating throughout the meal',
       ],
     },
   ];
@@ -255,7 +255,7 @@ const PassoverSederPlanner: React.FC = () => {
     {
       name: 'Beitzah — Roasted Egg',
       emoji: '🥚',
-      symbol: 'Represents the festival sacrifice and the cycle of life, mourning, and renewal. The egg hardens when cooked — symbolizing the Jewish people\'s resilience.',
+      symbol: 'Represents the festival sacrifice offered at the Temple, and more broadly the cycle of life and renewal. Some communities also associate it with mourning the Temple\'s destruction.',
       how: 'Hard-boil an egg, then hold it over a flame or roast briefly until it has brown spots. Some people use a blowtorch.',
     },
     {
@@ -268,13 +268,13 @@ const PassoverSederPlanner: React.FC = () => {
       name: 'Charoset — Sweet Paste',
       emoji: '🍎',
       symbol: 'Represents the mortar used by Hebrew slaves to build Pharaoh\'s cities.',
-      how: 'Ashkenazi charoset: peel and finely chop 3 apples, mix with ½ cup chopped walnuts, 1 tsp cinnamon, 2–3 tbsp sweet kosher wine. Sephardic charoset varies by community — often uses dates and almonds.',
+      how: 'Ashkenazi charoset: peel and finely chop 3 apples, mix with ½ cup chopped walnuts, 1 tsp cinnamon, 2–3 tbsp sweet kosher-for-Passover red wine. Sephardic charoset varies by community — often uses dates and almonds.',
     },
     {
       name: 'Karpas — Vegetable',
       emoji: '🌱',
       symbol: 'Represents spring and new beginnings. Dipped in salt water to evoke the tears of the slaves.',
-      how: 'Use fresh parsley, celery, or boiled potato. Dip in a bowl of salted water at the start of the Seder.',
+      how: 'Common choices include fresh parsley, celery, or boiled potato — follow your family\'s custom. Dip in a bowl of salted water at the start of the Seder.',
     },
     {
       name: 'Chazeret — Second Bitter Herb',
@@ -311,27 +311,27 @@ const PassoverSederPlanner: React.FC = () => {
       ],
     },
     {
-      category: 'Pantry — All Must Be Certified Kosher for Passover',
+      category: 'Pantry — Use Kosher for Passover Certified Versions',
       items: [
-        'Matzo (1 box per 4–6 people)',
-        'Matzo meal (1–2 boxes)',
-        'Potato starch (for thickening and flourless cake)',
+        'Matzo (KFP) — roughly 1 box per 4–6 people',
+        'Matzo meal (KFP) — 1–2 boxes',
+        'Potato starch (KFP)',
         'Unsweetened cocoa powder (KFP)',
         'Bittersweet chocolate, 8 oz (KFP)',
-        'Granulated sugar',
-        'Olive oil',
-        'Vegetable oil',
+        'Granulated sugar (KFP)',
+        'Olive oil (KFP)',
+        'Vegetable oil (KFP)',
         'Tomato paste (KFP)',
-        'Schmaltz or vegetable oil for matzo balls',
-        'Walnuts or almonds (for charoset)',
-        'Ground cinnamon',
+        'Schmaltz or vegetable oil for matzo balls (KFP)',
+        'Walnuts or almonds for charoset (KFP)',
+        'Ground cinnamon (KFP)',
       ],
     },
     {
       category: 'Kosher for Passover Wines & Liquids',
       items: [
         'Kosher for Passover wine or grape juice (each participant needs enough for four ritual cups; exact amounts depend on cup size and custom)',
-        '1 bottle dry kosher red wine (for brisket)',
+        '1 bottle dry kosher-for-Passover red wine (for brisket)',
         'Kosher beef broth (KFP certified)',
         'Kosher chicken broth (KFP certified, or make your own)',
         'Grape juice (for children and those who don\'t drink)',
@@ -405,7 +405,7 @@ const PassoverSederPlanner: React.FC = () => {
 
         <h2 className="text-2xl font-bold text-slate-800 text-center mb-3 mt-8">How Do I Plan a Passover Seder?</h2>
         <p className="text-sm text-slate-500 max-w-2xl mx-auto text-center mb-8 leading-relaxed">
-          This Seder planner covers four things: a complete Passover menu with links to full recipes, a day-by-day prep timeline starting one week before the Seder, a guide to the six items on the Seder plate, and a full shopping list. All food is kosher for Passover and chametz-free. Kitniyot-free for Ashkenazi traditions.
+          This Seder planner covers four things: a complete Passover menu with links to full recipes, a day-by-day prep timeline starting one week before the Seder, a guide to the six items on the Seder plate, and a full shopping list. Recipes are designed to be chametz-free. For packaged ingredients, use kosher-for-Passover certified products where applicable. Kitniyot practices vary by community — follow your family or rabbinic custom.
         </p>
 
         {/* Tab nav */}
@@ -469,7 +469,7 @@ const PassoverSederPlanner: React.FC = () => {
                       '3 medium apples, peeled and very finely chopped (Fuji or Gala)',
                       '¾ cup walnuts, finely chopped',
                       '1½ tsp ground cinnamon',
-                      '3–4 tbsp sweet kosher red wine (Manischewitz or similar)',
+                      '3–4 tbsp sweet kosher-for-Passover red wine (Manischewitz or similar)',
                       '1 tbsp honey (optional)',
                     ].map((ing, i) => (
                       <li key={i} className="flex items-start gap-2">
@@ -541,7 +541,7 @@ const PassoverSederPlanner: React.FC = () => {
         {activeTab === 'seder-plate' && (
           <div id="seder-plate" className="space-y-4">
             <div className="bg-indigo-50 border border-indigo-200 rounded-2xl p-5 text-sm text-indigo-800 leading-relaxed">
-              The Seder plate (ke'ara) holds six symbolic foods, each representing an aspect of the Passover story. The Seder plate is arranged at the center of the table before guests arrive.
+              The Seder plate (ke'ara) holds six symbolic foods, each representing an aspect of the Passover story. It is placed at the center of the table before the Seder begins. The three matzot used during the Seder are separate — typically covered with a cloth alongside or beneath the Seder plate.
             </div>
 
             {sederPlateItems.map((item) => (
@@ -573,7 +573,7 @@ const PassoverSederPlanner: React.FC = () => {
             <div className="bg-slate-50 rounded-3xl border border-slate-200 p-7">
               <h3 className="font-black text-slate-900 text-lg mb-2">The Afikomen</h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                The middle of the three matzot on the Seder table is broken early in the Seder. The larger piece becomes the afikomen — hidden by the leader (or stolen by children) and redeemed at the end of the meal for a prize. The Seder cannot officially end until the afikomen is found and eaten.
+                In many communities, three matzot are placed on the Seder table. The middle one is broken early in the Seder — the smaller piece goes back between the other two, and the larger piece becomes the afikomen. The afikomen is hidden by the leader (or stolen by children) and redeemed for a prize at the end of the meal. The Seder does not conclude until the afikomen is found and eaten.
               </p>
             </div>
           </div>
@@ -646,7 +646,7 @@ const PassoverSederPlanner: React.FC = () => {
               },
               {
                 q: "How many matzot are needed for a Seder?",
-                a: "You need three whole matzot on the Seder table — these are used for the rituals of yachatz (breaking the middle matzo) and the afikomen. For eating during the meal, plan roughly 1 box of matzo (10 sheets) per 4–6 people.",
+                a: "In many communities, three whole matzot are placed on the Seder table — the middle one is broken for yachatz and the afikomen. For eating during the meal, plan roughly 1 box of matzo per 4–6 people. Make sure your matzo is certified kosher for Passover.",
               },
               {
                 q: "How much wine do I need for a Passover Seder?",
