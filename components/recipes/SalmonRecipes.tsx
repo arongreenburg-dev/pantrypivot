@@ -279,6 +279,9 @@ const SalmonRecipes: React.FC = () => {
           </p>
         </div>
 
+        <h2 className="text-2xl font-bold text-slate-800 text-center mb-3">What Can I Make With Salmon?</h2>
+        <p className="text-sm text-slate-500 max-w-2xl mx-auto text-center mb-8 leading-relaxed">This page contains 4 kosher pareve salmon recipes — baked, sheet pan, air fryer, and with sweet potato. All recipes are dairy-free and pareve. Ingredients are simple pantry staples with no specialty items required.</p>
+
         {/* Tabs */}
         <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (

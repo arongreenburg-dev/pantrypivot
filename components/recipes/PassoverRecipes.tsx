@@ -312,6 +312,9 @@ const PassoverRecipes: React.FC = () => {
           </a>
         </div>
 
+        <h2 className="text-2xl font-bold text-slate-800 text-center mb-3">What Can I Make for Passover Dinner?</h2>
+        <p className="text-sm text-slate-500 max-w-2xl mx-auto text-center mb-8 leading-relaxed">This page contains 4 kosher-for-Passover recipes including beef brisket, matzo ball soup, roasted chicken, and chocolate cake. All recipes are kosher for Passover and contain no chametz. Ingredients are traditional Passover pantry staples.</p>
+
         {/* Tabs */}
         <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (

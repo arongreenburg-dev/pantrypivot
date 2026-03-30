@@ -328,6 +328,9 @@ const ChickenAndSpinach: React.FC = () => {
           </ul>
         </nav>
 
+        <h2 className="text-2xl font-bold text-slate-800 mb-3">What Can I Make With Chicken and Spinach?</h2>
+        <p className="text-sm text-slate-500 max-w-2xl mb-8 leading-relaxed">This page contains 4 kosher meat chicken and spinach recipes — skillet, stuffed, soup, and pasta. All recipes are dairy-free. Ingredients are simple pantry staples with no specialty items required.</p>
+
         {/* Tabs */}
         <div id="recipes" className="mb-6 flex flex-wrap gap-2">
           {TABS.map(({ key, label }) => (

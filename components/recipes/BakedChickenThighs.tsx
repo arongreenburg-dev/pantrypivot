@@ -278,6 +278,9 @@ const BakedChickenThighs: React.FC = () => {
           <p className="text-lg text-slate-500 max-w-xl mx-auto">Juicy, crispy-skinned baked chicken thighs — four flavors, one foolproof method.</p>
         </div>
 
+        <h2 className="text-2xl font-bold text-slate-800 text-center mb-3">What Can I Make With Chicken Thighs?</h2>
+        <p className="text-sm text-slate-500 max-w-2xl mx-auto text-center mb-8 leading-relaxed">This page contains 4 kosher meat baked chicken thigh recipes — garlic herb, lemon, honey mustard, and spiced variations. All recipes are dairy-free. Ingredients are simple pantry staples with no specialty items required.</p>
+
         <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (
             <button

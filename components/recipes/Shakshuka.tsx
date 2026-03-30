@@ -298,6 +298,9 @@ const Shakshuka: React.FC = () => {
           </p>
         </div>
 
+        <h2 className="text-2xl font-bold text-slate-800 text-center mb-3">What Can I Make With Eggs and Tomatoes?</h2>
+        <p className="text-sm text-slate-500 max-w-2xl mx-auto text-center mb-8 leading-relaxed">This page contains 4 kosher pareve shakshuka recipes using eggs and tomatoes. All recipes are pareve with no meat or dairy. Ingredients are simple pantry staples with no specialty items required.</p>
+
         {/* Tabs */}
         <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (

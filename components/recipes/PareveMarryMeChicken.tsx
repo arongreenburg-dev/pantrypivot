@@ -320,6 +320,9 @@ const PareveMarryMeChicken: React.FC = () => {
           </a>
         </div>
 
+        <h2 className="text-2xl font-bold text-slate-800 text-center mb-3">What Can I Make With Chicken Without Dairy?</h2>
+        <p className="text-sm text-slate-500 max-w-2xl mx-auto text-center mb-8 leading-relaxed">This page contains 4 dairy-free marry me chicken recipes made with coconut cream instead of heavy cream. All recipes are kosher meat and fully dairy-free. Ingredients include coconut cream and common pantry staples.</p>
+
         {/* Tabs */}
         <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (

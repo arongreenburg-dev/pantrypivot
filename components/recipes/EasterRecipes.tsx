@@ -297,6 +297,9 @@ const EasterRecipes: React.FC = () => {
           </a>
         </div>
 
+        <h2 className="text-2xl font-bold text-slate-800 text-center mb-3">What Can I Make for Easter Dinner?</h2>
+        <p className="text-sm text-slate-500 max-w-2xl mx-auto text-center mb-8 leading-relaxed">This page contains 4 Easter dinner recipes including slow-roasted lamb, glazed chicken, vegetable frittata, and roasted root vegetables. Recipes include both meat mains and vegetarian options. Ingredients are seasonal and widely available.</p>
+
         {/* Tabs */}
         <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (

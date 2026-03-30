@@ -279,6 +279,9 @@ const TurkeyAndVegetables: React.FC = () => {
           <p className="text-lg text-slate-500 max-w-xl mx-auto">Lean ground turkey with fresh vegetables — quick, healthy dinners for any night of the week.</p>
         </div>
 
+        <h2 className="text-2xl font-bold text-slate-800 text-center mb-3">What Can I Make With Ground Turkey and Vegetables?</h2>
+        <p className="text-sm text-slate-500 max-w-2xl mx-auto text-center mb-8 leading-relaxed">This page contains 4 kosher meat ground turkey and vegetable recipes — skillet, sheet pan, stir-fry, and soup. All recipes are dairy-free. Ingredients are simple pantry staples with no specialty items required.</p>
+
         <div id="recipe-ideas" className="flex gap-2 flex-wrap justify-center mb-8">
           {TABS.map(tab => (
             <button
