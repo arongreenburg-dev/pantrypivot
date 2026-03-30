@@ -85,7 +85,7 @@ const PassoverSederPlanner: React.FC = () => {
         {
           "@type": "Question",
           "name": "When is Passover 2026?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Passover 2026 begins at sundown on Saturday, April 11, 2026. The first Seder is the night of April 11–12. The second Seder is April 12–13. Passover ends at nightfall on Sunday, April 19, 2026." }
+          "acceptedAnswer": { "@type": "Answer", "text": "Passover 2026 begins Wednesday evening, April 1, 2026. The first Seder is Wednesday night, April 1. The second Seder (Diaspora) is Thursday night, April 2. Passover ends Thursday night, April 9 in the Diaspora (Wednesday night, April 8 in Israel)." }
         },
         {
           "@type": "Question",
@@ -133,12 +133,12 @@ const PassoverSederPlanner: React.FC = () => {
       color: 'bg-indigo-50 border-indigo-200',
       accent: 'text-indigo-700',
       items: [
-        { name: 'Shank bone (zeroa)', note: 'Roasted lamb or chicken bone — symbolic only, not eaten' },
+        { name: 'Shank bone (zeroa)', note: 'Roasted lamb or chicken bone — symbolic; customs vary on whether it is eaten' },
         { name: 'Roasted egg (beitzah)', note: 'Hard-boiled then briefly roasted or charred' },
-        { name: 'Bitter herbs (maror)', note: 'Freshly grated horseradish, not the jarred kind' },
-        { name: 'Charoset', note: 'Apple, walnut, cinnamon, kosher wine — recipe below' },
+        { name: 'Maror — bitter herbs', note: 'Commonly horseradish and/or romaine lettuce, depending on custom' },
+        { name: 'Ashkenazi Charoset', note: 'Apple, walnut, cinnamon, kosher wine — recipe below; Sephardic versions vary' },
         { name: 'Karpas', note: 'Parsley or celery, dipped in salt water' },
-        { name: 'Chazeret', note: 'Romaine lettuce or more horseradish' },
+        { name: 'Chazeret — second bitter herb', note: 'Commonly romaine lettuce' },
       ],
     },
     {
@@ -169,7 +169,7 @@ const PassoverSederPlanner: React.FC = () => {
         { name: 'Israeli salad', note: 'Diced cucumber, tomato, red onion, lemon, olive oil — no chametz' },
         { name: 'Roasted asparagus', note: 'Olive oil, salt, 400°F for 12 minutes' },
         { name: 'Roasted sweet potatoes', note: 'Cubed, olive oil, cinnamon — naturally Passover-friendly' },
-        { name: 'Quinoa tabbouleh (Sephardic only)', note: 'Quinoa is kitniyot — suitable for Sephardic guests only' },
+        { name: 'Quinoa tabbouleh', note: 'Some communities use certified-for-Passover quinoa; others avoid it. Follow your family or rabbinic custom.' },
       ],
     },
     {
@@ -188,11 +188,11 @@ const PassoverSederPlanner: React.FC = () => {
   const timelineItems = [
     {
       day: '1 Week Before',
-      date: 'April 4–5',
+      date: 'March 25',
       tasks: [
         'Order all groceries online — look for Kosher for Passover certification on every packaged item',
         'Order matzo (you need ~1 box per 4–6 people), matzo meal, potato starch',
-        'Order certified Passover wine (4 cups per person required at the Seder)',
+        'Order certified Passover wine and/or grape juice — each participant needs enough for four ritual cups; amounts depend on cup size and custom',
         'Clean and kasher your kitchen for Passover if needed',
         'Set guest count and finalize your menu',
         'Order a shank bone from your butcher if you can\'t find one',
@@ -200,7 +200,7 @@ const PassoverSederPlanner: React.FC = () => {
     },
     {
       day: '3 Days Before',
-      date: 'Thursday, April 9',
+      date: 'Sunday, March 29',
       tasks: [
         'Make the charoset — it gets better as it sits. Refrigerate in an airtight container.',
         'Make the flourless chocolate cake — improves overnight, stays good for 3–4 days in the fridge',
@@ -210,7 +210,7 @@ const PassoverSederPlanner: React.FC = () => {
     },
     {
       day: '2 Days Before',
-      date: 'Friday, April 10',
+      date: 'Monday, March 30',
       tasks: [
         'Make the brisket (this is the most important make-ahead) — braise 3–3½ hours at 325°F',
         'Let brisket cool completely, then refrigerate in braising liquid overnight',
@@ -220,7 +220,7 @@ const PassoverSederPlanner: React.FC = () => {
     },
     {
       day: 'Day Before',
-      date: 'Saturday, April 11',
+      date: 'Tuesday, March 31',
       tasks: [
         'Make the matzo ball mixture — refrigerate it until 2 hours before Seder',
         'Skim the solidified fat from the brisket braising liquid',
@@ -233,7 +233,7 @@ const PassoverSederPlanner: React.FC = () => {
     },
     {
       day: 'Seder Day',
-      date: 'Sunday, April 12',
+      date: 'Wednesday, April 1',
       tasks: [
         '3–4 hours before: Form and cook matzo balls in gently simmering broth (20–25 min, lid on)',
         '2 hours before: Begin reheating brisket covered at 325°F with braising liquid (30–40 min)',
@@ -250,7 +250,7 @@ const PassoverSederPlanner: React.FC = () => {
       name: 'Zeroa — Shank Bone',
       emoji: '🦴',
       symbol: 'Represents the Paschal lamb sacrificed in Egypt and the arm of God outstretched to free the Israelites.',
-      how: 'Use a roasted lamb shank bone or a roasted chicken neck/wing. Roast at 400°F for 30–40 minutes until browned. It is symbolic — not eaten at the Seder.',
+      how: 'Use a roasted lamb shank bone or a roasted chicken neck/wing. Roast at 400°F for 30–40 minutes until browned. It is symbolic — customs vary on whether it is eaten.',
     },
     {
       name: 'Beitzah — Roasted Egg',
@@ -262,7 +262,7 @@ const PassoverSederPlanner: React.FC = () => {
       name: 'Maror — Bitter Herbs',
       emoji: '🌿',
       symbol: 'Represents the bitterness of slavery in Egypt.',
-      how: 'Use freshly grated horseradish root — not the jarred cream kind. Grate it yourself for the full experience (and tears). Or use prepared white horseradish, drained.',
+      how: 'Commonly freshly grated horseradish root or romaine lettuce, depending on your custom. Both are valid — follow your family or rabbinic practice.',
     },
     {
       name: 'Charoset — Sweet Paste',
@@ -280,7 +280,7 @@ const PassoverSederPlanner: React.FC = () => {
       name: 'Chazeret — Second Bitter Herb',
       emoji: '🥬',
       symbol: 'Used for the Hillel sandwich (korech) — combining matzo, bitter herb, and charoset.',
-      how: 'Use romaine lettuce or additional horseradish. The inner white parts of romaine are traditionally used.',
+      how: 'Commonly romaine lettuce. The inner white parts of romaine are traditionally used.',
     },
   ];
 
@@ -330,7 +330,7 @@ const PassoverSederPlanner: React.FC = () => {
     {
       category: 'Kosher for Passover Wines & Liquids',
       items: [
-        '4 bottles kosher for Passover wine (4 cups per adult at Seder)',
+        'Kosher for Passover wine or grape juice (each participant needs enough for four ritual cups; exact amounts depend on cup size and custom)',
         '1 bottle dry kosher red wine (for brisket)',
         'Kosher beef broth (KFP certified)',
         'Kosher chicken broth (KFP certified, or make your own)',
@@ -392,7 +392,7 @@ const PassoverSederPlanner: React.FC = () => {
         {/* Hero */}
         <div className="flex justify-center mb-6">
           <span className="inline-flex items-center gap-2 bg-indigo-50 border border-indigo-200 text-indigo-700 font-bold px-5 py-2 rounded-full text-sm">
-            🍷 Passover 2026 — First Seder: Sunday, April 12
+            🍷 Passover 2026 — First Seder: Wednesday, April 1
           </span>
         </div>
 
@@ -513,7 +513,7 @@ const PassoverSederPlanner: React.FC = () => {
         {activeTab === 'timeline' && (
           <div id="timeline" className="space-y-4">
             <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-sm text-amber-800 leading-relaxed">
-              <strong>Passover 2026:</strong> First Seder is Sunday night, April 12. Second Seder is Monday night, April 13. Passover ends at nightfall on Sunday, April 19.
+              <strong>Passover 2026:</strong> First Seder is Wednesday night, April 1. Second Seder (Diaspora) is Thursday night, April 2. Passover ends Thursday night, April 9 in the Diaspora (Wednesday night, April 8 in Israel).
             </div>
 
             {timelineItems.map((block) => (
@@ -583,7 +583,7 @@ const PassoverSederPlanner: React.FC = () => {
         {activeTab === 'shopping' && (
           <div id="shopping" className="space-y-4">
             <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 text-sm text-amber-800 leading-relaxed">
-              <strong>Check items off as you shop.</strong> All packaged items must be certified Kosher for Passover — look for "KFP" or "Kosher L'Pesach" on the label. Your progress saves in this browser session.
+              <strong>Check items off as you shop.</strong> Recipes are designed to be chametz-free. For packaged ingredients, use products certified Kosher for Passover. Kitniyot practices vary by community. Your progress saves in this browser session.
             </div>
 
             {shoppingList.map((section) => (
@@ -634,7 +634,7 @@ const PassoverSederPlanner: React.FC = () => {
             {[
               {
                 q: "When is Passover 2026?",
-                a: "Passover 2026 begins at sundown on Saturday, April 11, 2026. The first Seder is the night of April 11–12. The second Seder is April 12–13. Passover ends at nightfall on Sunday, April 19, 2026.",
+                a: "Passover 2026 begins Wednesday evening, April 1, 2026. The first Seder is Wednesday night, April 1. The second Seder (Diaspora) is Thursday night, April 2. Passover ends Thursday night, April 9 in the Diaspora (Wednesday night, April 8 in Israel).",
               },
               {
                 q: "What food goes on the Seder plate?",
@@ -650,7 +650,7 @@ const PassoverSederPlanner: React.FC = () => {
               },
               {
                 q: "How much wine do I need for a Passover Seder?",
-                a: "Each adult drinks four cups of wine during the Seder. A standard bottle of wine is approximately five glasses. Plan roughly one bottle per adult, or slightly less if you pour modest cups. Have grape juice available for children and those who don't drink wine.",
+                a: "Each participant needs enough wine or grape juice for four ritual cups; exact amounts depend on cup size and custom. Have both wine and grape juice available so all guests can participate.",
               },
             ].map(({ q, a }, i) => (
               <div key={i} className="bg-slate-50 rounded-2xl p-5">
