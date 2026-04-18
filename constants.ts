@@ -102,21 +102,23 @@ export const HEALTH_CONDITIONS = [
   'Gastrointestinal',
 ] as const;
 
-export const HEALTH_CONDITION_PROMPTS: Record<string, string> = {
+type HealthConditionKey = typeof HEALTH_CONDITIONS[number];
+
+export const HEALTH_CONDITION_PROMPTS: Record<HealthConditionKey, string> = {
   'Diabetes':         'low added sugar, complex carbs preferred',
   'Heart Disease':    'low saturated fat, lean proteins',
   'Hypertension':     'low sodium',
   'Gastrointestinal': 'low FODMAP friendly, avoid common irritants',
 };
 
-export const HEALTH_CONDITION_DEFINITIONS: Record<string, string> = {
+export const HEALTH_CONDITION_DEFINITIONS: Record<HealthConditionKey, string> = {
   'Diabetes':         'Recipes lower in added sugar with complex carbs preferred.',
   'Heart Disease':    'Recipes lower in saturated fat with lean proteins.',
   'Hypertension':     'Recipes lower in sodium.',
   'Gastrointestinal': 'Recipes friendlier to sensitive stomachs (low FODMAP, fewer common irritants).',
 };
 
-export const HEALTH_CONDITION_TOOLTIP_POSITION: Record<string, string> = {
+export const HEALTH_CONDITION_TOOLTIP_POSITION: Record<HealthConditionKey, string> = {
   'Diabetes':         'left-0',
   'Heart Disease':    'right-0',
   'Hypertension':     'left-0',
