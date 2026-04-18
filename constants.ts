@@ -92,3 +92,33 @@ export const DEFAULT_SETTINGS = {
   favoriteChef: '',
   hasOnboarded: false
 };
+
+export const SHOW_KOSHER_FOR_PASSOVER = false;
+
+export const HEALTH_CONDITIONS = [
+  'Diabetes',
+  'Heart Disease',
+  'Hypertension',
+  'Gastrointestinal',
+] as const;
+
+export const HEALTH_CONDITION_PROMPTS: Record<string, string> = {
+  'Diabetes':         'low added sugar, complex carbs preferred',
+  'Heart Disease':    'low saturated fat, lean proteins',
+  'Hypertension':     'low sodium',
+  'Gastrointestinal': 'low FODMAP friendly, avoid common irritants',
+};
+
+export const HEALTH_CONDITION_DEFINITIONS: Record<string, string> = {
+  'Diabetes':         'Recipes lower in added sugar with complex carbs preferred.',
+  'Heart Disease':    'Recipes lower in saturated fat with lean proteins.',
+  'Hypertension':     'Recipes lower in sodium.',
+  'Gastrointestinal': 'Recipes friendlier to sensitive stomachs (low FODMAP, fewer common irritants).',
+};
+
+export const HEALTH_CONDITION_TOOLTIP_POSITION: Record<string, string> = {
+  'Diabetes':         'left-0',
+  'Heart Disease':    'right-0',
+  'Hypertension':     'left-0',
+  'Gastrointestinal': 'right-0',
+};
