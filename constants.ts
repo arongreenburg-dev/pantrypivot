@@ -117,10 +117,3 @@ export const HEALTH_CONDITION_DEFINITIONS: Record<HealthConditionKey, string> = 
   'Hypertension':     'Recipes lower in sodium.',
   'Gastrointestinal': 'Recipes friendlier to sensitive stomachs (low FODMAP, fewer common irritants).',
 };
-
-export const HEALTH_CONDITION_TOOLTIP_POSITION: Record<HealthConditionKey, string> = {
-  'Diabetes':         'left-0',
-  'Heart Disease':    'right-0',
-  'Hypertension':     'left-0',
-  'Gastrointestinal': 'right-0',
-};
