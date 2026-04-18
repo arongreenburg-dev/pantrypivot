@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { WizardState, GenerationResponse, AppSettings, ConvenienceFilter, UnitSystem, MealIdea } from '../types';
-import { MEAL_TYPES, EFFORT_LEVELS, SPICE_LEVELS, HOUSEHOLD_TYPES, RELIGIOUS_DIETS, HEALTH_DIETS, CUISINE_REGIONS, COMMON_EQUIPMENT, KOSHER_TYPES, PANTRY_STAPLES, COMMON_ALLERGENS, STAPLE_LINKS, CONVENIENCE_FILTERS, AFFILIATE_LINKS, UNIT_SYSTEMS } from '../constants';
+import { WizardState, GenerationResponse, AppSettings, ConvenienceFilter, UnitSystem, MealIdea, HealthCondition } from '../types';
+import { MEAL_TYPES, EFFORT_LEVELS, SPICE_LEVELS, HOUSEHOLD_TYPES, RELIGIOUS_DIETS, HEALTH_DIETS, CUISINE_REGIONS, COMMON_EQUIPMENT, KOSHER_TYPES, PANTRY_STAPLES, COMMON_ALLERGENS, STAPLE_LINKS, CONVENIENCE_FILTERS, AFFILIATE_LINKS, UNIT_SYSTEMS, SHOW_KOSHER_FOR_PASSOVER, HEALTH_CONDITIONS, HEALTH_CONDITION_DEFINITIONS } from '../constants';
 import { generateRecipes, generateIdeas } from '../lib/recipeModel';
 import VoiceInput from './VoiceInput';
 interface WizardProps {
@@ -13,8 +13,48 @@ interface WizardProps {
 }
 const MEAT_KEYWORDS = ['beef', 'chicken', 'steak', 'lamb', 'meat', 'turkey', 'veal', 'ground beef', 'ribs', 'bacon', 'ham', 'salmon', 'tuna', 'fish'];
 const VEGGIE_KEYWORDS = ['broccoli', 'carrot', 'spinach', 'kale', 'pepper', 'onion', 'garlic', 'potato', 'vegetable', 'greens', 'zucchini', 'tomato', 'cabbage', 'lettuce', 'cucumber', 'cauliflower', 'asparagus', 'beans'];
+const ConditionInfoIcon: React.FC<{
+  condition: string;
+  definition: string;
+  positionClass: string;
+  openKey: string | null;
+  onOpen: (key: string | null) => void;
+}> = ({ condition, definition, positionClass, openKey, onOpen }) => {
+  const isOpen = openKey === condition;
+  return (
+    <span
+      className="relative inline-flex"
+      onClick={e => e.stopPropagation()}
+    >
+      <button
+        type="button"
+        aria-label={`What does ${condition} filter mean?`}
+        aria-expanded={isOpen}
+        onClick={() => onOpen(isOpen ? null : condition)}
+        className="ml-1 text-slate-400 hover:text-slate-600 text-[11px] leading-none align-middle"
+      >
+        ⓘ
+      </button>
+      {isOpen && (
+        <span
+          className={`absolute top-full mt-1 z-20 w-52 bg-white border border-slate-200 rounded-xl shadow-lg p-3 text-[11px] font-medium text-slate-600 leading-relaxed ${positionClass}`}
+          onClick={e => e.stopPropagation()}
+        >
+          {definition}
+        </span>
+      )}
+    </span>
+  );
+};
 const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStream, onError, isLoading }) => {
   const [showStaples, setShowStaples] = useState(false);
+  const [openTooltip, setOpenTooltip] = useState<string | null>(null);
+  React.useEffect(() => {
+    if (!openTooltip) return;
+    const handler = () => setOpenTooltip(null);
+    document.addEventListener('click', handler);
+    return () => document.removeEventListener('click', handler);
+  }, [openTooltip]);
   const [formData, setFormData] = useState<WizardState>({
     userPrompt: '',
     mealType: 'Main Dish',
@@ -41,11 +81,12 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
     kidFriendly: false,
     favoriteChef: settings.favoriteChef,
     kosherForPassover: false,
+    healthConditions: [],
   });
   const updateForm = (key: keyof WizardState, value: any) => {
     setFormData(prev => ({ ...prev, [key]: value }));
   };
-  const toggleList = (key: 'cuisines' | 'dietaryRestrictions' | 'equipment' | 'allergies' | 'pantryStaples' | 'convenienceFilters' | 'kosherType', item: string) => {
+  const toggleList = (key: 'cuisines' | 'dietaryRestrictions' | 'equipment' | 'allergies' | 'pantryStaples' | 'convenienceFilters' | 'kosherType' | 'healthConditions', item: string) => {
     let list = [...(formData[key] as string[])];
     const index = list.indexOf(item);
     if (key === 'kosherType') {
@@ -191,6 +232,36 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
                 </div>
               </div>
             </div>
+            {/* Health Conditions */}
+            <div className="space-y-4">
+              <p className="text-xs font-bold text-slate-500">Health Conditions</p>
+              <p className="text-[10px] font-medium text-slate-400">
+                Not medical advice. Consult your doctor before changing your diet.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {HEALTH_CONDITIONS.map((condition, index) => (
+                  <button
+                    key={condition}
+                    type="button"
+                    onClick={() => toggleList('healthConditions', condition)}
+                    className={`flex items-center px-4 py-2 rounded-full text-xs font-bold border transition-all ${
+                      formData.healthConditions.includes(condition as HealthCondition)
+                        ? 'bg-violet-100 border-violet-400 text-violet-700 shadow-md'
+                        : 'border-slate-200 text-slate-600 hover:border-violet-300'
+                    }`}
+                  >
+                    {condition}
+                    <ConditionInfoIcon
+                      condition={condition}
+                      definition={HEALTH_CONDITION_DEFINITIONS[condition]}
+                      positionClass={index % 2 === 0 ? 'left-0' : 'right-0'}
+                      openKey={openTooltip}
+                      onOpen={setOpenTooltip}
+                    />
+                  </button>
+                ))}
+              </div>
+            </div>
             {/* Cuisine Style */}
             <div className="space-y-4">
               <p className="text-xs font-bold text-slate-500">Cuisine Style</p>
@@ -245,18 +316,20 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
                   <span className="text-xl">👶</span>
                   {formData.kidFriendly ? 'Kid-Friendly ON' : 'Kid-Friendly'}
                 </button>
-                <button
-                  type="button"
-                  onClick={() => updateForm('kosherForPassover', !formData.kosherForPassover)}
-                  className={`flex items-center gap-3 px-5 py-3 rounded-2xl border-2 font-bold text-sm transition-all ${
-                    formData.kosherForPassover
-                      ? 'bg-indigo-50 border-indigo-400 text-indigo-700'
-                      : 'border-slate-200 text-slate-600 hover:border-indigo-300'
-                  }`}
-                >
-                  <span className="text-xl">🍽</span>
-                  {formData.kosherForPassover ? 'Kosher for Passover ON' : 'Kosher for Passover'}
-                </button>
+                {SHOW_KOSHER_FOR_PASSOVER && (
+                  <button
+                    type="button"
+                    onClick={() => updateForm('kosherForPassover', !formData.kosherForPassover)}
+                    className={`flex items-center gap-3 px-5 py-3 rounded-2xl border-2 font-bold text-sm transition-all ${
+                      formData.kosherForPassover
+                        ? 'bg-indigo-50 border-indigo-400 text-indigo-700'
+                        : 'border-slate-200 text-slate-600 hover:border-indigo-300'
+                    }`}
+                  >
+                    <span className="text-xl">🍽</span>
+                    {formData.kosherForPassover ? 'Kosher for Passover ON' : 'Kosher for Passover'}
+                  </button>
+                )}
               </div>
             </div>
             {/* Meal Type + Time */}
