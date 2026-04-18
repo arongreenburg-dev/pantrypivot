@@ -24,12 +24,13 @@ const ConditionInfoIcon: React.FC<{
   return (
     <span
       className="relative inline-flex"
-      onClick={e => e.stopPropagation()}
+      onClick={e => e.nativeEvent.stopImmediatePropagation()}
     >
       <button
         type="button"
         aria-label={`What does ${condition} filter mean?`}
         aria-expanded={isOpen}
+        aria-describedby={`tooltip-${condition}`}
         onClick={() => onOpen(isOpen ? null : condition)}
         className="ml-1 text-slate-400 hover:text-slate-600 text-[11px] leading-none align-middle"
       >
@@ -37,8 +38,10 @@ const ConditionInfoIcon: React.FC<{
       </button>
       {isOpen && (
         <span
+          role="tooltip"
+          id={`tooltip-${condition}`}
           className={`absolute top-full mt-1 z-20 w-52 bg-white border border-slate-200 rounded-xl shadow-lg p-3 text-[11px] font-medium text-slate-600 leading-relaxed ${positionClass}`}
-          onClick={e => e.stopPropagation()}
+          onClick={e => e.nativeEvent.stopImmediatePropagation()}
         >
           {definition}
         </span>
@@ -50,11 +53,10 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
   const [showStaples, setShowStaples] = useState(false);
   const [openTooltip, setOpenTooltip] = useState<string | null>(null);
   React.useEffect(() => {
-    if (!openTooltip) return;
     const handler = () => setOpenTooltip(null);
     document.addEventListener('click', handler);
     return () => document.removeEventListener('click', handler);
-  }, [openTooltip]);
+  }, []);
   const [formData, setFormData] = useState<WizardState>({
     userPrompt: '',
     mealType: 'Main Dish',
@@ -245,7 +247,7 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
                     type="button"
                     onClick={() => toggleList('healthConditions', condition)}
                     className={`flex items-center px-4 py-2 rounded-full text-xs font-bold border transition-all ${
-                      formData.healthConditions.includes(condition as HealthCondition)
+                      (formData.healthConditions as string[]).includes(condition)
                         ? 'bg-violet-100 border-violet-400 text-violet-700 shadow-md'
                         : 'border-slate-200 text-slate-600 hover:border-violet-300'
                     }`}
