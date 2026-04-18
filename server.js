@@ -37,6 +37,14 @@ function buildRecipePrompt(input) {
     `Avoid: ${input.avoidList?.join(', ') || 'None'}`,
     `Kosher: ${input.isKosher ? `Yes (${input.kosherType?.join(', ') || 'General'})` : 'No'}`,
     input.kosherForPassover ? 'This recipe must be strictly Kosher for Passover. No chametz (no wheat, barley, oats, rye, spelt in any leavened form). No kitniyot (no rice, corn, beans, lentils, peas, sesame, mustard, peanuts). Use only Passover-compliant ingredients and substitutions such as matzo meal, potato starch, and almond flour. Label the recipe as Kosher for Passover.' : '',
+    input.healthConditions?.length
+      ? `Health Condition Dietary Constraints: ${[
+          input.healthConditions.includes('Diabetes')         ? 'low added sugar, complex carbs preferred' : '',
+          input.healthConditions.includes('Heart Disease')    ? 'low saturated fat, lean proteins' : '',
+          input.healthConditions.includes('Hypertension')     ? 'low sodium' : '',
+          input.healthConditions.includes('Gastrointestinal') ? 'low FODMAP friendly, avoid common irritants' : '',
+        ].filter(Boolean).join('; ')}`
+      : '',
     input.favoriteChef ? `Style Inspiration: ${input.favoriteChef}` : '',
     input.kidFriendly ? 'Kid-Friendly: Yes — mild flavors, simple textures, fun presentation, no spicy ingredients' : '',
     '',
