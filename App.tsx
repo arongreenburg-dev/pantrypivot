@@ -25,6 +25,7 @@ const GroundTurkeySweetPotato = lazy(() => import('./components/recipes/GroundTu
 const PareveMarryMeChicken = lazy(() => import('./components/recipes/PareveMarryMeChicken'));
 const PassoverRecipes = lazy(() => import('./components/recipes/PassoverRecipes'));
 const PassoverSederPlanner = lazy(() => import('./components/recipes/PassoverSederPlanner'));
+const PostPassoverLeftovers = lazy(() => import('./components/recipes/PostPassoverLeftovers'));
 const EasterRecipes = lazy(() => import('./components/recipes/EasterRecipes'));
 const ChickenAndBroccoli = lazy(() => import('./components/recipes/ChickenAndBroccoli'));
 const ChickenAndPotatoes = lazy(() => import('./components/recipes/ChickenAndPotatoes'));
@@ -315,6 +316,7 @@ const App: React.FC = () => {
         <Route path="/recipes/dairy-free-marry-me-chicken" element={<PareveMarryMeChicken />} />
         <Route path="/recipes/passover" element={<PassoverRecipes />} />
         <Route path="/recipes/passover-seder-planner" element={<PassoverSederPlanner />} />
+        <Route path="/recipes/post-passover-leftovers" element={<PostPassoverLeftovers />} />
         <Route path="/recipes/easter" element={<EasterRecipes />} />
         <Route path="/recipes/chicken-and-broccoli" element={<ChickenAndBroccoli />} />
         <Route path="/recipes/chicken-and-potatoes" element={<ChickenAndPotatoes />} />
