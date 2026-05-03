@@ -56,6 +56,7 @@ export interface GenerationResponse {
   selectedRecipe: DetailedRecipe;
   ideas?: MealIdea[];
   kosherForPassover?: boolean;
+  recommendedProducts?: AffiliateProduct[];
 }
 
 export interface AppSettings {
@@ -106,4 +107,11 @@ export interface SavedRecipe {
   id: string;
   timestamp: number;
   data: DetailedRecipe;
+}
+
+export interface AffiliateProduct {
+  name: string;
+  asin: string;
+  description?: string;
+  reviewer?: 'ATK' | 'CR';
 }

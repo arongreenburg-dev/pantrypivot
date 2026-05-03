@@ -17,7 +17,7 @@ const RecipeCards: React.FC<RecipeCardsProps> = ({ cards, onSelect, onStartOver 
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {cards.map((card) => (
+        {(cards ?? []).map((card) => (
           <div key={card.id} className="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
             <div className="flex justify-between items-start mb-4">
               <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
@@ -36,17 +36,17 @@ const RecipeCards: React.FC<RecipeCardsProps> = ({ cards, onSelect, onStartOver 
               <div className="space-y-1">
                 <span className="text-[10px] font-bold text-slate-400 uppercase">Key Ingredients</span>
                 <div className="flex flex-wrap gap-1">
-                  {card.ingredientsUsed.slice(0, 3).map(ing => (
+                  {(card.ingredientsUsed ?? []).slice(0, 3).map(ing => (
                     <span key={ing} className="bg-slate-50 text-slate-600 px-2 py-0.5 rounded text-[10px] font-medium">{ing}</span>
                   ))}
-                  {card.ingredientsUsed.length > 3 && <span className="text-[10px] text-slate-400">+{card.ingredientsUsed.length - 3} more</span>}
+                  {(card.ingredientsUsed ?? []).length > 3 && <span className="text-[10px] text-slate-400">+{(card.ingredientsUsed ?? []).length - 3} more</span>}
                 </div>
               </div>
 
-              {card.extraNeeded.length > 0 && (
+              {(card.extraNeeded ?? []).length > 0 && (
                 <div className="space-y-1">
                   <span className="text-[10px] font-bold text-orange-400 uppercase">Suggested Extras</span>
-                  <p className="text-[10px] text-slate-500 truncate">{card.extraNeeded.join(', ')}</p>
+                  <p className="text-[10px] text-slate-500 truncate">{(card.extraNeeded ?? []).join(', ')}</p>
                 </div>
               )}
 

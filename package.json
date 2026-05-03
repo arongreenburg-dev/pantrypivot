@@ -11,7 +11,7 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "@google/genai": "^1.35.0",
+    "@google/genai": "^1.51.0",
     "@types/react-router-dom": "^5.3.3",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",

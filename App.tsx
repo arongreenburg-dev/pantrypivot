@@ -6,6 +6,8 @@ import { getSettings, saveRecipe, deleteRecipe } from './lib/storage';
 import Wizard from './components/Wizard';
 import RecipeCards from './components/RecipeCards';
 import RecipeDetail from './components/RecipeDetail';
+import PantryShortcuts from './components/PantryShortcuts';
+import ProductRecommendations from './components/ProductRecommendations';
 import Settings from './components/Settings';
 import SavedRecipes from './components/SavedRecipes';
 import NotFound from './components/NotFound';
@@ -235,11 +237,17 @@ const App: React.FC = () => {
         )}
 
         {currentView === 'results' && generationResults && (
-          <RecipeCards
-            cards={generationResults.recipeCards}
-            onSelect={handleSelectRecipe}
-            onStartOver={() => setCurrentView('home')}
-          />
+          <div className="space-y-10">
+            <RecipeCards
+              cards={generationResults.recipeCards ?? []}
+              onSelect={handleSelectRecipe}
+              onStartOver={() => setCurrentView('home')}
+            />
+            <PantryShortcuts />
+            <ProductRecommendations
+              products={generationResults.recommendedProducts ?? []}
+            />
+          </div>
         )}
 
         {currentView === 'detail' && selectedRecipe && (

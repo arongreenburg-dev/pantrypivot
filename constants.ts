@@ -49,8 +49,8 @@ export const PANTRY_STAPLES = [
 export const AFFILIATE_LINKS = {
   ORDER_INGREDIENTS: 'https://amzn.to/3N4KdS6',
   AMAZON_GROCERY: 'https://amzn.to/470PgK2',
-  AMAZON_FRESH: 'https://amzn.to/46ydB9T',
-  PANTRY_ITEMS: 'https://amzn.to/401EJdJ',
+  AMAZON_FRESH: 'https://amzn.to/4t4DK8B',
+  PANTRY_ITEMS: 'https://amzn.to/3OFHO1f',
 };
 
 export const STAPLE_LINKS: Record<string, string> = {

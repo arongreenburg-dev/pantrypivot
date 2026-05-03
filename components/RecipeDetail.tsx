@@ -1,7 +1,9 @@
 
 import React, { useState } from 'react';
 import { DetailedRecipe } from '../types';
-import { AFFILIATE_LINKS, KITCHEN_TOOL_LINKS } from '../constants';
+import { AFFILIATE_LINKS } from '../constants';
+import { KITCHEN_TOOLS_CATALOG, KitchenTool } from '../affiliateCatalog';
+import ReviewerBadge from './ReviewerBadge';
 
 interface RecipeDetailProps {
   recipe: DetailedRecipe;
@@ -20,10 +22,10 @@ Servings: ${recipe.servings}
 Time: ${recipe.timeMinutes} mins
 
 Ingredients:
-${recipe.ingredients.map(i => `- ${i.amount} ${i.item}`).join('\n')}
+${(recipe.ingredients ?? []).map(i => `- ${i.amount} ${i.item}`).join('\n')}
 
 Steps:
-${recipe.steps.map((s, i) => `${i + 1}. ${s}`).join('\n')}
+${(recipe.steps ?? []).map((s, i) => `${i + 1}. ${s}`).join('\n')}
     `;
     navigator.clipboard.writeText(text);
     alert('Recipe copied to clipboard!');
@@ -93,14 +95,17 @@ ${recipe.steps.map((s, i) => `${i + 1}. ${s}`).join('\n')}
       <div className="flex flex-col items-center gap-2 print:hidden">
         <span className="text-xs text-slate-400 font-bold italic uppercase tracking-tighter">Ready to Cook?</span>
         <div className="flex flex-wrap justify-center gap-3">
-          <a 
-            href={AFFILIATE_LINKS.ORDER_INGREDIENTS} 
-            target="_blank" 
+          <a
+            href={AFFILIATE_LINKS.AMAZON_FRESH}
+            target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackClick('Order Ingredients')}
-            className="bg-blue-600 text-white text-sm font-bold py-3 px-8 rounded-2xl flex items-center gap-2 hover:bg-blue-700 shadow-lg shadow-blue-100 transition-all transform hover:-translate-y-0.5"
+            onClick={() => (window as any).gtag?.('event', 'affiliate_click', {
+              event_category: 'amazon_storefront',
+              event_label: 'amazon_fresh_top',
+            })}
+            className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-bold py-3 px-8 rounded-2xl flex items-center gap-2 shadow-lg shadow-orange-100 transition-all transform hover:-translate-y-0.5"
           >
-            🛒 Order Ingredients
+            🛒 Get Ingredients on Amazon Fresh
           </a>
         </div>
       </div>
@@ -112,7 +117,7 @@ ${recipe.steps.map((s, i) => `${i + 1}. ${s}`).join('\n')}
               <span className="text-xl">🥗</span> Ingredients
             </h3>
             <ul className="space-y-3">
-              {recipe.ingredients.map((ing, i) => (
+              {(recipe.ingredients ?? []).map((ing, i) => (
                 <li key={i} className="flex justify-between items-start gap-4 border-b border-slate-50 pb-2 last:border-0">
                   <span className="text-slate-800 text-sm font-medium">{ing.item}</span>
                   <span className="text-orange-600 text-xs font-black shrink-0">{ing.amount}</span>
@@ -153,7 +158,7 @@ ${recipe.steps.map((s, i) => `${i + 1}. ${s}`).join('\n')}
               <span className="text-2xl">👨‍🍳</span> Preparation Steps
             </h3>
             <div className="space-y-8">
-              {recipe.steps.map((step, i) => (
+              {(recipe.steps ?? []).map((step, i) => (
                 <div key={i} className="flex gap-4">
                   <span className="shrink-0 w-8 h-8 rounded-full bg-orange-600 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-orange-100">
                     {i + 1}
@@ -170,7 +175,7 @@ ${recipe.steps.map((s, i) => `${i + 1}. ${s}`).join('\n')}
                 <span>🔄</span> Clever Substitutions
               </h4>
               <ul className="space-y-2">
-                {recipe.substitutions.map((s, i) => <li key={i} className="text-xs text-blue-700 font-medium">• {s}</li>)}
+                {(recipe.substitutions ?? []).map((s, i) => <li key={i} className="text-xs text-blue-700 font-medium">• {s}</li>)}
               </ul>
             </div>
             <div className="bg-purple-50 p-6 rounded-3xl border border-purple-100">
@@ -178,7 +183,7 @@ ${recipe.steps.map((s, i) => `${i + 1}. ${s}`).join('\n')}
                 <span>🍱</span> Leftover Storage
               </h4>
               <ul className="space-y-2">
-                {recipe.leftovers.map((l, i) => <li key={i} className="text-xs text-purple-700 font-medium">• {l}</li>)}
+                {(recipe.leftovers ?? []).map((l, i) => <li key={i} className="text-xs text-purple-700 font-medium">• {l}</li>)}
               </ul>
             </div>
           </div>
@@ -189,71 +194,97 @@ ${recipe.steps.map((s, i) => `${i + 1}. ${s}`).join('\n')}
         <h2 className="text-2xl font-bold flex items-center gap-2">
           <span className="text-3xl">🚀</span> Next Steps
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <button 
+        <div className="grid grid-cols-2 gap-4">
+          <button
             onClick={() => { handlePrint(); trackClick('Print Recipe'); }}
-            className="flex items-center gap-3 p-4 bg-white/10 hover:bg-white/20 rounded-2xl transition-all text-left"
+            className="flex items-center gap-2 p-3 bg-white/10 hover:bg-white/20 rounded-2xl transition-all text-left"
           >
-            <span className="text-2xl">🖨️</span>
+            <span className="text-xl">🖨️</span>
             <div>
-              <p className="font-bold">Print Recipe</p>
-              <p className="text-xs text-slate-400">Keep a paper copy in the kitchen</p>
+              <p className="text-sm font-semibold">Print Recipe</p>
+              <p className="text-[10px] text-slate-400">Keep a paper copy</p>
             </div>
           </button>
-          <button 
+          <button
             onClick={() => { setShowGroceryList(true); trackClick('Generate Grocery List'); }}
-            className="flex items-center gap-3 p-4 bg-white/10 hover:bg-white/20 rounded-2xl transition-all text-left"
+            className="flex items-center gap-2 p-3 bg-white/10 hover:bg-white/20 rounded-2xl transition-all text-left"
           >
-            <span className="text-2xl">📝</span>
+            <span className="text-xl">📝</span>
             <div>
-              <p className="font-bold">Generate Grocery List</p>
-              <p className="text-xs text-slate-400">Extract ingredients for shopping</p>
+              <p className="text-sm font-semibold">Grocery List</p>
+              <p className="text-[10px] text-slate-400">Extract for shopping</p>
             </div>
           </button>
-          <a 
-            href={AFFILIATE_LINKS.ORDER_INGREDIENTS}
+          <a
+            href={AFFILIATE_LINKS.AMAZON_FRESH}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackClick('Order Ingredients on Amazon')}
-            className="flex items-center gap-3 p-4 bg-white/10 hover:bg-white/20 rounded-2xl transition-all text-left"
+            onClick={() => (window as any).gtag?.('event', 'affiliate_click', {
+              event_category: 'amazon_storefront',
+              event_label: 'amazon_fresh',
+            })}
+            className="col-span-2 flex items-center gap-4 p-5 bg-orange-500 hover:bg-orange-600 rounded-2xl transition-all text-left shadow-lg shadow-orange-900/30"
           >
-            <span className="text-2xl">📦</span>
+            <span className="text-3xl">🛒</span>
             <div>
-              <p className="font-bold">Order on Amazon</p>
-              <p className="text-xs text-slate-400">Get ingredients delivered</p>
+              <p className="text-base font-black">Order on Amazon</p>
+              <p className="text-sm text-orange-100">Get fresh ingredients delivered</p>
             </div>
+            <span className="ml-auto text-orange-200 text-lg font-bold">→</span>
           </a>
-          <a 
+          <a
             href={AFFILIATE_LINKS.PANTRY_ITEMS}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => trackClick('Stock Your Pantry')}
-            className="flex items-center gap-3 p-4 bg-white/10 hover:bg-white/20 rounded-2xl transition-all text-left"
+            onClick={() => (window as any).gtag?.('event', 'affiliate_click', {
+              event_category: 'amazon_storefront',
+              event_label: 'amazon_staples',
+            })}
+            className="col-span-2 flex items-center gap-4 p-5 bg-orange-500 hover:bg-orange-600 rounded-2xl transition-all text-left shadow-lg shadow-orange-900/30"
           >
-            <span className="text-2xl">🥫</span>
+            <span className="text-3xl">🥫</span>
             <div>
-              <p className="font-bold">Stock Your Pantry</p>
-              <p className="text-xs text-slate-400">Essential staples & ingredients</p>
+              <p className="text-base font-black">Stock Your Pantry</p>
+              <p className="text-sm text-orange-100">Essential staples & ingredients</p>
             </div>
+            <span className="ml-auto text-orange-200 text-lg font-bold">→</span>
           </a>
-          <div className="col-span-full pt-4 border-t border-white/10">
-            <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">Recommended Kitchen Tools</p>
-            <div className="flex flex-wrap gap-2">
-              {Object.entries(KITCHEN_TOOL_LINKS).map(([name, link]) => (
-                <a 
-                  key={name}
-                  href={link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => trackClick(`Tool: ${name}`)}
-                  className="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-[10px] font-bold transition-all"
-                >
-                  {name}
-                </a>
-              ))}
-            </div>
-          </div>
         </div>
+      </div>
+
+      {/* Recommended Kitchen Tools Section */}
+      <div className="space-y-6 print:hidden">
+        <div>
+          <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Recommended Kitchen Tools</p>
+          <p className="text-sm text-slate-500">Tested and recommended by America's Test Kitchen (ATK) and Consumer Reports (CR)</p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {KITCHEN_TOOLS_CATALOG.map((tool: KitchenTool) => (
+            <div
+              key={tool.eventLabel}
+              className="flex flex-col gap-3 p-4 bg-orange-50 rounded-3xl border-2 border-orange-200 hover:border-orange-300 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+            >
+              <span className="font-bold text-slate-900 text-xs leading-snug">{tool.name}</span>
+              <ReviewerBadge reviewer={tool.reviewer} />
+              <a
+                href={tool.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-auto w-full text-center bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white font-bold text-xs py-2.5 px-3 rounded-2xl transition-colors duration-200 shadow-sm hover:shadow-md"
+                onClick={() => (window as any).gtag?.('event', 'affiliate_click', {
+                  event_category: 'amazon_tool',
+                  event_label: tool.eventLabel,
+                })}
+              >
+                Buy on Amazon →
+              </a>
+            </div>
+          ))}
+        </div>
+        <p className="text-[10px] text-slate-400 font-medium uppercase tracking-widest leading-relaxed text-center">
+          Disclosure: PantryPivot participates in the Amazon Associates Program.
+          As an Amazon Associate, we may earn from qualifying purchases at no additional cost to you.
+        </p>
       </div>
 
       {/* Grocery List Modal */}
@@ -268,7 +299,7 @@ ${recipe.steps.map((s, i) => `${i + 1}. ${s}`).join('\n')}
             <div className="space-y-4">
               <p className="text-sm text-slate-500 font-medium">Ingredients for {recipe.name}:</p>
               <ul className="space-y-2 border-y border-slate-100 py-4">
-                {recipe.ingredients.map((ing, i) => (
+                {(recipe.ingredients ?? []).map((ing, i) => (
                   <li key={i} className="flex items-center gap-3 text-sm font-semibold text-slate-700">
                     <span className="w-5 h-5 border-2 border-slate-200 rounded flex-shrink-0" />
                     <span>{ing.amount} {ing.item}</span>

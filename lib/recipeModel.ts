@@ -1,4 +1,8 @@
 import type { WizardState } from "../types";
+// AFFILIATE_CATALOG is imported here for type reference; the actual catalog is
+// injected server-side into the Gemini system prompt inside buildRecipePrompt.
+import { AFFILIATE_CATALOG } from "../affiliateCatalog";
+export { AFFILIATE_CATALOG };
 
 type AnyResp = any;
 
