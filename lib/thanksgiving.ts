@@ -18,6 +18,7 @@ export type Dish = {
   minutes: number;
   meat?: boolean;
   cold?: boolean;
+  wholeBird?: boolean;
 };
 type Course = 'Main' | 'Alternate main' | 'Vegetable' | 'Side' | 'Dessert';
 export type Slot = { course: Course; people: number; audience: string; options: Dish[] };
@@ -294,6 +295,7 @@ function candidates(index: number) {
   };
 }
 export const ingredients = [
+  'whole turkey',
   ...new Set(
     cuisines.flatMap((_, i) =>
       Object.values(candidates(i))
@@ -302,15 +304,68 @@ export const ingredients = [
     ),
   ),
 ].sort();
-export const dishNames = [
-  ...new Set(
-    cuisines.flatMap((_, i) =>
-      Object.values(candidates(i))
-        .flat()
-        .map((d) => d.name),
-    ),
-  ),
-].sort();
+function wholeTurkey(servings: number): Dish {
+  const pounds = Math.max(8, Math.ceil(servings * 1.25));
+  const minutes = pounds <= 12 ? 215 : pounds <= 14 ? 260 : 285;
+  return recipe('Sage-roasted whole turkey', {
+    'whole turkey': pounds * 453.59237 / servings,
+    'olive oil': 2.5 * pounds / servings,
+    sage: 0.15 * pounds / servings,
+  }, 'Oven', minutes, [
+    'Start with a fully thawed, unstuffed bird. Heat the oven to 325°F. Remove the neck and giblets, pat the turkey dry and set it breast-side up on a rack in a roasting pan.',
+    'Mix the olive oil and rubbed sage. Rub over the skin and tuck the wing tips underneath. Roast uncovered, tenting the breast loosely with foil if the skin browns early.',
+    'Begin checking after 2½ hours. Roast until a thermometer reads at least 165°F in the thickest breast and innermost thigh and wing, away from bone.',
+    'Rest for 20 minutes before carving. Remove the legs first, then slice the breast across the grain.',
+  ], 'Roast one ' + pounds + '-pound bird for the table. Smaller groups will have extra meat for leftovers.', { meat: true, wholeBird: true });
+}
+
+function requestName(text: string) {
+  return text.toLowerCase().replace(/[-–]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+const commonNames: Record<string, string> = {
+  'roast turkey': 'whole turkey', 'roasted turkey': 'whole turkey',
+  'sage roasted whole turkey': 'whole turkey', 'whole roast turkey': 'whole turkey', 'whole roasted turkey': 'whole turkey',
+  'roast whole turkey': 'whole turkey', 'roasted whole turkey': 'whole turkey',
+  'mashed potatoes': 'fluffy olive oil potato mash', 'potato mash': 'fluffy olive oil potato mash',
+  'sweet potatoes': 'sweet potato', 'potato': 'potatoes', 'carrot': 'carrots',
+  'cranberry': 'cranberries', 'apples': 'apple', 'pears': 'pear',
+};
+
+function menuRequests(input: string) {
+  return [...new Set(input.split(/[,;]/).map(requestName).filter(Boolean).map(name => commonNames[name] ?? name))];
+}
+
+function matchesRequest(dish: Dish, name: string) {
+  const foods = Object.keys(dish.food);
+  if (ingredients.includes(name)) return foods.includes(name);
+  const names = [dish.name, ...foods].map(requestName);
+  return names.some(text => (' ' + text + ' ').includes(' ' + name + ' '));
+}
+
+function applyRequests(slots: Slot[], requests: string[]): Slot[] {
+  if (!requests.length) return slots;
+  const unsupported = requests.filter(name => !slots.some(s => s.options.some(d => matchesRequest(d, name))));
+  if (unsupported.length) throw Error('No compatible recipe for “' + unsupported.join('”, “') +
+    '” in this collection with your current settings. Edit those must-haves or review your preferences.');
+
+  // Pick a feasible combination first, then keep all swaps that preserve
+  // each requested item in its assigned course.
+  function choose(index: number, remaining: string[]): Slot[] | undefined {
+    if (!remaining.length) return slots.slice(index);
+    if (index === slots.length) return undefined;
+    const slot = slots[index];
+    for (const dish of slot.options) {
+      const covered = remaining.filter(name => matchesRequest(dish, name));
+      const rest = choose(index + 1, remaining.filter(name => !covered.includes(name)));
+      if (rest) return [{...slot, options: slot.options.filter(d => covered.every(name => matchesRequest(d, name)))}, ...rest];
+    }
+  }
+  const result = choose(0, requests);
+  if (!result) throw Error('These must-haves cannot all fit the same menu: ' + requests.join(', ') + '. Remove or change one and try again.');
+  return result;
+}
+
 export function makeSlots(r: Request): Slot[] {
   if (
     !Number.isInteger(r.guests) ||
@@ -332,6 +387,10 @@ export function makeSlots(r: Request): Slot[] {
   const main = candidates(r.cuisine);
   const shared = candidates(r.subtle ? 0 : r.cuisine);
   const alternate = !plantMain && r.mixed > 0 && plant(r.other);
+  const requests = menuRequests(r.must);
+  if (requests.includes('whole turkey')) {
+    main.main.push(wholeTurkey(alternate ? r.guests - r.mixed : r.guests));
+  }
   function slot(course: Course, options: Dish[], people = r.guests, audience = 'Everyone'): Slot {
     let result = options.filter(
       (d) =>
@@ -368,14 +427,7 @@ export function makeSlots(r: Request): Slot[] {
     slot('Side', shared.side),
     slot('Dessert', shared.dessert),
   );
-  if (r.must) {
-    const matches = (d: Dish) => r.must === d.name || Object.keys(d.food).includes(r.must);
-    const target = slots.find((s) => s.options.some(matches));
-    if (!target)
-      throw Error('The requested ingredient cannot fit this menu. Change the cuisine or must-have.');
-    target.options = target.options.filter(matches);
-  }
-  return slots;
+  return applyRequests(slots, requests);
 }
 export function shopping(slots: Slot[], choices: number[], pantry: Food) {
   const totals: Food = {};
@@ -405,14 +457,15 @@ export function schedule(slots: Slot[], choices: number[], burners: number, oven
     const lane = lanes[d.tool];
     const j = lane.indexOf(Math.min(...lane));
     const end = lane[j] + 5;
-    lane[j] = end + d.minutes * Math.ceil(s.people / (d.tool === 'Oven' ? 6 * Math.max(1, oven) : 6));
+    const batches = d.wholeBird ? 1 : Math.ceil(s.people / (d.tool === 'Oven' ? 6 * Math.max(1, oven) : 6));
+    lane[j] = end + d.minutes * batches;
     day.push(
       lane[j] +
         ' minutes before serving · ' +
         d.name +
         ' (' +
         d.tool.toLowerCase() +
-        '). Allow extra time for batches; hold hot until serving.',
+        (d.wholeBird ? '). Allow time to roast and rest the whole bird before carving.' : '). Allow extra time for batches; hold hot until serving.'),
     );
   });
   return [
