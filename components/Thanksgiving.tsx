@@ -84,7 +84,7 @@ export default function Thanksgiving() {
   const [allergens, setAllergens] = useState<string[]>([]),
     [custom, setCustom] = useState(''),
     [pantry, setPantry] = useState<Food>({}),
-    [stock, setStock] = useState(ingredients[0]);
+    [stock, setStock] = useState('');
   const [menu, setMenu] = useState<Menu | null>(null),
     [notice, msg] = useState(''),
     [busy, wait] = useState(false),
@@ -128,46 +128,44 @@ export default function Thanksgiving() {
     running.current = true;
     wait(true);
     msg('');
-    setSaved('');
     try {
       const slots = makeSlots(normalized);
       let choices = slots.map(() => 0);
+      let personalized = false;
       if (ai) {
-        const res = await fetch('/api/thanksgiving', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          signal: AbortSignal.timeout(65000),
-          body: JSON.stringify({
-            courses: slots.map((s) => JSON.stringify(s.options.map((o) => o.name))),
-            influence: custom || cuisines[r.cuisine],
-            effort: r.effort,
-          }),
-        });
-        if (!res.ok)
-          throw Error(
-            'AI menu selection is unavailable. Choose “Build starter menu” for a meal from the PantryPivot collection.',
-          );
-        const data = await res.json();
-        if (
-          !Array.isArray(data.choices) ||
-          data.choices.length !== slots.length ||
-          !data.choices.every((v: number, i: number) => Number.isInteger(v) && slots[i].options[v])
-        )
-          throw Error('The menu response was incomplete. Try the starter menu.');
-        choices = data.choices;
+        let failure = 'AI personalization is unavailable right now.';
+        try {
+          const res = await fetch('/api/thanksgiving', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            signal: AbortSignal.timeout(65000),
+            body: JSON.stringify({
+              courses: slots.map(s => JSON.stringify(s.options.map(o => o.name))),
+              influence: custom || cuisines[r.cuisine],
+              effort: r.effort,
+            }),
+          });
+          if (res.status === 429) failure = 'The AI service is busy. You can retry in a moment.';
+          if (!res.ok) throw Error('Unavailable');
+          const data = await res.json();
+          if (!Array.isArray(data?.choices) || data.choices.length !== slots.length ||
+              !data.choices.every((v: number, i: number) => Number.isInteger(v) && slots[i].options[v]))
+            throw Error('Incomplete selection');
+          choices = data.choices;
+          personalized = true;
+        } catch {
+          msg(failure + (menu ? ' Your current menu is still below.' : ' A curated starter menu is shown below.'));
+          if (menu) return;
+        }
       }
+      setSaved('');
       setMenu({
-        slots,
-        choices,
-        source: ai ? 'AI-selected menu from the PantryPivot collection' : 'Curated starter menu',
+        slots, choices,
+        source: personalized ? 'AI-selected menu from the PantryPivot collection' : 'Curated starter menu',
       });
-      track('thanksgiving_menu_generated', { source: ai ? 'ai' : 'curated' });
+      track('thanksgiving_menu_generated', { source: personalized ? 'ai' : 'curated' });
     } catch (e) {
-      msg(
-        e instanceof TypeError || e instanceof DOMException
-          ? 'Couldn’t reach the service. Try the starter menu.'
-          : (e as Error).message,
-      );
+      msg((e as Error).message);
     } finally {
       running.current = false;
       wait(false);
@@ -407,23 +405,38 @@ export default function Thanksgiving() {
               <label>
                 Ingredient already on hand
                 <select value={stock} onChange={(e) => setStock(e.target.value)}>
+                  <option value="">Select an ingredient (optional)</option>
                   {ingredients.map((x) => (
                     <option key={x}>{x}</option>
                   ))}
                 </select>
               </label>
-              <label>
+              {stock && <label>
                 Amount on hand ({measureFor(stock).unit}) · {foodLabel(stock)}
                 <input
                   type="number"
                   min="0"
                   step="any"
                   value={pantry[stock] ? +(pantry[stock] / measureFor(stock).grams).toFixed(6) : ''}
-                  onChange={(e) =>
-                    setPantry({ ...pantry, [stock]: Math.max(0, +e.target.value) * measureFor(stock).grams })
-                  }
+                  onChange={(e) => {
+                    setPantry({ ...pantry, [stock]: Math.max(0, +e.target.value) * measureFor(stock).grams });
+                    setSaved('');
+                  }}
                 />
-              </label>
+              </label>}
+              {Object.entries(pantry).some(([, grams]) => grams > 0) && <ul aria-label="Ingredients on hand">
+                {Object.entries(pantry).filter(([, grams]) => grams > 0).map(([name, grams]) => (
+                  <li key={name}>{usAmount(name, grams)} {foodLabel(name)}{' '}
+                    <button type="button" aria-label={'Remove ' + name} onClick={() => {
+                      const next = { ...pantry };
+                      delete next[name];
+                      setPantry(next);
+                      setSaved('');
+                      if (stock === name) setStock('');
+                    }}>Remove</button>
+                  </li>
+                ))}
+              </ul>}
               <p>Tools I already own</p>
               {chips(['Food thermometer', 'Sheet pan', 'Masher'], owned, own)}
             </details>
@@ -433,7 +446,7 @@ export default function Thanksgiving() {
                 disabled={busy || menu?.source.startsWith('Curated')}
                 onClick={() => build(false)}
               >
-                Build starter menu
+                {menu?.source.startsWith('Curated') ? 'Starter menu shown below' : 'Build starter menu'}
               </button>
               <button disabled={busy || menu?.source.startsWith('AI')} onClick={() => build(true)}>
                 {busy ? 'Selecting dishes…' : 'Personalize with AI'}
