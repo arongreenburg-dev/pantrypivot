@@ -123,3 +123,18 @@ test('invalid requests and model payloads fail validation', () => {
   assert.ok(!validInput({ ingredientPhoto: 'url' }));
   assert.ok(!validRecipes({ selectedRecipe: { name: 'Dinner' }, recipeCards: [] }));
 });
+
+test('six-guest starter card uses practical US kitchen measures and dish-specific directions', async () => {
+  const { usAmount, measureFor } = await vite.ssrLoadModule('/lib/kitchenMeasures.ts');
+  const slots = makeSlots({ ...base, guests: 6 });
+  const turkey = slots[0].options[0];
+  assert.equal(usAmount('turkey cutlets', turkey.food['turkey cutlets'] * 6), '2 ¼ lb');
+  assert.equal(usAmount('cranberries', turkey.food.cranberries * 6), '¾ cup');
+  assert.equal(usAmount('olive oil', turkey.food['olive oil'] * 6), '2 tbsp');
+  assert.equal(usAmount('sage', turkey.food.sage * 6), '1 tsp');
+  assert.match(turkey.steps.join(' '), /cranberries/);
+  assert.doesNotMatch(turkey.steps.join(' '), /ginger/);
+  const pantry = { 'turkey cutlets': measureFor('turkey cutlets').grams };
+  const left = shopping(slots, slots.map(() => 0), pantry).find(x => x.name === 'turkey cutlets');
+  assert.equal(usAmount(left.name,left.grams), '1 ¼ lb');
+});
