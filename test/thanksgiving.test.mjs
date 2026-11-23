@@ -138,3 +138,20 @@ test('six-guest starter card uses practical US kitchen measures and dish-specifi
   const left = shopping(slots, slots.map(() => 0), pantry).find(x => x.name === 'turkey cutlets');
   assert.equal(usAmount(left.name,left.grams), '1 ¼ lb');
 });
+
+test('mixed delimiters, duplicate names and aliases preserve all must-haves across swaps', () => {
+  const slots = makeSlots({...base, cuisine:4, diet:['Kosher'], must:' WHOLE turkey ; mashed potatoes, Cranberries; whole roast turkey, '});
+  assert.ok(slots[0].options.every(d=>d.wholeBird));
+  assert.ok(slots.find(s=>s.course==='Side').options.every(d=>/potato mash/i.test(d.name)));
+  assert.ok(slots.some(s=>s.options.every(d=>'cranberries' in d.food)));
+  const choices = slots.map(()=>0);
+  assert.ok(shopping(slots,choices,{}).some(x=>x.name==='whole turkey' && Math.abs(x.grams/453.59237-10)<0.001));
+  assert.match(schedule(slots,choices,1,1).join(' '), /220 minutes before serving · Sage-roasted whole turkey/);
+});
+test('whole turkey respects diets, ingredient exclusions and oven availability', () => {
+  for(const prefs of [{diet:['Vegan']},{oven:0},{diet:['Kosher'],kosher:'Dairy'},{exclude:['whole turkey']}])
+    assert.throws(()=>makeSlots({...base,...prefs,must:'whole turkey'}),/No compatible recipe for “whole turkey”/);
+  assert.throws(()=>makeSlots({...base,must:'whole turkey, pecan pie'}),/pecan pie/);
+  assert.throws(()=>makeSlots({...base,must:'whole turkey; turkey cutlets'}),/cannot all fit/);
+  assert.deepEqual(makeSlots({...base,must:' , ; '}),makeSlots(base));
+});

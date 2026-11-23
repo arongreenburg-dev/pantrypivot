@@ -51,7 +51,7 @@ export default function Leftovers({
     if (plantOnly && amount.Turkey)
       throw Error('Remove turkey for the selected plant-based or kosher meal direction.');
     const aliases: Record<string, string[]> = {
-      Turkey: ['turkey cutlets'],
+      Turkey: ['turkey cutlets', 'whole turkey'],
       'Cooked beans': [
         'cooked white beans',
         'cooked chickpeas',

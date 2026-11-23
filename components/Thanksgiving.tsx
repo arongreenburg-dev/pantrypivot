@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import {
   cuisines,
   diets,
-  dishNames,
   ingredients,
   makeSlots,
   schedule,
@@ -91,8 +90,7 @@ export default function Thanksgiving() {
     [busy, wait] = useState(false),
     [owned, own] = useState<string[]>([]);
   const [saved, setSaved] = useState(''),
-    [serving, serve] = useState(''),
-    [excludeFood, chooseExclude] = useState(ingredients[0]);
+    [serving, serve] = useState('');
   const [savedMenu, setSavedMenu] = useState(() => {
     try {
       return localStorage.getItem('thanksgiving-saved-menu') || '';
@@ -213,15 +211,16 @@ export default function Thanksgiving() {
         })}
         <label>
           Exclude an ingredient
-          <select value={excludeFood} onChange={(e) => chooseExclude(e.target.value)}>
-            {[...ingredients, 'rice', 'green beans', 'lettuce', 'squash'].map((x) => (
+          <select value="" onChange={(e) => {
+            if (e.target.value) field('exclude', [...r.exclude, e.target.value]);
+          }}>
+            <option value="">{r.exclude.length ? 'Add another ingredient (optional)' : 'None selected (optional)'}</option>
+            {[...ingredients, 'rice', 'green beans', 'lettuce', 'squash'].filter(x => !r.exclude.includes(x)).map((x) => (
               <option key={x}>{x}</option>
             ))}
           </select>
         </label>
-        <button onClick={() => field('exclude', [...new Set([...r.exclude, excludeFood])])}>
-          Exclude ingredient
-        </button>
+        {r.exclude.length > 0 && <button onClick={() => field('exclude', [])}>Clear ingredient exclusions</button>}
         {r.exclude.map((x) => (
           <button
             key={x}
@@ -375,18 +374,11 @@ export default function Thanksgiving() {
                 />
               </label>
               <label>
-                Must-have dish or ingredient
-                <select value={r.must} onChange={(e) => field('must', e.target.value)}>
-                  <option value="">Flexible</option>
-                  <optgroup label="Dishes">
-                    {dishNames.map((x) => (
-                      <option key={x}>{x}</option>
-                    ))}
-                  </optgroup>
-                  {ingredients.map((x) => (
-                    <option key={x}>{x}</option>
-                  ))}
-                </select>
+                Must-have dishes or ingredients (optional)
+                <input type="text" maxLength={240} value={r.must}
+                  placeholder="e.g. whole turkey, mashed potatoes"
+                  aria-describedby="must-have-help" onChange={(e) => field('must', e.target.value)} />
+                <small id="must-have-help">Separate items with commas or semicolons. Leave blank for a flexible menu.</small>
               </label>
               <div className="season-grid">
                 <label>
@@ -480,7 +472,7 @@ export default function Thanksgiving() {
                 </small>
                 <h3>{d.name}</h3>
                 <p>{d.description}</p>
-                <p className="recipe-meta">{d.tool === "Burner" ? "Stovetop" : d.tool === "Bowl" ? "No cooking" : "Oven"} · About {d.minutes} minutes per batch</p>
+                <p className="recipe-meta">{d.tool === "Burner" ? "Stovetop" : d.tool === "Bowl" ? "No cooking" : "Oven"} · About {d.minutes} minutes{d.wholeBird ? " including resting" : " per batch"}</p>
                 <SeasonalRecipeBody ingredients={Object.entries(d.food).map(([name, grams]) => ({
                   item: foodLabel(name), amount: usAmount(name, grams * s.people),
                 }))} steps={d.steps} />

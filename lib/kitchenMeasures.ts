@@ -6,7 +6,7 @@ const pound: Measure = { unit: 'lb', grams: 16 * ounce };
 const cup = (grams: number, label?: string): Measure => ({ unit: 'cup', grams, label });
 const spoon = (grams: number, label?: string): Measure => ({ unit: 'tsp', grams, label });
 const measures: Record<string, Measure> = {
-  'turkey cutlets': pound, potatoes: pound, 'sweet potato': pound, carrots: pound, cabbage: pound,
+  'whole turkey': pound, 'turkey cutlets': pound, potatoes: pound, 'sweet potato': pound, carrots: pound, cabbage: pound,
   apple: pound, pear: pound, orange: pound, pineapple: pound, mango: pound, peach: pound,
   cucumber: pound, onion: pound, 'sweet pepper': pound,
   'olive oil': { unit: 'tbsp', grams: 13.5 }, 'maple syrup': { unit: 'tbsp', grams: 20 },
