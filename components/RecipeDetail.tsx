@@ -1,9 +1,8 @@
 
 import React, { useState } from 'react';
 import { DetailedRecipe } from '../types';
-import { AFFILIATE_LINKS } from '../constants';
-import { KITCHEN_TOOLS_CATALOG, KitchenTool } from '../affiliateCatalog';
-import ReviewerBadge from './ReviewerBadge';
+import { KITCHEN_TOOLS_CATALOG } from '../affiliateCatalog';
+import { AmazonLink } from './HolidayPicks';
 
 interface RecipeDetailProps {
   recipe: DetailedRecipe;
@@ -95,18 +94,7 @@ ${(recipe.steps ?? []).map((s, i) => `${i + 1}. ${s}`).join('\n')}
       <div className="flex flex-col items-center gap-2 print:hidden">
         <span className="text-xs text-slate-400 font-bold italic uppercase tracking-tighter">Ready to Cook?</span>
         <div className="flex flex-wrap justify-center gap-3">
-          <a
-            href={AFFILIATE_LINKS.AMAZON_FRESH}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => (window as any).gtag?.('event', 'affiliate_click', {
-              event_category: 'amazon_storefront',
-              event_label: 'amazon_fresh_top',
-            })}
-            className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-bold py-3 px-8 rounded-2xl flex items-center gap-2 shadow-lg shadow-orange-100 transition-all transform hover:-translate-y-0.5"
-          >
-            🛒 Get Ingredients on Amazon Fresh
-          </a>
+          <AmazonLink id="amazon_same_day_delivery" eventLabel="amazon_fresh_top" placement="recipe_detail" className="bg-orange-500 hover:bg-orange-600 text-white text-sm font-bold py-3 px-8 rounded-2xl flex items-center gap-2 shadow-lg shadow-orange-100 transition-all transform hover:-translate-y-0.5" />
         </div>
       </div>
 
@@ -215,40 +203,8 @@ ${(recipe.steps ?? []).map((s, i) => `${i + 1}. ${s}`).join('\n')}
               <p className="text-[10px] text-slate-400">Extract for shopping</p>
             </div>
           </button>
-          <a
-            href={AFFILIATE_LINKS.AMAZON_FRESH}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => (window as any).gtag?.('event', 'affiliate_click', {
-              event_category: 'amazon_storefront',
-              event_label: 'amazon_fresh',
-            })}
-            className="col-span-2 flex items-center gap-4 p-5 bg-orange-500 hover:bg-orange-600 rounded-2xl transition-all text-left shadow-lg shadow-orange-900/30"
-          >
-            <span className="text-3xl">🛒</span>
-            <div>
-              <p className="text-base font-black">Order on Amazon</p>
-              <p className="text-sm text-orange-100">Get fresh ingredients delivered</p>
-            </div>
-            <span className="ml-auto text-orange-200 text-lg font-bold">→</span>
-          </a>
-          <a
-            href={AFFILIATE_LINKS.PANTRY_ITEMS}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => (window as any).gtag?.('event', 'affiliate_click', {
-              event_category: 'amazon_storefront',
-              event_label: 'amazon_staples',
-            })}
-            className="col-span-2 flex items-center gap-4 p-5 bg-orange-500 hover:bg-orange-600 rounded-2xl transition-all text-left shadow-lg shadow-orange-900/30"
-          >
-            <span className="text-3xl">🥫</span>
-            <div>
-              <p className="text-base font-black">Stock Your Pantry</p>
-              <p className="text-sm text-orange-100">Essential staples & ingredients</p>
-            </div>
-            <span className="ml-auto text-orange-200 text-lg font-bold">→</span>
-          </a>
+          <AmazonLink id="amazon_same_day_delivery" eventLabel="amazon_fresh" placement="recipe_detail" className="col-span-2 flex items-center gap-4 p-5 bg-orange-500 hover:bg-orange-600 rounded-2xl transition-all text-left shadow-lg shadow-orange-900/30" />
+          <AmazonLink id="amazon_staples" eventLabel="amazon_staples" placement="recipe_detail" className="col-span-2 flex items-center gap-4 p-5 bg-orange-500 hover:bg-orange-600 rounded-2xl transition-all text-left shadow-lg shadow-orange-900/30" />
         </div>
       </div>
 
@@ -256,34 +212,23 @@ ${(recipe.steps ?? []).map((s, i) => `${i + 1}. ${s}`).join('\n')}
       <div className="space-y-6 print:hidden">
         <div>
           <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Recommended Kitchen Tools</p>
-          <p className="text-sm text-slate-500">Tested and recommended by America's Test Kitchen (ATK) and Consumer Reports (CR)</p>
+          <p className="text-sm text-slate-500">As an Amazon Associate I earn from qualifying purchases.</p>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {KITCHEN_TOOLS_CATALOG.map((tool: KitchenTool) => (
+          {KITCHEN_TOOLS_CATALOG.map((tool) => (
             <div
               key={tool.eventLabel}
               className="flex flex-col gap-3 p-4 bg-orange-50 rounded-3xl border-2 border-orange-200 hover:border-orange-300 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
             >
               <span className="font-bold text-slate-900 text-xs leading-snug">{tool.name}</span>
-              <ReviewerBadge reviewer={tool.reviewer} />
-              <a
-                href={tool.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-auto w-full text-center bg-orange-500 hover:bg-orange-600 active:bg-orange-700 text-white font-bold text-xs py-2.5 px-3 rounded-2xl transition-colors duration-200 shadow-sm hover:shadow-md"
-                onClick={() => (window as any).gtag?.('event', 'affiliate_click', {
-                  event_category: 'amazon_tool',
-                  event_label: tool.eventLabel,
-                })}
-              >
-                Buy on Amazon →
-              </a>
+
+              <AmazonLink id={tool.eventLabel} compact />
             </div>
           ))}
         </div>
         <p className="text-[10px] text-slate-400 font-medium uppercase tracking-widest leading-relaxed text-center">
           Disclosure: PantryPivot participates in the Amazon Associates Program.
-          As an Amazon Associate, we may earn from qualifying purchases at no additional cost to you.
+          As an Amazon Associate I earn from qualifying purchases.
         </p>
       </div>
 
@@ -315,15 +260,7 @@ ${(recipe.steps ?? []).map((s, i) => `${i + 1}. ${s}`).join('\n')}
               >
                 Print Grocery List
               </button>
-              <a 
-                href={AFFILIATE_LINKS.AMAZON_FRESH}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackClick('Order on Amazon Fresh')}
-                className="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold text-center hover:bg-blue-700 transition-all"
-              >
-                Order on Amazon Fresh
-              </a>
+              <AmazonLink id="amazon_same_day_delivery" eventLabel="amazon_fresh_list" placement="recipe_detail" className="w-full py-4 bg-blue-600 text-white rounded-2xl font-bold text-center hover:bg-blue-700 transition-all" />
             </div>
           </div>
         </div>

@@ -1,4 +1,6 @@
 import 'dotenv/config';
+import { readFile } from 'node:fs/promises';
+import { validInput, validRecipes, validIdeas } from './lib/apiValidation.js';
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -9,7 +11,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const PORT = process.env.PORT || 8080;
 
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json({ limit: '6mb' }));
 app.use(express.static(path.join(__dirname, 'dist')));
 
 function buildRecipePrompt(input) {
@@ -37,19 +39,27 @@ function buildRecipePrompt(input) {
     `Religious/Dietary Notes: ${input.customReligious || 'None'}`,
     `Avoid: ${input.avoidList?.join(', ') || 'None'}`,
     `Kosher: ${input.isKosher ? `Yes (${input.kosherType?.join(', ') || 'General'})` : 'No'}`,
-    input.kosherForPassover ? 'This recipe must be strictly Kosher for Passover. No chametz (no wheat, barley, oats, rye, spelt in any leavened form). No kitniyot (no rice, corn, beans, lentils, peas, sesame, mustard, peanuts). Use only Passover-compliant ingredients and substitutions such as matzo meal, potato starch, and almond flour. Label the recipe as Kosher for Passover.' : '',
+    input.kosherForPassover
+      ? 'This recipe must be strictly Kosher for Passover. No chametz (no wheat, barley, oats, rye, spelt in any leavened form). No kitniyot (no rice, corn, beans, lentils, peas, sesame, mustard, peanuts). Use only Passover-compliant ingredients and substitutions such as matzo meal, potato starch, and almond flour. Label the recipe as Kosher for Passover.'
+      : '',
     input.healthConditions?.length
       ? `Health Condition Dietary Constraints: ${[
-          input.healthConditions.includes('Diabetes')         ? 'low added sugar, complex carbs preferred' : '',
-          input.healthConditions.includes('Heart Disease')    ? 'low saturated fat, lean proteins' : '',
-          input.healthConditions.includes('Hypertension')     ? 'low sodium' : '',
-          input.healthConditions.includes('Gastrointestinal') ? 'low FODMAP friendly, avoid common irritants' : '',
-        ].filter(Boolean).join('; ')}`
+          input.healthConditions.includes('Diabetes') ? 'low added sugar, complex carbs preferred' : '',
+          input.healthConditions.includes('Heart Disease') ? 'low saturated fat, lean proteins' : '',
+          input.healthConditions.includes('Hypertension') ? 'low sodium' : '',
+          input.healthConditions.includes('Gastrointestinal')
+            ? 'low FODMAP friendly, avoid common irritants'
+            : '',
+        ]
+          .filter(Boolean)
+          .join('; ')}`
       : '',
     input.favoriteChef ? `Style Inspiration: ${input.favoriteChef}` : '',
-    input.kidFriendly ? 'Kid-Friendly: Yes — mild flavors, simple textures, fun presentation, no spicy ingredients' : '',
+    input.kidFriendly
+      ? 'Kid-Friendly: Yes — mild flavors, simple textures, fun presentation, no spicy ingredients'
+      : '',
     '',
-    'Return exactly this JSON shape (3 recipe cards, selectedRecipe is the first card in full detail):',
+    'Return exactly this JSON shape (3 recipe cards and 3 complete recipeDetails in the same order, with identical names. Apply restrictions to every ingredient, step and substitution):',
     `{
   "recipeCards": [
     {
@@ -62,7 +72,7 @@ function buildRecipePrompt(input) {
       "extraNeeded": ["string"]
     }
   ],
-  "selectedRecipe": {
+  "recipeDetails": [{
     "name": "string",
     "servings": 0,
     "timeMinutes": 0,
@@ -78,14 +88,14 @@ function buildRecipePrompt(input) {
       "sodium_mg": 0,
       "disclaimer": "string"
     }
-  }
+  }]
 }`,
   ];
 
-  return lines.filter(l => l !== null).join('\n');
+  return lines.filter((l) => l !== null).join('\n');
 }
 
-async function callGemini(prompt, imageBase64) {
+async function callGemini(prompt, imageBase64, maxOutputTokens = 7000) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error('GEMINI_API_KEY environment variable is not set');
 
@@ -94,14 +104,23 @@ async function callGemini(prompt, imageBase64) {
   const contents = imageBase64
     ? [
         { text: prompt },
-        { inlineData: { mimeType: 'image/jpeg', data: imageBase64.replace(/^data:image\/\w+;base64,/, '') } },
+        {
+          inlineData: {
+            mimeType: imageBase64.split(';')[0].slice(5),
+            data: imageBase64.replace(/^data:image\/\w+;base64,/, ''),
+          },
+        },
       ]
     : prompt;
 
   const response = await ai.models.generateContent({
     model: 'gemini-2.5-flash',
     contents,
-    config: { responseMimeType: 'application/json' },
+    config: {
+      responseMimeType: 'application/json',
+      maxOutputTokens,
+      httpOptions: { timeout: 55000, retryOptions: { attempts: 1 } },
+    },
   });
 
   const text = response.text;
@@ -114,15 +133,38 @@ async function callGemini(prompt, imageBase64) {
   }
 }
 
+app.use('/api', (req, res, next) => {
+  if (req.method === 'POST' && !validInput(req.body))
+    return res.status(400).json({ error: 'Check the size and format of your ingredients or photo.' });
+  next();
+});
+
+function generationFailure(res, err) {
+  const status = Number(err?.status);
+  console.warn('Generation unavailable', { status: Number.isFinite(status) ? status : 'unknown' });
+  res
+    .status(status === 429 ? 429 : 503)
+    .json({
+      error:
+        'Recipe generation is temporarily unavailable. Your inputs are still here. Try again later.',
+    });
+}
+
+app.get('/api/version', (_req, res) =>
+  res.set('Cache-Control', 'no-store').json({ revision: process.env.K_REVISION || 'local' }),
+);
+
 app.post('/api/generateRecipes', async (req, res) => {
   try {
     const prompt = buildRecipePrompt(req.body);
     const data = await callGemini(prompt, req.body.ingredientPhoto);
+    data.selectedRecipe = data.recipeDetails?.[0];
+    if (!validRecipes(data)) throw Error('Invalid recipe response');
+    delete data.recommendedProducts;
     if (req.body.kosherForPassover) data.kosherForPassover = true;
     res.json(data);
   } catch (err) {
-    console.error('generateRecipes error:', err);
-    res.status(500).json({ error: err.message || 'Failed to generate recipes' });
+    generationFailure(res, err);
   }
 });
 
@@ -141,13 +183,83 @@ app.post('/api/generateIdeas', async (req, res) => {
     ].join('\n');
 
     const data = await callGemini(prompt, null);
+    if (!validIdeas(data)) throw Error('Invalid ideas response');
     res.json(data);
   } catch (err) {
-    console.error('generateIdeas error:', err);
-    res.status(500).json({ error: err.message || 'Failed to generate ideas' });
+    generationFailure(res, err);
   }
 });
 
+// Gemini selects indices only. Recipes, quantities and restrictions remain in the planner.
+app.post('/api/thanksgiving', async (req, res) => {
+  const { courses, influence, effort } = req.body;
+  if (
+    !Array.isArray(courses) ||
+    courses.length < 4 ||
+    courses.length > 5 ||
+    !courses.every((x) => typeof x === 'string' && x.length <= 800) ||
+    typeof influence !== 'string' ||
+    influence.length > 100
+  )
+    return res.status(400).json({ error: 'Check the menu choices.' });
+  try {
+    const lists = courses.map((x) => JSON.parse(x));
+    if (
+      !lists.every(
+        (items) =>
+          Array.isArray(items) &&
+          items.length > 0 &&
+          items.length <= 6 &&
+          items.every((x) => typeof x === 'string' && x.length <= 120),
+      )
+    )
+      return res.sendStatus(400);
+    const data = await callGemini(
+      'Choose one dish per course for a cohesive Thanksgiving menu. Return JSON {"choices":[zero-based index per course]}. Preferences and candidate lists: ' +
+        JSON.stringify({ influence, effort, lists }),
+      null,
+      1200,
+    );
+    if (
+      !Array.isArray(data.choices) ||
+      data.choices.length !== lists.length ||
+      !data.choices.every((n, i) => Number.isInteger(n) && n >= 0 && n < lists[i].length)
+    )
+      throw Error('Invalid choices');
+    res.json({ choices: data.choices });
+  } catch (err) {
+    generationFailure(res, err);
+  }
+});
+app.use('/api', (err, req, res, next) =>
+  res
+    .status(err.status === 413 ? 413 : 400)
+    .json({ error: 'Check the size and format of your request.' }),
+);
+
+app.get('/thanksgiving', async (_req, res, next) => {
+  try {
+    const html = await readFile(path.join(__dirname, 'dist/index.html'), 'utf8');
+    const title = 'Thanksgiving, Your Way | PantryPivot';
+    const desc =
+      'Plan a coordinated Thanksgiving menu for your table, build a shopping list and turn leftovers into another meal.';
+    res.type('html').send(
+      html
+        .replace(/<title>.*?<\/title>/, '<title>' + title + '</title>')
+        .replace(
+          /((?:name|property)="(?:description|og:description|twitter:description)" content=")[^"]+/g,
+          '$1' + desc,
+        )
+        .replace(/((?:name|property)="(?:og:title|twitter:title)" content=")[^"]+/g, '$1' + title)
+        .replace(
+          /((?:rel="canonical" href|property="og:url" content)="https:\/\/pantrypivot.com)"/g,
+          '$1/thanksgiving"',
+        ),
+    );
+  } catch (err) {
+    next(err);
+  }
+});
 // SPA fallback — serve index.html for all non-API routes
 app.get('/{*splat}', (_req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));

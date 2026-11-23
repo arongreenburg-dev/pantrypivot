@@ -1,3 +1,4 @@
+import { AmazonLink } from '../HolidayPicks';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -134,7 +135,6 @@ const TABS: { key: Tab; label: string }[] = [
   { key: 'thighs', label: 'Roast Chicken Thighs' },
 ];
 
-const AMAZON_LINK = 'https://amzn.to/40ZcXPs';
 const PANTRYPIVOT_LINK = 'https://pantrypivot.com';
 
 const RoastChicken: React.FC = () => {
@@ -324,14 +324,7 @@ const RoastChicken: React.FC = () => {
 
         {/* Amazon CTA */}
         <div className="text-center mb-6">
-          <a
-            href="https://amzn.to/4bvEX2h"
-            target="_blank"
-            rel="noopener noreferrer sponsored"
-            className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full transition-colors text-sm"
-          >
-            Shop Roasting Pans on Amazon →
-          </a>
+          <AmazonLink id="roasting_pans_with_racks" className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full transition-colors text-sm" />
         </div>
 
         <h2 className="text-2xl font-bold text-slate-800 text-center mb-3">What Can I Make With a Whole Chicken?</h2>
@@ -398,14 +391,7 @@ const RoastChicken: React.FC = () => {
 
           {/* CTAs */}
           <div className="px-8 pb-8 flex flex-col sm:flex-row gap-3">
-            <a
-              href={AMAZON_LINK} onClick={() => window.gtag('event', 'affiliate_click', { link_url: 'https://amzn.to/40ZcXPs', link_text: 'amazon_fresh' })}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-2xl text-center transition-all shadow-md"
-            >
-              Order Ingredients on Amazon Fresh
-            </a>
+            <AmazonLink id="amazon_same_day_delivery" eventLabel="amazon_fresh" className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-2xl text-center transition-all shadow-md" />
             <a
               href={PANTRYPIVOT_LINK}
               target="_blank"
@@ -545,7 +531,7 @@ const RoastChicken: React.FC = () => {
         </div>
         <p className="text-[10px] text-slate-400 font-medium uppercase tracking-widest leading-relaxed text-center">
           Disclosure: PantryPivot participates in the Amazon Associates Program. <br />
-          As an Amazon Associate, we may earn from qualifying purchases at no additional cost to you.
+          As an Amazon Associate I earn from qualifying purchases.
         </p>
       </footer>
     </div>

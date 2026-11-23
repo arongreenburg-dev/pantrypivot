@@ -1,7 +1,7 @@
+import { AmazonLink } from '../HolidayPicks';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-declare const window: Window & { gtag: (...args: unknown[]) => void };
 
 type Tab = 'lemonherb' | 'garlic' | 'mediterranean' | 'harvest';
 
@@ -149,7 +149,6 @@ const TABS: { key: Tab; label: string }[] = [
   { key: 'harvest', label: 'Harvest' },
 ];
 
-const AMAZON_LINK = 'https://amzn.to/40ZcXPs';
 const PANTRYPIVOT_LINK = 'https://pantrypivot.com';
 
 const OnePanChicken: React.FC = () => {
@@ -378,13 +377,7 @@ const OnePanChicken: React.FC = () => {
           </div>
 
           <div className="px-8 pb-8 flex flex-col sm:flex-row gap-3">
-            <a
-              href={AMAZON_LINK} onClick={() => window.gtag('event', 'affiliate_click', { link_url: 'https://amzn.to/40ZcXPs', link_text: 'amazon_fresh' })}
-              target="_blank" rel="noopener noreferrer"
-              className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-2xl text-center transition-all shadow-md"
-            >
-              Order Ingredients on Amazon Fresh
-            </a>
+            <AmazonLink id="amazon_same_day_delivery" eventLabel="amazon_fresh" className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-2xl text-center transition-all shadow-md" />
             <a
               href={PANTRYPIVOT_LINK} target="_blank" rel="noopener noreferrer"
               className="flex-1 bg-slate-900 hover:bg-slate-700 text-white font-bold py-3 px-6 rounded-2xl text-center transition-all shadow-md"
@@ -508,7 +501,7 @@ const OnePanChicken: React.FC = () => {
         </div>
         <p className="text-[10px] text-slate-400 font-medium uppercase tracking-widest leading-relaxed text-center">
           Disclosure: PantryPivot participates in the Amazon Associates Program. <br />
-          As an Amazon Associate, we may earn from qualifying purchases at no additional cost to you.
+          As an Amazon Associate I earn from qualifying purchases.
         </p>
       </footer>
     </div>

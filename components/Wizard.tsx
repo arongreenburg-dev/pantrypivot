@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { WizardState, GenerationResponse, AppSettings, ConvenienceFilter, UnitSystem, MealIdea, HealthCondition } from '../types';
-import { MEAL_TYPES, EFFORT_LEVELS, SPICE_LEVELS, HOUSEHOLD_TYPES, RELIGIOUS_DIETS, HEALTH_DIETS, CUISINE_REGIONS, COMMON_EQUIPMENT, KOSHER_TYPES, PANTRY_STAPLES, COMMON_ALLERGENS, STAPLE_LINKS, CONVENIENCE_FILTERS, AFFILIATE_LINKS, UNIT_SYSTEMS, SHOW_KOSHER_FOR_PASSOVER, HEALTH_CONDITIONS, HEALTH_CONDITION_DEFINITIONS } from '../constants';
+import { MEAL_TYPES, EFFORT_LEVELS, SPICE_LEVELS, HOUSEHOLD_TYPES, RELIGIOUS_DIETS, HEALTH_DIETS, CUISINE_REGIONS, COMMON_EQUIPMENT, KOSHER_TYPES, PANTRY_STAPLES, COMMON_ALLERGENS, CONVENIENCE_FILTERS, UNIT_SYSTEMS, SHOW_KOSHER_FOR_PASSOVER, HEALTH_CONDITIONS, HEALTH_CONDITION_DEFINITIONS } from '../constants';
 import { generateRecipes, generateIdeas } from '../lib/recipeModel';
 import VoiceInput from './VoiceInput';
 interface WizardProps {
@@ -8,6 +8,7 @@ interface WizardProps {
   onComplete: (data: GenerationResponse) => void;
   onLoading: (loading: boolean) => void;
   onStream?: (text: string) => void;
+  error: string | null;
   onError: (error: string) => void;
   isLoading: boolean;
 }
@@ -49,7 +50,7 @@ const ConditionInfoIcon: React.FC<{
     </span>
   );
 };
-const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStream, onError, isLoading }) => {
+const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStream, error, onError, isLoading }) => {
   const [showStaples, setShowStaples] = useState(false);
   const [openTooltip, setOpenTooltip] = useState<string | null>(null);
   React.useEffect(() => {
@@ -111,6 +112,10 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      if (!['image/jpeg','image/png','image/webp'].includes(file.type) || file.size>4400000) {
+        onError('Choose a JPEG, PNG or WebP photo smaller than 4.4 MB.');
+        return;
+      }
       const reader = new FileReader();
       reader.onloadend = () => {
         updateForm('ingredientPhoto', reader.result as string);
@@ -118,18 +123,24 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
       reader.readAsDataURL(file);
     }
   };
+  const submitting = React.useRef(false);
   const handleSubmit = async (overridePrompt?: string) => {
+    if (submitting.current) return;
+    submitting.current = true;
+    onError('');
     onLoading(true);
     try {
       const dataToSubmit = overridePrompt ? { ...formData, userPrompt: overridePrompt } : formData;
-      const results = await generateRecipes(dataToSubmit, onStream);
+      const results = await generateRecipes(dataToSubmit);
       onComplete(results);
     } catch (err: any) {
       onError(err.message || 'Something went wrong');
     } finally {
+      submitting.current = false;
       onLoading(false);
     }
   };
+  const failure = error && <div role="alert" className="rounded-xl bg-amber-50 text-amber-950 p-4">{error} <a href="/thanksgiving" className="underline">Use a curated Thanksgiving menu</a></div>;
   const hasMeatInput = MEAT_KEYWORDS.some(k => formData.userPrompt.toLowerCase().includes(k));
   const hasVeggieInput = VEGGIE_KEYWORDS.some(k => formData.userPrompt.toLowerCase().includes(k) || formData.pantryStaples.some(s => s.toLowerCase().includes(k)));
   const showVeggieNudge = hasMeatInput && !hasVeggieInput && formData.userPrompt.trim().length > 3;
@@ -142,6 +153,7 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
             <h2 className="text-2xl font-black text-slate-900">What's on your mind or in your pantry?</h2>
             <div className="relative">
               <textarea
+                maxLength={2000}
                 value={formData.userPrompt}
                 onChange={(e) => updateForm('userPrompt', e.target.value)}
                 placeholder="e.g. 'eggplant parm but baked', '2 chicken breasts and broccoli', 'need a shakshuka recipe'..."
@@ -173,12 +185,14 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
               </div>
             </div>
             <button
+              type="button"
               onClick={() => handleSubmit()}
               disabled={isLoading}
               className="w-full bg-orange-600 text-white font-black py-4 rounded-2xl shadow-lg shadow-orange-100 hover:bg-orange-700 transition-all transform hover:scale-[1.01] disabled:opacity-50 text-base"
             >
-              {isLoading ? 'Cooking up ideas...' : 'Generate My Recipe'}
+              {isLoading ? 'Cooking up ideas...' : error ? 'Try again' : 'Generate My Recipe'}
             </button>
+            {failure}
           </div>
           {/* Optional Refinements */}
           <div className="space-y-6">
@@ -204,7 +218,7 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
                 <div className="mt-4 p-4 bg-blue-50 rounded-2xl border border-blue-100 animate-in fade-in slide-in-from-top-2">
                   <p className="text-[10px] font-black text-blue-400 uppercase tracking-widest mb-2 text-center">Kosher Type (Select One)</p>
                   <div className="flex gap-2">
-                    {['Meat', 'Dairy', 'Pareve'].map(t => (
+                    {(['Meat', 'Dairy', 'Pareve'] as const).map(t => (
                       <button
                         key={t}
                         onClick={() => toggleList('kosherType', t)}
@@ -440,12 +454,14 @@ const Wizard: React.FC<WizardProps> = ({ settings, onComplete, onLoading, onStre
             </div>
           </div>
           <button
-            onClick={() => handleSubmit()}
+            type="button"
+              onClick={() => handleSubmit()}
             disabled={isLoading}
             className="w-full bg-orange-600 text-white font-black py-5 rounded-2xl shadow-xl shadow-orange-100 hover:bg-orange-700 transition-all transform hover:scale-[1.01] disabled:opacity-50 text-lg"
           >
-            {isLoading ? 'Cooking up ideas...' : 'Generate My Recipe'}
+            {isLoading ? 'Cooking up ideas...' : error ? 'Try again' : 'Generate My Recipe'}
           </button>
+            {failure}
         </div>
       </div>
     </div>
