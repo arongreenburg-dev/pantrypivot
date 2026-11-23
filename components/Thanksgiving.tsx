@@ -1,3 +1,5 @@
+import { foodLabel, measureFor, usAmount } from '../lib/kitchenMeasures';
+import SeasonalRecipeBody from './SeasonalRecipeBody';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -184,7 +186,7 @@ export default function Thanksgiving() {
   if (selections.some((d) => d.name.includes('mash')) && !owned.includes('Masher'))
     picks.push('potato_mashers');
   function exportMenu() {
-    return Array.from(result.current!.querySelectorAll('h2,h3,p,small,li'))
+    return Array.from(result.current!.querySelectorAll('h2,h3,h4,p,small,li'))
       .map((el) => el.textContent?.trim())
       .filter(Boolean)
       .join('\n');
@@ -419,14 +421,14 @@ export default function Thanksgiving() {
                 </select>
               </label>
               <label>
-                Available grams of {stock}
+                Amount on hand ({measureFor(stock).unit}) · {foodLabel(stock)}
                 <input
                   type="number"
                   min="0"
-                  max="20000"
-                  value={pantry[stock] || ''}
+                  step="any"
+                  value={pantry[stock] ? +(pantry[stock] / measureFor(stock).grams).toFixed(6) : ''}
                   onChange={(e) =>
-                    setPantry({ ...pantry, [stock]: Math.min(20000, Math.max(0, +e.target.value)) })
+                    setPantry({ ...pantry, [stock]: Math.max(0, +e.target.value) * measureFor(stock).grams })
                   }
                 />
               </label>
@@ -472,31 +474,16 @@ export default function Thanksgiving() {
           {menu.slots.map((s, i) => {
             const d = selections[i];
             return (
-              <article key={s.course}>
+              <article key={s.course} className="season-recipe-card">
                 <small>
                   {s.course} · {s.audience} · {s.people} servings
                 </small>
                 <h3>{d.name}</h3>
-                <p>
-                  {d.tool} · about {d.minutes} min per batch
-                </p>
-                <ul>
-                  {Object.entries(d.food).map(([f, g]) => (
-                    <li key={f}>
-                      {+(g * s.people).toFixed(2)} g {f}
-                    </li>
-                  ))}
-                </ul>
-                <ol>
-                  {d.steps.map((t) => (
-                    <li key={t}>{t}</li>
-                  ))}
-                </ol>
-                {s.options.length > 1 && (
-                  <p>
-                    Compatible substitution: {s.options[(menu.choices[i] + 1) % s.options.length].name}.
-                  </p>
-                )}
+                <p>{d.description}</p>
+                <p className="recipe-meta">{d.tool === "Burner" ? "Stovetop" : d.tool === "Bowl" ? "No cooking" : "Oven"} · About {d.minutes} minutes per batch</p>
+                <SeasonalRecipeBody ingredients={Object.entries(d.food).map(([name, grams]) => ({
+                  item: foodLabel(name), amount: usAmount(name, grams * s.people),
+                }))} steps={d.steps} />
                 <button
                   className="print:hidden"
                   disabled={s.options.length < 2}
@@ -520,7 +507,7 @@ export default function Thanksgiving() {
               <ul>
                 {list.map((x) => (
                   <li key={x.name}>
-                    {x.grams} g {x.name}
+                    {usAmount(x.name, x.grams)} {foodLabel(x.name)}
                   </li>
                 ))}
               </ul>

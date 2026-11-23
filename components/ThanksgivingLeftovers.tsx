@@ -1,3 +1,5 @@
+import SeasonalRecipeBody from './SeasonalRecipeBody';
+import { kitchenNumber } from '../lib/kitchenMeasures';
 import { usableStorage } from '../lib/thanksgiving';
 import { useState } from 'react';
 import { track } from './HolidayPicks';
@@ -35,13 +37,13 @@ export default function Leftovers({
     [selected, select] = useState(''),
     [error, setError] = useState('');
   const used = Object.entries(amount).filter(([, v]) => v > 0);
-  const portions = Math.max(1, Math.ceil(used.reduce((s, [, v]) => s + v, 0) / 250));
+  const portions = Math.max(1, Math.ceil(used.reduce((s, [, v]) => s + v, 0) / 1.5));
   const options =
     tool === 'Microwave' ? ['Steam bowl', 'Brothy bowl'] : ['Covered skillet', 'Quick soup'];
   if (!exclude.includes('lettuce')) options.push('Warm lettuce cups');
   function generate() {
-    if (!used.length || Object.values(amount).some((v) => !Number.isInteger(v) || v < 0 || v > 2000))
-      throw Error('Enter 1–2000 grams for each leftover you want to use.');
+    if (!used.length || Object.values(amount).some((v) => !Number.isFinite(v) || v < 0 || v > 12 || (v > 0 && v < 0.125)))
+      throw Error('Enter ⅛ to 12 cups for each leftover you want to use.');
     if (!confirmed || !usableStorage(cooked, storage, thawed))
       throw Error(
         'Skip leftovers with uncertain handling or refrigeration beyond four days. Use only ingredients you can confirm meet everyone’s needs.',
@@ -80,17 +82,17 @@ export default function Leftovers({
     >
       <h2>Use up my leftovers</h2>
       <p>
-        Enter grams for the cooked foods you want to use together. Use the oldest safely stored batch for
+        Estimate your leftovers in cups. Chop or shred larger pieces before measuring. Use the oldest safely stored batch for
         the dates below.
       </p>
       <div className="season-grid">
         {foods.map((f) => (
           <label key={f}>
-            {f} (g)
+            {f} (cups)
             <input
               type="number"
               min="0"
-              max="2000"
+              max="12" step="0.125"
               value={amount[f] || ''}
               placeholder="0"
               onChange={(e) => setAmount({ ...amount, [f]: Number(e.target.value) })}
@@ -178,40 +180,23 @@ export default function Leftovers({
         </>
       )}
       {selected && (
-        <article>
+        <article className="season-recipe-card">
           <h3>
             {selected} with {used.map(([x]) => x.toLowerCase()).join(' and ')}
           </h3>
           <p>
             About {portions} servings · {tool}
           </p>
-          <ul>
-            {used.map(([f, g]) => (
-              <li key={f}>
-                {g} g {f.toLowerCase()}
-              </li>
-            ))}
-            <li>{(soup ? 180 : 15) * portions} ml water</li>
-            {cups && <li>{portions*3} large lettuce leaves, washed and dried</li>}
-          </ul>
-          <ol>
-            <li>
-              Cut solids into bite-size pieces. Divide the cooked leftovers and water evenly between batches.
-            </li>
-            <li>
-              {tool === 'Microwave'
-                ? 'Combine in a microwave-safe bowl and cover loosely. Microwave in one-minute bursts, stirring between bursts.'
-                : 'Combine in a pan, cover and warm over medium heat, stirring frequently.'}{' '}
-              {soup
-                ? 'Bring the liquid to a boil.'
-                : 'Add a splash more water if needed to prevent sticking.'}
-            </li>
-            <li>
-              Check several spots with a food thermometer. Serve when the leftovers reach 165°F
-              throughout.
-            </li>
-            {cups && <li>Drain excess liquid and spoon the hot filling into the lettuce leaves just before serving.</li>}
-          </ol>
+          <SeasonalRecipeBody ingredients={[
+            ...used.map(([name, volume]) => ({ item: name.toLowerCase(), amount: kitchenNumber(volume) + (volume > 1 ? ' cups' : ' cup') })),
+            { item: 'water', amount: soup ? kitchenNumber(0.75 * portions) + (portions > 1 ? ' cups' : ' cup') : portions + ' tbsp' },
+            ...(cups ? [{ item: 'large lettuce leaves, washed and dried', amount: String(portions * 3) }] : []),
+          ]} steps={[
+            'Cut large pieces into bite-size chunks. Divide the cooked leftovers and water evenly between batches.',
+            tool === 'Microwave' ? 'Combine in a microwave-safe bowl and cover loosely. Microwave in one-minute bursts, stirring between bursts.' : 'Combine in a pan, cover and warm over medium heat, stirring frequently.',
+            (soup ? 'Bring the liquid to a boil. ' : 'Add a splash more water if needed to prevent sticking. ') + 'Check several spots with a food thermometer. Serve when the leftovers reach 165°F throughout.',
+            ...(cups ? ['Drain excess liquid and spoon the hot filling into the lettuce leaves just before serving.'] : []),
+          ]} />
         </article>
       )}
     </section>

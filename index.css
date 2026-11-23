@@ -21,3 +21,17 @@
 .season-promo {display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.65rem;background:#f7f0e2;border-radius:.75rem;padding:1rem 1.3rem}
 .season [role=alert]{background:#fff0d7;border-left:3px solid #a6522e;padding:.8rem}
 @media print {.season article {break-inside:avoid}.season .print\:hidden,.season-promo{display:none}}
+
+.season .season-recipe-card {padding:clamp(1.25rem,4vw,2rem);border-color:#e2e8f0;border-radius:1.5rem;color:#1e293b}
+.season-recipe-card small {font-weight:700;color:#9a431c}
+.season .season-recipe-card h3 {line-height:1.15;font-family:inherit;font-weight:800;font-size:clamp(1.45rem,4vw,2rem);margin:.45rem 0 .65rem}
+.season-recipe-card .recipe-meta {font-size:.875rem;color:#475569;margin-top:.65rem}
+.season-recipe-body {display:grid;gap:1.25rem;grid-template-columns:minmax(0,2fr) minmax(0,3fr);margin:1.25rem 0}
+.season-recipe-body h4 {font-size:1.05rem;font-weight:750}
+.season-recipe-body > div:first-child {background:#fff7ed;border-radius:1rem;padding:1rem;align-self:start}
+.season .season-recipe-body ul {list-style:none;padding:0}
+.season .season-recipe-body ul li {padding:.35rem 0;border-bottom:1px solid #f3dfcd}
+.season .season-recipe-body li strong {color:#9a3412}
+.season .season-recipe-body ol li {padding-left:.25rem;margin-bottom:.75rem}
+.season-recipe-body ol li::marker {font-weight:bold;color:#c2410c}
+@media(max-width:640px){.season-recipe-body{grid-template-columns:1fr}}
