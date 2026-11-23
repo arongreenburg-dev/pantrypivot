@@ -95,7 +95,7 @@ function buildRecipePrompt(input) {
   return lines.filter((l) => l !== null).join('\n');
 }
 
-async function callGemini(prompt, imageBase64, maxOutputTokens = 7000) {
+async function callGemini(prompt, imageBase64, maxOutputTokens = 7000, selectionSchema) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error('GEMINI_API_KEY environment variable is not set');
 
@@ -119,6 +119,7 @@ async function callGemini(prompt, imageBase64, maxOutputTokens = 7000) {
     config: {
       responseMimeType: 'application/json',
       maxOutputTokens,
+      ...(selectionSchema && { responseJsonSchema: selectionSchema, thinkingConfig: { thinkingBudget: 0 } }),
       httpOptions: { timeout: 55000, retryOptions: { attempts: 1 } },
     },
   });
@@ -219,6 +220,11 @@ app.post('/api/thanksgiving', async (req, res) => {
         JSON.stringify({ influence, effort, lists }),
       null,
       1200,
+      {
+        type: 'object',
+        properties: { choices: { type: 'array', items: { type: 'integer', minimum: 0 }, minItems: lists.length, maxItems: lists.length } },
+        required: ['choices'],
+      },
     );
     if (
       !Array.isArray(data.choices) ||
