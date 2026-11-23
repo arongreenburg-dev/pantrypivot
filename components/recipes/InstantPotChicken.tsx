@@ -1,3 +1,4 @@
+import { AmazonLink } from '../HolidayPicks';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -134,7 +135,6 @@ const TABS: { key: Tab; label: string }[] = [
   { key: 'thighs', label: 'Chicken Thighs' },
 ];
 
-const AMAZON_LINK = 'https://amzn.to/40ZcXPs';
 const PANTRYPIVOT_LINK = 'https://pantrypivot.com';
 
 const InstantPotChicken: React.FC = () => {
@@ -321,29 +321,8 @@ const InstantPotChicken: React.FC = () => {
 
         {/* Amazon CTA */}
         <div className="text-center mb-4">
-          <a
-            href="https://amzn.to/47MV8a6"
-            target="_blank"
-            rel="noopener noreferrer sponsored"
-            className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full transition-colors text-sm"
-          >
-            Shop Top-Rated Instant Pots on Amazon →
-          </a>
+          <AmazonLink id="instant_pot_multicooker" className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-6 rounded-full transition-colors text-sm" />
         </div>
-
-        {/* Seasonal Banner */}
-        {[6, 9, 10].includes(new Date().getMonth()) && (
-          <a
-            href="https://amzn.to/47MV8a6"
-            target="_blank"
-            rel="noopener noreferrer sponsored"
-            className="block text-center bg-orange-500 text-white font-bold py-3 px-4 mb-6 text-sm hover:bg-orange-600 transition-colors rounded"
-          >
-            {new Date().getMonth() === 6 && '🛒 Prime Day — Save big on Instant Pots!'}
-            {new Date().getMonth() === 9 && '🎃 Prime Big Deal Days — Limited-time deals on Instant Pots!'}
-            {new Date().getMonth() === 10 && '🦃 Black Friday — Best prices of the year on Instant Pots!'}
-          </a>
-        )}
 
         <h2 className="text-2xl font-bold text-slate-800 text-center mb-3">What Can I Make With Chicken in the Instant Pot?</h2>
         <p className="text-sm text-slate-500 max-w-2xl mx-auto text-center mb-8 leading-relaxed">This page contains 4 kosher meat Instant Pot chicken recipes — breasts, drumsticks, dump dinner, and thighs. All recipes are dairy-free. Ingredients are simple pantry staples with no specialty items required.</p>
@@ -403,14 +382,7 @@ const InstantPotChicken: React.FC = () => {
           </div>
 
           <div className="px-8 pb-8 flex flex-col sm:flex-row gap-3">
-            <a
-              href={AMAZON_LINK} onClick={() => window.gtag('event', 'affiliate_click', { link_url: 'https://amzn.to/40ZcXPs', link_text: 'amazon_fresh' })}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-2xl text-center transition-all shadow-md"
-            >
-              Order Ingredients on Amazon Fresh
-            </a>
+            <AmazonLink id="amazon_same_day_delivery" eventLabel="amazon_fresh" className="flex-1 bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-2xl text-center transition-all shadow-md" />
             <a
               href={PANTRYPIVOT_LINK}
               target="_blank"
@@ -549,7 +521,7 @@ const InstantPotChicken: React.FC = () => {
         </div>
         <p className="text-[10px] text-slate-400 font-medium uppercase tracking-widest leading-relaxed text-center">
           Disclosure: PantryPivot participates in the Amazon Associates Program. <br />
-          As an Amazon Associate, we may earn from qualifying purchases at no additional cost to you.
+          As an Amazon Associate I earn from qualifying purchases.
         </p>
       </footer>
     </div>

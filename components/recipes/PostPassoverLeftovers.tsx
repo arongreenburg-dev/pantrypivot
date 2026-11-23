@@ -1,3 +1,4 @@
+import { AmazonLink } from '../HolidayPicks';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -204,15 +205,7 @@ const PostPassoverLeftovers: React.FC = () => {
                     {rank === 1 && (
                       <span className="ml-3">
                         — store in{' '}
-                        <a
-                          href="https://amzn.to/4ca99QI"
-                          target="_blank"
-                          rel="noopener noreferrer sponsored"
-                          className="text-orange-600 hover:underline"
-                          onClick={() => (window as any).gtag?.('event', 'affiliate_click', { link_url: 'https://amzn.to/4ca99QI', link_text: 'airtight_containers_matzah' })}
-                        >
-                          airtight containers
-                        </a>
+                        <AmazonLink id="food_storage_containers" eventLabel="airtight_containers_matzah" className="text-orange-600 hover:underline" />
                         {' '}to keep it fresh
                       </span>
                     )}
@@ -240,16 +233,7 @@ const PostPassoverLeftovers: React.FC = () => {
                       <span className={`h-1.5 w-1.5 rounded-full flex-shrink-0 ${cat.dot}`} />
                       {cat.name === 'Baking Ingredients' && item === 'Almond flour' ? (
                         <>
-                          <a
-                            href="https://amzn.to/3OxEmp7"
-                            target="_blank"
-                            rel="noopener noreferrer sponsored"
-                            className="text-orange-600 hover:underline font-medium"
-                            onClick={() => (window as any).gtag?.('event', 'affiliate_click', { link_url: 'https://amzn.to/3OxEmp7', link_text: 'bulk_almond_flour' })}
-                          >
-                            Almond flour
-                          </a>
-                          {' '}(buy in bulk bags next year to save)
+                          Almond flour · <AmazonLink id="amazon_staples" eventLabel="bulk_almond_flour" className="text-orange-600 hover:underline font-medium" />
                         </>
                       ) : (
                         item
@@ -339,7 +323,7 @@ const PostPassoverLeftovers: React.FC = () => {
         </div>
         <p className="text-[10px] text-slate-400 font-medium uppercase tracking-widest leading-relaxed text-center">
           Disclosure: PantryPivot participates in the Amazon Associates Program. <br />
-          As an Amazon Associate, we may earn from qualifying purchases at no additional cost to you.
+          As an Amazon Associate I earn from qualifying purchases.
         </p>
       </footer>
     </div>

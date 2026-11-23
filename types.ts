@@ -54,6 +54,7 @@ export interface MealIdea {
 export interface GenerationResponse {
   recipeCards: RecipeCard[];
   selectedRecipe: DetailedRecipe;
+  recipeDetails?: DetailedRecipe[];
   ideas?: MealIdea[];
   kosherForPassover?: boolean;
   recommendedProducts?: AffiliateProduct[];

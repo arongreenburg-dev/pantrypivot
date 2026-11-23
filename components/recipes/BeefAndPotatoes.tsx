@@ -1,7 +1,7 @@
+import { AmazonLink } from '../HolidayPicks';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-declare const window: Window & { gtag: (...args: unknown[]) => void };
 
 type Tab = 'stew' | 'skillet' | 'sheetpan' | 'hash';
 
@@ -153,7 +153,6 @@ const TABS: { key: Tab; label: string }[] = [
   { key: 'hash', label: 'Hash' },
 ];
 
-const AMAZON_LINK = 'https://amzn.to/40ZcXPs';
 const PANTRYPIVOT_LINK = 'https://pantrypivot.com';
 
 const BeefAndPotatoes: React.FC = () => {
@@ -424,15 +423,7 @@ const BeefAndPotatoes: React.FC = () => {
 
           {/* CTAs */}
           <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href={AMAZON_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => window.gtag('event', 'click', { event_category: 'affiliate', event_label: 'amazon-fresh-beef-potatoes' })}
-              className="px-5 py-2.5 bg-orange-500 text-white rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors"
-            >
-              Order Ingredients on Amazon Fresh
-            </a>
+            <AmazonLink id="amazon_same_day_delivery" eventLabel="amazon-fresh-beef-potatoes" className="px-5 py-2.5 bg-orange-500 text-white rounded-lg text-sm font-medium hover:bg-orange-600 transition-colors" />
             <a
               href={PANTRYPIVOT_LINK}
               target="_blank"

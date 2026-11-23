@@ -54,6 +54,9 @@ const IngredientsIndex = lazy(() => import('./components/IngredientsIndex'));
 const About = lazy(() => import('./components/About'));
 import ReactGA from 'react-ga4';
 
+import HolidayPicks, { PicksEntry } from './components/HolidayPicks';
+const Thanksgiving = lazy(()=>import('./components/Thanksgiving'));
+
 type View = 'home' | 'results' | 'detail' | 'settings' | 'saved';
 
 const LOADING_MESSAGES = [
@@ -108,10 +111,10 @@ const App: React.FC = () => {
   };
 
   const handleSelectRecipe = (recipeId: string) => {
-    const card = generationResults?.recipeCards?.find(c => c.id === recipeId);
-    const recipe = generationResults?.selectedRecipe;
+    const index = generationResults?.recipeCards.findIndex(c => c.id === recipeId) ?? -1;
+    const recipe = generationResults?.recipeDetails?.[index] ?? (index === 0 ? generationResults?.selectedRecipe : undefined);
     if (recipe) {
-      setSelectedRecipe({ ...recipe, name: card?.name ?? recipe.name });
+      setSelectedRecipe(recipe);
       setCurrentView('detail');
     }
   };
@@ -150,12 +153,6 @@ const App: React.FC = () => {
 
 
       <main className="max-w-4xl mx-auto px-4 py-8">
-        {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl flex items-center gap-3">
-            <span>⚠️</span> {error}
-          </div>
-        )}
-
         {currentView === 'home' && (
           <div className="space-y-12">
             <div className="text-center py-6 flex flex-col items-center">
@@ -170,6 +167,7 @@ const App: React.FC = () => {
               </p>
             </div>
 
+            <div className="max-w-2xl mx-auto space-y-3"><Link className="block rounded-xl bg-amber-100 p-4 text-amber-950 font-bold" to="/thanksgiving">Thanksgiving, Your Way · Plan a menu or use up leftovers →</Link><PicksEntry/></div>
             <Wizard
               settings={settings}
               onComplete={handleRecipeGenerated}
@@ -178,6 +176,7 @@ const App: React.FC = () => {
                 if (!loading) setStreamingText('');
               }}
               onStream={(text) => setStreamingText(text)}
+              error={error}
               onError={(err) => setError(err)}
               isLoading={isLoading}
             />
@@ -299,7 +298,7 @@ const App: React.FC = () => {
       <footer className="max-w-4xl mx-auto px-4 py-8 border-t border-slate-200 mt-12 text-center">
         <p className="text-[10px] text-slate-400 font-medium uppercase tracking-widest leading-relaxed">
           Disclosure: PantryPivot participates in the Amazon Associates Program. <br />
-          As an Amazon Associate, we may earn from qualifying purchases at no additional cost to you.
+          As an Amazon Associate I earn from qualifying purchases.
         </p>
       </footer>
     </div>
@@ -308,6 +307,8 @@ const App: React.FC = () => {
   return (
     <Suspense fallback={<div className="flex items-center justify-center min-h-screen bg-slate-50"><div className="animate-spin rounded-full h-12 w-12 border-4 border-orange-500 border-t-transparent"></div></div>}>
       <Routes>
+        <Route path="/thanksgiving" element={<Thanksgiving/>}/>
+        <Route path="/holiday-kitchen-picks" element={<HolidayPicks/>}/>
         <Route path="/" element={homeView} />
         <Route path="/recipes/air-fryer-chicken" element={<AirFryerChicken />} />
         <Route path="/recipes/crockpot-chicken" element={<CrockpotChicken />} />

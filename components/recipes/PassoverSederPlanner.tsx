@@ -1,7 +1,7 @@
+import { AmazonLink } from '../HolidayPicks';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const AMAZON_LINK = 'https://amzn.to/40ZcXPs';
 const PANTRYPIVOT_LINK = 'https://pantrypivot.com';
 
 type PlannerTab = 'menu' | 'timeline' | 'seder-plate' | 'shopping';
@@ -614,15 +614,7 @@ const PassoverSederPlanner: React.FC = () => {
             ))}
 
             <div className="text-center pt-2">
-              <a
-                href={AMAZON_LINK}
-                onClick={() => window.gtag('event', 'affiliate_click', { link_url: 'https://amzn.to/40ZcXPs', link_text: 'amazon_fresh_passover' })}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-2xl transition-all shadow-md"
-              >
-                Order Passover Groceries on Amazon Fresh →
-              </a>
+              <AmazonLink id="amazon_same_day_delivery" eventLabel="amazon_fresh_passover" className="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-2xl transition-all shadow-md" />
             </div>
           </div>
         )}
@@ -727,7 +719,7 @@ const PassoverSederPlanner: React.FC = () => {
         </div>
         <p className="text-[10px] text-slate-400 font-medium uppercase tracking-widest leading-relaxed text-center">
           Disclosure: PantryPivot participates in the Amazon Associates Program. <br />
-          As an Amazon Associate, we may earn from qualifying purchases at no additional cost to you.
+          As an Amazon Associate I earn from qualifying purchases.
         </p>
       </footer>
     </div>
