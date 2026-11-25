@@ -100,11 +100,12 @@ function buildRecipePrompt(input) {
 // goes to GEMINI_FALLBACK_MODEL (the "latest Flash" alias by default).
 const MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
 const FALLBACK_MODEL = process.env.GEMINI_FALLBACK_MODEL || 'gemini-flash-latest';
-// Retry only quick HTTP failures such as a retired model (404) or an overloaded one (5xx).
-// Key, billing and rate-limit errors would fail the same way, and a timeout has no time left.
+// Retry once on another model for quick HTTP failures: a retired or restricted model
+// (400/403/404) or an overloaded one (5xx). Billing (402) and rate limits (429) are
+// account-wide, and a timeout leaves no time for a second call.
 const retryable = (err) => {
   const status = Number(err?.status);
-  return status === 400 || status === 404 || status >= 500;
+  return [400, 403, 404].includes(status) || status >= 500;
 };
 
 function parseJson(text) {
