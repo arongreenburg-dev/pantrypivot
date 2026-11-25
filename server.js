@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import { readFile } from 'node:fs/promises';
 import { validInput, validRecipes, validIdeas } from './lib/apiValidation.js';
+import { validCourses, selectionPrompt, selectionSchema, parseChoices } from './lib/thanksgivingAi.js';
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -95,7 +96,30 @@ function buildRecipePrompt(input) {
   return lines.filter((l) => l !== null).join('\n');
 }
 
-async function callGemini(prompt, imageBase64, maxOutputTokens = 7000, selectionSchema) {
+// GEMINI_MODEL overrides the primary model. If it is retired or overloaded, one retry
+// goes to GEMINI_FALLBACK_MODEL (the "latest Flash" alias by default).
+const MODEL = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+const FALLBACK_MODEL = process.env.GEMINI_FALLBACK_MODEL || 'gemini-flash-latest';
+// Retry once on another model for quick HTTP failures: a retired or restricted model
+// (400/403/404) or an overloaded one (5xx). Billing (402) and rate limits (429) are
+// account-wide, and a timeout leaves no time for a second call.
+const retryable = (err) => {
+  const status = Number(err?.status);
+  return [400, 403, 404].includes(status) || status >= 500;
+};
+
+function parseJson(text) {
+  if (typeof text !== 'string' || !text.trim()) throw new Error('AI returned an empty response');
+  try {
+    return JSON.parse(text);
+  } catch {
+    const match = text.match(/\{[\s\S]*\}/);
+    if (match) return JSON.parse(match[0]);
+    throw new Error('AI returned invalid JSON');
+  }
+}
+
+async function callGemini(prompt, imageBase64, maxOutputTokens = 7000, responseJsonSchema) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error('GEMINI_API_KEY environment variable is not set');
 
@@ -113,24 +137,30 @@ async function callGemini(prompt, imageBase64, maxOutputTokens = 7000, selection
       ]
     : prompt;
 
-  const response = await ai.models.generateContent({
-    model: 'gemini-2.5-flash',
-    contents,
-    config: {
-      responseMimeType: 'application/json',
-      maxOutputTokens,
-      ...(selectionSchema && { responseJsonSchema: selectionSchema, thinkingConfig: { thinkingBudget: 0 } }),
-      httpOptions: { timeout: 55000, retryOptions: { attempts: 1 } },
-    },
-  });
-
-  const text = response.text;
-  try {
-    return JSON.parse(text);
-  } catch {
-    const match = text.match(/\{[\s\S]*\}/);
-    if (match) return JSON.parse(match[0]);
-    throw new Error('AI returned invalid JSON');
+  const models = FALLBACK_MODEL && FALLBACK_MODEL !== MODEL ? [MODEL, FALLBACK_MODEL] : [MODEL];
+  for (const [attempt, model] of models.entries()) {
+    try {
+      const response = await ai.models.generateContent({
+        model,
+        contents,
+        config: {
+          responseMimeType: 'application/json',
+          maxOutputTokens,
+          ...(responseJsonSchema && { responseJsonSchema }),
+          // A zero thinking budget is a Gemini 2.5 Flash setting; other models keep their default.
+          ...(responseJsonSchema && model === 'gemini-2.5-flash' && { thinkingConfig: { thinkingBudget: 0 } }),
+          httpOptions: { timeout: responseJsonSchema ? 25000 : 55000, retryOptions: { attempts: 1 } },
+        },
+      });
+      return parseJson(response.text);
+    } catch (err) {
+      console.warn('Gemini call failed', {
+        model,
+        status: Number(err?.status) || 'none',
+        reason: String(err?.message || err).slice(0, 300),
+      });
+      if (attempt === models.length - 1 || !retryable(err)) throw err;
+    }
   }
 }
 
@@ -142,7 +172,10 @@ app.use('/api', (req, res, next) => {
 
 function generationFailure(res, err) {
   const status = Number(err?.status);
-  console.warn('Generation unavailable', { status: Number.isFinite(status) ? status : 'unknown' });
+  console.warn('Generation unavailable', {
+    status: Number.isFinite(status) ? status : 'unknown',
+    reason: String(err?.message || err).slice(0, 300),
+  });
   res
     .status(status === 429 ? 429 : 503)
     .json({
@@ -191,48 +224,22 @@ app.post('/api/generateIdeas', async (req, res) => {
   }
 });
 
-// Gemini selects indices only. Recipes, quantities and restrictions remain in the planner.
+// Gemini selects dish names only. Recipes, quantities and restrictions remain in the planner.
 app.post('/api/thanksgiving', async (req, res) => {
   const { courses, influence, effort } = req.body;
-  if (
-    !Array.isArray(courses) ||
-    courses.length < 4 ||
-    courses.length > 5 ||
-    !courses.every((x) => typeof x === 'string' && x.length <= 800) ||
-    typeof influence !== 'string' ||
-    influence.length > 100
-  )
+  const lists = validCourses(courses);
+  if (!lists || typeof influence !== 'string' || influence.length > 100 || typeof effort !== 'string')
     return res.status(400).json({ error: 'Check the menu choices.' });
   try {
-    const lists = courses.map((x) => JSON.parse(x));
-    if (
-      !lists.every(
-        (items) =>
-          Array.isArray(items) &&
-          items.length > 0 &&
-          items.length <= 6 &&
-          items.every((x) => typeof x === 'string' && x.length <= 120),
-      )
-    )
-      return res.sendStatus(400);
     const data = await callGemini(
-      'Choose one dish per course for a cohesive Thanksgiving menu. Return JSON {"choices":[zero-based index per course]}. Preferences and candidate lists: ' +
-        JSON.stringify({ influence, effort, lists }),
+      selectionPrompt(lists, influence.trim() || 'Traditional American', effort.slice(0, 20)),
       null,
       1200,
-      {
-        type: 'object',
-        properties: { choices: { type: 'array', items: { type: 'integer', minimum: 0 }, minItems: lists.length, maxItems: lists.length } },
-        required: ['choices'],
-      },
+      selectionSchema(lists),
     );
-    if (
-      !Array.isArray(data.choices) ||
-      data.choices.length !== lists.length ||
-      !data.choices.every((n, i) => Number.isInteger(n) && n >= 0 && n < lists[i].length)
-    )
-      throw Error('Invalid choices');
-    res.json({ choices: data.choices });
+    const choices = parseChoices(data, lists);
+    if (!choices) throw Error('Invalid choices: ' + JSON.stringify(data).slice(0, 200));
+    res.json({ choices });
   } catch (err) {
     generationFailure(res, err);
   }

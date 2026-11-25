@@ -297,7 +297,7 @@ export default function Thanksgiving() {
             {chips(directions, direction, (v) => {
               clear();
               setDirection(v);
-              set({ ...r, twist: v.includes(directions[0]) });
+              set((prev) => ({ ...prev, twist: v.includes(directions[0]) }));
             })}
             <div className="season-grid">
               <label>
