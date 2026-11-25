@@ -155,3 +155,25 @@ test('whole turkey respects diets, ingredient exclusions and oven availability',
   assert.throws(()=>makeSlots({...base,must:'whole turkey; turkey cutlets'}),/cannot all fit/);
   assert.deepEqual(makeSlots({...base,must:' , ; '}),makeSlots(base));
 });
+
+test('AI selection is schema-limited to real dishes and tolerates model drift', async () => {
+  const { validCourses, selectionSchema, parseChoices } = await import('../lib/thanksgivingAi.js');
+  // Same payload the planner sends for the kosher Southern menu in the bug report.
+  const slots = makeSlots({ ...base, guests: 6, cuisine: 4, diet: ['Kosher'] });
+  const courses = slots.map((s) => JSON.stringify(s.options.map((o) => o.name)));
+  assert.ok(validInput({ courses, influence: 'Southern', effort: 'Moderate' }));
+  const lists = validCourses(courses);
+  assert.equal(lists.length, slots.length);
+  const schema = selectionSchema(lists);
+  assert.deepEqual(schema.required, lists.map((_, i) => 'course' + i));
+  lists.forEach((items, i) => assert.deepEqual(schema.properties['course' + i].enum, items));
+  const last = lists.map((items) => items.length - 1);
+  assert.deepEqual(parseChoices(Object.fromEntries(lists.map((x, i) => ['course' + i, x.at(-1)])), lists), last);
+  assert.deepEqual(parseChoices({ choices: last }, lists), last);
+  assert.deepEqual(parseChoices({ choices: lists.map((x) => x[0].toUpperCase() + '.') }, lists), lists.map(() => 0));
+  assert.equal(parseChoices({ choices: lists.map((x) => x.length) }, lists), null);
+  assert.equal(parseChoices({ course0: 'Pecan pie' }, lists), null);
+  assert.equal(parseChoices(null, lists), null);
+  for (const bad of [courses.slice(0, 3), [...courses.slice(0, 3), '{oops'], [...courses.slice(0, 3), '[]']])
+    assert.equal(validCourses(bad), null);
+});
