@@ -108,6 +108,11 @@ const retryable = (err) => {
   return [400, 403, 404].includes(status) || status >= 500;
 };
 
+// One JSON line per event, so Cloud Logging keeps every field in a single entry.
+function logWarning(message, fields) {
+  console.warn(JSON.stringify({ severity: 'WARNING', message, ...fields }));
+}
+
 function parseJson(text) {
   if (typeof text !== 'string' || !text.trim()) throw new Error('AI returned an empty response');
   try {
@@ -154,7 +159,7 @@ async function callGemini(prompt, imageBase64, maxOutputTokens = 7000, responseJ
       });
       return parseJson(response.text);
     } catch (err) {
-      console.warn('Gemini call failed', {
+      logWarning('Gemini call failed', {
         model,
         status: Number(err?.status) || 'none',
         reason: String(err?.message || err).slice(0, 300),
@@ -172,7 +177,7 @@ app.use('/api', (req, res, next) => {
 
 function generationFailure(res, err) {
   const status = Number(err?.status);
-  console.warn('Generation unavailable', {
+  logWarning('Generation unavailable', {
     status: Number.isFinite(status) ? status : 'unknown',
     reason: String(err?.message || err).slice(0, 300),
   });
@@ -280,4 +285,5 @@ app.get('/{*splat}', (_req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
+  console.log(JSON.stringify({ severity: 'INFO', message: 'Gemini models', model: MODEL, fallback: FALLBACK_MODEL }));
 });
