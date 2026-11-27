@@ -50,6 +50,9 @@ function buildRecipePrompt(input) {
           'Use the leftovers as the main ingredients and scale amounts to what the user has. Keep extra ingredients to common pantry staples and list them in extraNeeded.',
           'Leftovers are already cooked: do not overcook them, and include a step that reheats everything to 165°F. Assume leftovers were refrigerated promptly and are under 4 days old.',
           'Across the 3 recipes, try to use all of the listed leftovers. Recipe names must not include brand names.',
+          input.isKosher
+            ? 'Kosher: never combine meat or poultry (including leftover turkey or gravy) with dairy in the same recipe.'
+            : '',
         ].join('\n')
       : '',
     input.healthConditions?.length
@@ -133,7 +136,7 @@ function parseJson(text) {
   }
 }
 
-async function callGemini(prompt, imageBase64, maxOutputTokens = 7000, responseJsonSchema) {
+async function callGemini(prompt, imageBase64, maxOutputTokens = 8192, responseJsonSchema) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error('GEMINI_API_KEY environment variable is not set');
 
@@ -161,8 +164,9 @@ async function callGemini(prompt, imageBase64, maxOutputTokens = 7000, responseJ
           responseMimeType: 'application/json',
           maxOutputTokens,
           ...(responseJsonSchema && { responseJsonSchema }),
-          // A zero thinking budget is a Gemini 2.5 Flash setting; other models keep their default.
-          ...(responseJsonSchema && model === 'gemini-2.5-flash' && { thinkingConfig: { thinkingBudget: 0 } }),
+          // On Gemini 2.5 Flash, thinking tokens count against maxOutputTokens and can cut a
+          // long recipe JSON short. Turn thinking off there; other models keep their default.
+          ...(model === 'gemini-2.5-flash' && { thinkingConfig: { thinkingBudget: 0 } }),
           httpOptions: { timeout: responseJsonSchema ? 25000 : 55000, retryOptions: { attempts: 1 } },
         },
       });
@@ -207,7 +211,8 @@ app.post('/api/generateRecipes', async (req, res) => {
     const prompt = buildRecipePrompt(req.body);
     const data = await callGemini(prompt, req.body.ingredientPhoto);
     data.selectedRecipe = data.recipeDetails?.[0];
-    if (!validRecipes(data)) throw Error('Invalid recipe response');
+    if (!validRecipes(data))
+      throw Error('Invalid recipe response: ' + JSON.stringify(data).slice(0, 200));
     delete data.recommendedProducts;
     if (req.body.kosherForPassover) data.kosherForPassover = true;
     res.json(data);

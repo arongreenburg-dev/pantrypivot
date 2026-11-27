@@ -4,14 +4,28 @@ import { generateRecipes } from '../lib/recipeModel';
 import { getSettings } from '../lib/storage';
 import { COMMON_EQUIPMENT, PANTRY_STAPLES } from '../constants';
 import { track } from './HolidayPicks';
-import type { DetailedRecipe, GenerationResponse, RecipeCard, WizardState } from '../types';
+import type { DetailedRecipe, GenerationResponse, HealthCondition, RecipeCard, WizardState } from '../types';
+import LoadingMessages from './LoadingMessages';
+
+const DIETS = ['Kosher', 'Halal', 'Vegetarian', 'Vegan', 'Gluten-free', 'Dairy-free', 'Nut-free', 'Diabetic-friendly', 'Low-sodium'];
 
 const USDA =
   'https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/leftovers-and-food-safety';
 const EXAMPLE = 'e.g. about 3 cups turkey, 2 cups mashed potatoes, half a pan of stuffing, some cranberry sauce';
 
-function request(leftovers: string): WizardState {
+function savedDiets() {
   const s = getSettings();
+  const saved = s.defaultDietaryRestrictions.map((x) => x.toLowerCase());
+  return DIETS.filter((d) => saved.includes(d.toLowerCase()) || (d === 'Kosher' && s.isKosher));
+}
+
+function request(leftovers: string, diets: string[]): WizardState {
+  const s = getSettings();
+  const has = (d: string) => diets.includes(d);
+  const healthConditions: HealthCondition[] = [
+    ...(has('Diabetic-friendly') ? (['Diabetes'] as const) : []),
+    ...(has('Low-sodium') ? (['Hypertension'] as const) : []),
+  ];
   return {
     userPrompt: leftovers,
     thanksgivingLeftovers: true,
@@ -23,26 +37,27 @@ function request(leftovers: string): WizardState {
     spiceLevel: s.defaultSpice,
     cuisines: s.defaultCuisines,
     household: s.defaultHousehold,
-    allergies: [],
+    allergies: has('Nut-free') ? ['Peanuts', 'Tree Nuts'] : [],
     customAllergies: '',
-    dietaryRestrictions: s.defaultDietaryRestrictions,
+    dietaryRestrictions: diets.filter((d) => d !== 'Nut-free'),
     convenienceFilters: [],
     customHealthGoals: '',
     customReligious: '',
     pantryStaples: [...PANTRY_STAPLES],
     equipment: [...COMMON_EQUIPMENT],
     avoidList: [],
-    isKosher: s.isKosher,
+    isKosher: has('Kosher'),
     kosherType: [],
     skillLevel: s.skillLevel,
     unitSystem: s.unitSystem,
-    healthConditions: [],
+    healthConditions,
   } as WizardState;
 }
 
 // One box: people type what is left and roughly how much; the AI returns recipes.
 export default function LeftoversBox() {
   const [text, setText] = useState('');
+  const [diets, setDiets] = useState<string[]>(savedDiets);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [result, setResult] = useState<{ cards: RecipeCard[]; details: DetailedRecipe[] } | null>(null);
@@ -59,7 +74,7 @@ export default function LeftoversBox() {
     setError('');
     setResult(null);
     try {
-      const data: GenerationResponse = await generateRecipes(request(text.trim()));
+      const data: GenerationResponse = await generateRecipes(request(text.trim(), diets));
       const details = data.recipeDetails?.length ? data.recipeDetails : [data.selectedRecipe];
       setResult({ cards: data.recipeCards, details });
       track('thanksgiving_leftovers_recipe_generated', { source: 'ai' });
@@ -83,14 +98,34 @@ export default function LeftoversBox() {
           placeholder={EXAMPLE}
           onChange={(e) => setText(e.target.value)}
         />
+        <fieldset className="leftovers-diets">
+          <legend>Any dietary needs? (optional)</legend>
+          <div className="season-chips">
+            {DIETS.map((d) => (
+              <button
+                type="button"
+                key={d}
+                aria-pressed={diets.includes(d)}
+                onClick={() => setDiets(diets.includes(d) ? diets.filter((x) => x !== d) : [...diets, d])}
+              >
+                {d}
+              </button>
+            ))}
+          </div>
+        </fieldset>
         <button className="primary" type="submit" disabled={busy}>
-          {busy ? 'Cooking up ideas… (about 30 seconds)' : 'Get leftover recipes'}
+          {busy ? 'Cooking…' : 'Get leftover recipes'}
         </button>
         <p className="leftovers-note">
           Eat refrigerated leftovers within 3–4 days and reheat to 165°F.{' '}
           <a href={USDA} target="_blank" rel="noreferrer">USDA leftovers guide</a>
         </p>
       </form>
+      {busy && (
+        <div className="leftovers-loading" aria-live="polite">
+          <LoadingMessages />
+        </div>
+      )}
       {error && <p role="alert">{error}</p>}
       {result && (
         <div ref={results}>
