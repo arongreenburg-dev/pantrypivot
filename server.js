@@ -162,7 +162,8 @@ async function callGemini(prompt, imageBase64, maxOutputTokens = 8192, responseJ
         contents,
         config: {
           responseMimeType: 'application/json',
-          maxOutputTokens,
+          // Newer models think by default and thinking shares this limit, so give them more room.
+          maxOutputTokens: model === 'gemini-2.5-flash' ? maxOutputTokens : maxOutputTokens * 2,
           ...(responseJsonSchema && { responseJsonSchema }),
           // On Gemini 2.5 Flash, thinking tokens count against maxOutputTokens and can cut a
           // long recipe JSON short. Turn thinking off there; other models keep their default.
