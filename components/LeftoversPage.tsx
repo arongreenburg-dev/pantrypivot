@@ -17,7 +17,7 @@ export default function LeftoversPage() {
       <p className="season-lede">
         Type what's in your fridge after Thanksgiving. You'll get three recipes that use it up.
       </p>
-      <LeftoversBox />
+      <LeftoversBox storage />
       <p>
         Planning next year's menu? <Link to="/thanksgiving">Try the Thanksgiving planner →</Link>
       </p>

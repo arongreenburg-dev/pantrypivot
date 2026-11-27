@@ -11,8 +11,10 @@ export function AmazonLink({
   className,
   compact,
   placement,
+  label: customLabel,
 }: {
   id: PickId;
+  label?: string;
   eventLabel?: string;
   className?: string;
   compact?: boolean;
@@ -20,7 +22,8 @@ export function AmazonLink({
 }) {
   const item = catalog[id];
   const label =
-    item.kind === 'Product' ? item.name + ' on Amazon' : item.kind === 'Grocery/Pantry' ? 'Browse ' + item.name : 'Browse options on Amazon · ' + item.name;
+    customLabel ??
+    (item.kind === 'Product' ? item.name + ' on Amazon' : item.kind === 'Grocery/Pantry' ? 'Browse ' + item.name : 'Browse options on Amazon · ' + item.name);
   return (
     <span>
       <a
