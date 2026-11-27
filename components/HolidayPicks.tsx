@@ -113,6 +113,29 @@ export default function HolidayPicks() {
       <h1>Holiday kitchen picks</h1>
       <p>{DISCLOSURE}</p>
       <Link to="/thanksgiving">Thanksgiving meal planner →</Link>
+      <section id="air-fryer-guide" aria-labelledby="air-fryer-guide-title">
+        <h2 id="air-fryer-guide-title">One basket, two baskets, or a sheet pan?</h2>
+        <p>Choose based on what you usually cook together.</p>
+        <ul>
+          <li>
+            <strong>One batch at a time.</strong> For a lunch of crisp stuffing patties,
+            the Instant Vortex Plus gives you one 6-quart basket for the whole batch.{' '}
+            <AmazonLink id="instant_vortex_air_fryer" compact placement="holiday_air_fryer_guide" />
+          </li>
+          <li>
+            <strong>Two sides with different cooking times.</strong> The Ninja Foodi DualZone
+            splits its 8 quarts between two baskets. Give potatoes a head start and cook
+            the second side on its own setting.{' '}
+            <AmazonLink id="ninja_air_fryer" compact placement="holiday_air_fryer_guide" />
+          </li>
+          <li>
+            <strong>A tableful of people.</strong> If you already have a rimmed half sheet,
+            use it in the oven and spread the potatoes in one layer. If you need pans,
+            the Nordic Ware Naturals listing includes two.{' '}
+            <AmazonLink id="nordic_ware_sheet_pan" compact placement="holiday_air_fryer_guide" />
+          </li>
+        </ul>
+      </section>
       <div className="season-grid">
         {Object.entries(groups).map(([group, ids]) => (
           <section key={group}>
