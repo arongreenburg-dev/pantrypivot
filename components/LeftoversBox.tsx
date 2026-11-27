@@ -6,6 +6,7 @@ import { COMMON_EQUIPMENT, PANTRY_STAPLES } from '../constants';
 import { track } from './HolidayPicks';
 import type { DetailedRecipe, GenerationResponse, HealthCondition, RecipeCard, WizardState } from '../types';
 import LoadingMessages from './LoadingMessages';
+import LeftoversStorage from './LeftoversStorage';
 
 const DIETS = ['Kosher', 'Halal', 'Vegetarian', 'Vegan', 'Gluten-free', 'Dairy-free', 'Nut-free', 'Diabetic-friendly', 'Low-sodium'];
 
@@ -55,7 +56,7 @@ function request(leftovers: string, diets: string[]): WizardState {
 }
 
 // One box: people type what is left and roughly how much; the AI returns recipes.
-export default function LeftoversBox() {
+export default function LeftoversBox({ storage }: { storage?: boolean }) {
   const [text, setText] = useState('');
   const [diets, setDiets] = useState<string[]>(savedDiets);
   const [busy, setBusy] = useState(false);
@@ -121,6 +122,7 @@ export default function LeftoversBox() {
           <a href={USDA} target="_blank" rel="noreferrer">USDA leftovers guide</a>
         </p>
       </form>
+      {storage && <LeftoversStorage />}
       {busy && (
         <div className="leftovers-loading" aria-live="polite">
           <LoadingMessages />

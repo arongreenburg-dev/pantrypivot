@@ -48,3 +48,10 @@
 .leftovers-diets {border:0;padding:0;margin:.2rem 0 1rem}
 .leftovers-diets legend {font-weight:600;margin-bottom:.4rem}
 .leftovers-loading {background:white;border:1px solid #ded6c8;border-radius:.9rem;padding:2rem 1rem;margin:1rem 0}
+
+.leftovers-storage {font-size:.95rem;padding:clamp(.75rem,3vw,1.1rem)!important}
+.season .leftovers-storage h2 {font-size:1.15rem;margin:0 0 .3rem}
+.leftovers-storage p {margin:.2rem 0}
+.leftovers-storage ul {margin:.5rem 0;padding:0;list-style:none}
+.leftovers-storage li {margin:.45rem 0;color:#5e564c}
+.leftovers-storage-disclosure {font-size:.85rem;color:#5e564c}
