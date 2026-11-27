@@ -56,6 +56,7 @@ import ReactGA from 'react-ga4';
 
 import HolidayPicks, { PicksEntry } from './components/HolidayPicks';
 const Thanksgiving = lazy(()=>import('./components/Thanksgiving'));
+const LeftoversPage = lazy(()=>import('./components/LeftoversPage'));
 
 type View = 'home' | 'results' | 'detail' | 'settings' | 'saved';
 
@@ -167,7 +168,7 @@ const App: React.FC = () => {
               </p>
             </div>
 
-            <div className="max-w-2xl mx-auto space-y-3"><Link className="block rounded-xl bg-amber-100 p-4 text-amber-950 font-bold" to="/thanksgiving">Thanksgiving, Your Way · Plan a menu or use up leftovers →</Link><PicksEntry/></div>
+            <div className="max-w-2xl mx-auto space-y-3"><Link className="block rounded-xl bg-amber-100 p-4 text-amber-950 font-bold" to="/thanksgiving-leftovers">🦃 Thanksgiving leftovers? Type what you have and get new recipes →</Link><Link className="block rounded-xl bg-amber-50 p-3 text-amber-950 font-semibold text-sm" to="/thanksgiving">Thanksgiving, Your Way · Plan a holiday menu →</Link><PicksEntry/></div>
             <Wizard
               settings={settings}
               onComplete={handleRecipeGenerated}
@@ -308,6 +309,7 @@ const App: React.FC = () => {
     <Suspense fallback={<div className="flex items-center justify-center min-h-screen bg-slate-50"><div className="animate-spin rounded-full h-12 w-12 border-4 border-orange-500 border-t-transparent"></div></div>}>
       <Routes>
         <Route path="/thanksgiving" element={<Thanksgiving/>}/>
+        <Route path="/thanksgiving-leftovers" element={<LeftoversPage/>}/>
         <Route path="/holiday-kitchen-picks" element={<HolidayPicks/>}/>
         <Route path="/" element={homeView} />
         <Route path="/recipes/air-fryer-chicken" element={<AirFryerChicken />} />

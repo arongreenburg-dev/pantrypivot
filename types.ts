@@ -101,6 +101,7 @@ export interface WizardState {
   kidFriendly?: boolean;
   favoriteChef?: string;
   kosherForPassover?: boolean;
+  thanksgivingLeftovers?: boolean;
   healthConditions: HealthCondition[];
 }
 
