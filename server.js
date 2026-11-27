@@ -43,6 +43,15 @@ function buildRecipePrompt(input) {
     input.kosherForPassover
       ? 'This recipe must be strictly Kosher for Passover. No chametz (no wheat, barley, oats, rye, spelt in any leavened form). No kitniyot (no rice, corn, beans, lentils, peas, sesame, mustard, peanuts). Use only Passover-compliant ingredients and substitutions such as matzo meal, potato starch, and almond flour. Label the recipe as Kosher for Passover.'
       : '',
+    input.thanksgivingLeftovers
+      ? [
+          'This is a Thanksgiving leftovers request. The user request lists already-cooked leftovers, usually with rough amounts.',
+          'Each recipe must turn the leftovers into a genuinely different dish (for example soup, hash, pot pie, fried rice, sandwiches, quesadillas, fritters or casserole), not simply reheated leftovers.',
+          'Use the leftovers as the main ingredients and scale amounts to what the user has. Keep extra ingredients to common pantry staples and list them in extraNeeded.',
+          'Leftovers are already cooked: do not overcook them, and include a step that reheats everything to 165°F. Assume leftovers were refrigerated promptly and are under 4 days old.',
+          'Across the 3 recipes, try to use all of the listed leftovers. Recipe names must not include brand names.',
+        ].join('\n')
+      : '',
     input.healthConditions?.length
       ? `Health Condition Dietary Constraints: ${[
           input.healthConditions.includes('Diabetes') ? 'low added sugar, complex carbs preferred' : '',
@@ -255,12 +264,20 @@ app.use('/api', (err, req, res, next) =>
     .json({ error: 'Check the size and format of your request.' }),
 );
 
-app.get('/thanksgiving', async (_req, res, next) => {
+const seasonalPages = {
+  '/thanksgiving': [
+    'Thanksgiving, Your Way | PantryPivot',
+    'Plan a coordinated Thanksgiving menu for your table, build a shopping list and turn leftovers into another meal.',
+  ],
+  '/thanksgiving-leftovers': [
+    'Thanksgiving Leftover Recipes | PantryPivot',
+    'Type what is left over after Thanksgiving and get three new recipes that use it up: soups, hashes, pot pies and more.',
+  ],
+};
+app.get(Object.keys(seasonalPages), async (req, res, next) => {
   try {
     const html = await readFile(path.join(__dirname, 'dist/index.html'), 'utf8');
-    const title = 'Thanksgiving, Your Way | PantryPivot';
-    const desc =
-      'Plan a coordinated Thanksgiving menu for your table, build a shopping list and turn leftovers into another meal.';
+    const [title, desc] = seasonalPages[req.path];
     res.type('html').send(
       html
         .replace(/<title>.*?<\/title>/, '<title>' + title + '</title>')
@@ -271,7 +288,7 @@ app.get('/thanksgiving', async (_req, res, next) => {
         .replace(/((?:name|property)="(?:og:title|twitter:title)" content=")[^"]+/g, '$1' + title)
         .replace(
           /((?:rel="canonical" href|property="og:url" content)="https:\/\/pantrypivot.com)"/g,
-          '$1/thanksgiving"',
+          '$1' + req.path + '"',
         ),
     );
   } catch (err) {

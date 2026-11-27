@@ -15,7 +15,7 @@ import {
 } from '../lib/thanksgiving';
 import { getSettings } from '../lib/storage';
 import { AmazonLink, PicksEntry, track } from './HolidayPicks';
-import Leftovers from './ThanksgivingLeftovers';
+import LeftoversBox from './LeftoversBox';
 import { DISCLOSURE, type PickId } from '../affiliateCatalog';
 
 function chips(values: readonly string[], chosen: string[], change: (next: string[]) => void) {
@@ -277,20 +277,10 @@ export default function Thanksgiving() {
           ))}
         </nav>
         {mode === 'Use up my leftovers' ? (
-          <>
-            {checks}
-            <Leftovers
-              key={JSON.stringify([normalized.diet, normalized.other, normalized.exclude, r.kosher])}
-              kosher={kosher}
-              plantOnly={
-                normalized.diet
-                  .concat(normalized.other)
-                  .some((x) => x === 'Vegan' || x === 'Vegetarian') ||
-                (kosher && r.kosher !== 'Meat')
-              }
-              exclude={normalized.exclude}
-            />
-          </>
+          <section>
+            <h2>Use up my leftovers</h2>
+            <LeftoversBox />
+          </section>
         ) : (
           <section>
             <h2>What kind of Thanksgiving do you want?</h2>

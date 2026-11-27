@@ -35,3 +35,12 @@
 .season .season-recipe-body ol li {padding-left:.25rem;margin-bottom:.75rem}
 .season-recipe-body ol li::marker {font-weight:bold;color:#c2410c}
 @media(max-width:640px){.season-recipe-body{grid-template-columns:1fr}}
+
+.season textarea {display:block;width:100%;border:1px solid #988e80;padding:.7rem;border-radius:.5rem;background:white;margin:.4rem 0 .8rem;font-size:1.05rem;line-height:1.45}
+.leftovers-box label {font-size:1.15rem}
+.leftovers-box button.primary {width:100%;font-size:1.05rem;min-height:48px}
+.leftovers-note {font-size:.9rem;color:#5e564c;margin-top:.6rem}
+.season details.season-recipe-card > summary {cursor:pointer;list-style:none}
+.season details.season-recipe-card > summary::-webkit-details-marker {display:none}
+.season details.season-recipe-card > summary h3::after {content:' ▾';font-size:.9rem;color:#8a7a68}
+.season details.season-recipe-card:not([open]) > summary h3::after {content:' ▸'}
